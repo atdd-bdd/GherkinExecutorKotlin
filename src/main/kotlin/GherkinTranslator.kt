@@ -2,7 +2,7 @@ import java.io.File
 import java.io.FileWriter
 
 class Translate {
-    val basePath = "src\\test\\kotlin\\"
+    val basePath = Configuration.testSubDirectory
     var glue_class = ""
     var glue_object = ""
     var step_number_in_scenario = 0
@@ -36,6 +36,7 @@ class Translate {
 
     fun split_line(line: String): Pair<MutableList<String>, List<String>> {
         val all_words = line.split(" ")
+        println("All words " + all_words)
         val words = mutableListOf<String>()
         val comment = mutableListOf<String>()
         var in_comment = false
@@ -43,6 +44,7 @@ class Translate {
             var word = a_word.trim()
             if (word.length <= 0)
                 continue
+            println("Word *"+ word + "*")
             if (in_comment) {
                 comment.add(word)
                 continue
@@ -52,11 +54,12 @@ class Translate {
                 word = word.trim('#')
                 if (word.length > 0) {
                     comment.add(word)
-                    continue
                 }
+                continue
             }
             words.add(word)
         }
+
         return Pair(words, comment)
     }
 
@@ -76,9 +79,14 @@ class Translate {
     var glue_template_file = FileWriter(basePath + "Glue" + ".tmp")
 
     fun act_on_feature(full_text: String) {
-        val test_pathname = basePath + full_text + ".kt"
+        val test_pathname = Configuration.featureSubDirectory + full_text + ".kt"
+        println(" Writing " + test_pathname)
         test_file = FileWriter(test_pathname, false)
-        glue_template_file = FileWriter(basePath + full_text + "_glue.kt", false)
+        var template_filename =
+            Configuration.featureSubDirectory + full_text + "_glue_template.tmpl"
+        if (Configuration.inTest)
+            template_filename = Configuration.featureSubDirectory + full_text + "_glue.kt"
+        glue_template_file = FileWriter(template_filename, false)
 
         glue_class = full_text + "_glue"
         glue_object = full_text + "_glue_object"
@@ -135,33 +143,33 @@ class Translate {
     fun act_on_step(full_text: String, comment: List<String>) {
         step_number_in_scenario += 1
         val (followtype, table) = look_for_follow()
-
         template_print("")
-
+        test_print("")
         if (followtype == "TABLE") {
-            var option = "MultiString"
+            var option = "ListOfList"
             if (comment.size > 0 && comment[0].length > 0)
                 option = comment[0]
-            if (option.equals("ListOfList"))
+             if (option.equals("ListOfList"))
                 tableToListOfList(table, full_text)
-            else
+            else if (option.equals("String"))
                 tableToString(table, full_text)
+            else {
+                 println("*** Option not found, default to ListOfList " + option)
+                 tableToListOfList(table, full_text)
+             }
         }
         if (followtype == "NOTHING") {
             noParameter(full_text)
         }
         if (followtype == "STRING") {
-            var option = "MultiString"
+            var option = "String"
             if (comment.size > 0 && comment[0].length > 0)
                 option = comment[0]
             if (option.equals("ListOfString"))
                 StringToList(table, full_text)
             else
                 StringToString(table, full_text)
-
         }
-        template_print("        assertEquals(true, false)  ")
-        template_print("    }")
     }
 
     private fun noParameter(full_text: String) {
@@ -261,7 +269,9 @@ class Translate {
 
     fun read_string(): MutableList<String> {
         val ret_value = mutableListOf<String>()
+        data.next()  // read the quotes which have been peeked
         var line = data.next()
+
         while (!line.trim().equals("\"\"\"")) {
             ret_value.add(line)
             line = data.next()
@@ -272,9 +282,9 @@ class Translate {
 
     fun look_for_follow(): Pair<String, MutableList<String>> {
         var line = data.peek()
-        var empty = mutableListOf<String>()
+        val empty = mutableListOf<String>()
         while (line.length > 0 && line[0] == '#') {
-            line = data.next()
+            data.next()
             line = data.peek()
         }
         line = line.trim()
@@ -299,7 +309,7 @@ class Translate {
         init {
             _index = 0
             if (!name.equals("")) {
-                val raw = File(name).readLines()
+                val raw = File(Configuration.featureSubDirectory+ name).readLines()
                 for (line in raw) {
                     if (line.length > 0)
                         data.add(line.trim())
@@ -327,16 +337,33 @@ class Translate {
         }
 
         companion object {
-            val EOF = "FOR"
+            val EOF = "EOF"
         }
     }
 
 }
 
+class Configuration {
+    companion object {
+        var inTest = true     // If true, then glue file is overwritten
+        var currentDirectory = ""
+        var featureSubDirectory = "src\\test\\kotlin\\"
+        var testSubDirectory = "src\\test\\kotlin\\"
+        val featureFiles = listOf(
+//            "testfeature.feature",
+//            "FlowGrid.feature",
+            "temptest.feature"
+        )
+
+    }
+}
 fun main(args: Array<String>) {
     println("Gherkin Executor ")
-    val translate = Translate()
-    val path = System.getProperty("user.dir")
-    println("Working Directory = $path")
-    translate.translate_in_tests("testfeature.feature")
+    Configuration.currentDirectory = System.getProperty("user.dir")
+    println("Arguments " + args)  // eventually read into featureFiles
+    for (name in Configuration.featureFiles) {
+        val translate = Translate()
+        println("Translating " + name)
+        translate.translate_in_tests(name)
+    }
 }
