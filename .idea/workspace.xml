@@ -4,26 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/TestFile.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/testfeature.feature" afterDir="false" />
+    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="Refactored and renamed">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testfeature.feature" beforeDir="false" afterPath="$PROJECT_DIR$/testfeature.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +71,7 @@
       <recent name="C:\Users\user\ideaprojects\GherkinExecutor\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Feature_Gherkin_Test (1)">
+  <component name="RunManager" selected="Kotlin.GherkinTranslatorKt">
     <configuration name="Feature_Gherkin_Test (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -157,8 +141,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Feature_Gherkin_Test (1)" />
         <item itemvalue="Kotlin.GherkinTranslatorKt" />
+        <item itemvalue="Gradle.Feature_Gherkin_Test (1)" />
         <item itemvalue="Gradle.Feature_Gherkin_Test" />
         <item itemvalue="Kotlin script (Beta).Feature_Gherkin_Test_glue.kts" />
         <item itemvalue="Kotlin script (Beta).Feature_Gherkin_Test.kts (1)" />
@@ -174,6 +158,18 @@
       <option name="presentableId" value="Default" />
       <updated>1737573478625</updated>
     </task>
+    <task id="LOCAL-00001" summary="Refactored and renamed">
+      <created>1737651498906</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1737651498906</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Refactored and renamed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored and renamed" />
   </component>
 </project>

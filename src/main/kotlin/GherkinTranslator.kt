@@ -61,7 +61,7 @@ class Translate {
     }
 
     fun act_on_keyword(keyword: String, words: List<String>, comment: List<String>) {
-        var full_text = words.joinToString("_")
+        val full_text = words.joinToString("_")
         when (keyword) {
             "Feature" -> act_on_feature(full_text)
             "Scenario" -> act_on_scenario(full_text)
@@ -90,7 +90,7 @@ class Translate {
         test_print("@TestInstance(TestInstance.Lifecycle.PER_CLASS)")
         test_print("class " + full_text + "{")
         test_print("")
-        test_print("    val " + glue_object + " = " + glue_class + "()");
+        test_print("    val " + glue_object + " = " + glue_class + "()")
 
         template_print("package gherkinexecutor")
         template_print("import kotlin.test.assertEquals")
@@ -139,14 +139,25 @@ class Translate {
         template_print("")
 
         if (followtype == "TABLE") {
-            // switch output based on desired type in the comments
-            tableToString(table, full_text)
+            var option = "MultiString"
+            if (comment.size > 0 && comment[0].length > 0)
+                option = comment[0]
+            if (option.equals("ListOfList"))
+                tableToListOfList(table, full_text)
+            else
+                tableToString(table, full_text)
         }
         if (followtype == "NOTHING") {
             noParameter(full_text)
         }
         if (followtype == "STRING") {
-            StringToString(table, full_text)
+            var option = "MultiString"
+            if (comment.size > 0 && comment[0].length > 0)
+                option = comment[0]
+            if (option.equals("ListOfString"))
+                StringToList(table, full_text)
+            else
+                StringToString(table, full_text)
 
         }
         template_print("        assertEquals(true, false)  ")
@@ -156,6 +167,19 @@ class Translate {
     private fun noParameter(full_text: String) {
         test_print("        " + glue_object + "." + full_text + "()")
         template_print("    fun " + full_text + "(){")
+    }
+
+
+    private fun StringToList(table: MutableList<String>, full_text: String) {
+        val s = step_number_in_scenario.toString()
+        test_print("        val stringList" + s + " = listOf<String>(")
+        for (line in table) {
+            test_print("            \"" + line + "\",")
+        }
+        test_print("            )")
+        test_print("")
+        test_print("        " + glue_object + "." + full_text + "(stringList" + s + ")")
+        template_print("    fun " + full_text + "( stringList" + s + ":List<String> ){")
     }
 
     private fun StringToString(table: MutableList<String>, full_text: String) {
@@ -182,6 +206,44 @@ class Translate {
         template_print("    fun " + full_text + "( table" + s + ": String){")
     }
 
+    private fun tableToListOfList(table: MutableList<String>, full_text: String) {
+        val s = step_number_in_scenario.toString()
+        test_print("        val stringListList" + s + " = listOf<List<String>>(")
+        for (line in table) {
+            convertBarLineToList(line)
+        }
+        test_print("            )")
+        test_print("")
+        test_print("        " + glue_object + "." + full_text + "(stringListList" + s + ")")
+        template_print("    fun " + full_text + "( table" + s + ": List<List<String>>){")
+    }
+
+    private fun convertBarLineToList(line: String) {
+        test_print("           listOf<String>(")
+        val elements = parseLine(line)
+        for (element in elements) {
+            test_print("            \"" + element.trim() + "\",")
+        }
+        test_print("            ),")
+    }
+
+    private fun parseLine(line: String): List<String> {
+        var lineShort = line.trim()
+        if (lineShort[0] == '|')
+            lineShort = lineShort.substringAfter('|')
+        else
+            println("*** table not begin with | " + line)
+        val last = lineShort.length - 1
+        if (lineShort[last] == '|')
+            lineShort = lineShort.substring(0, last - 1)
+        else
+            println("*** table not end with | " + line )
+        val elements = lineShort.split("|")
+        return elements
+
+
+
+    }
 
     fun read_table(): MutableList<String> {
         val ret_value = mutableListOf<String>()
@@ -198,9 +260,8 @@ class Translate {
 
 
     fun read_string(): MutableList<String> {
-        var ret_value = mutableListOf<String>()
+        val ret_value = mutableListOf<String>()
         var line = data.next()
-        line = data.next()
         while (!line.trim().equals("\"\"\"")) {
             ret_value.add(line)
             line = data.next()
@@ -219,11 +280,11 @@ class Translate {
         line = line.trim()
         if (line.length == 0) return Pair("NOTHING", empty)
         if (line[0] == '|') {
-            var ret_value = read_table()
+            val ret_value = read_table()
             return Pair("TABLE", ret_value)
         }
         if (line.equals("\"\"\"")) {
-            var ret_value = read_string()
+            val ret_value = read_string()
             return Pair("STRING", ret_value)
         }
         return Pair("NOTHING", empty)
@@ -238,7 +299,7 @@ class Translate {
         init {
             _index = 0
             if (!name.equals("")) {
-                var raw = File(name).readLines()
+                val raw = File(name).readLines()
                 for (line in raw) {
                     if (line.length > 0)
                         data.add(line.trim())

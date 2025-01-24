@@ -30,5 +30,17 @@ One line
 Two line
 """
 
+Scenario: Step with a string to list
+Then a step with a string list # ListOfString
+"""
+One line separate
+Two line separate
+"""
+
+
+Scenario:  Steps with various table forms
+Given table to be list of list # ListOfList
+| One | Two |
+| Three | Four |
 
 
