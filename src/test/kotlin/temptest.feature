@@ -1,4 +1,4 @@
-Feature: Gherkin Test
+Feature: Gherkin Test Short
 
 
 Scenario:  Steps with all tables
