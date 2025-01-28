@@ -70,6 +70,7 @@ class Translate {
         when (keyword) {
             "Feature" -> act_on_feature(full_text)
             "Scenario" -> act_on_scenario(full_text)
+            "Background" -> act_on_scenario(full_text)
             "Given" -> act_on_step(full_text, comment)
             "When" -> act_on_step(full_text, comment)
             "Then" -> act_on_step(full_text, comment)
@@ -201,7 +202,7 @@ class Translate {
             else if (option.equals("ListOfObject")) {
                 if (comment.size < 2) {
                     println("*** No class name specified")
-                    return;
+                    return
                 }
                 val className = comment[1]
                 tableToListOfObject(table, full_text, className)
@@ -240,7 +241,7 @@ class Translate {
                 in_header_line = false
                 continue
             }
-            var values = parseLine(line)
+            val values = parseLine(line)
             convertBarLineToParameter(headers, values, className)
         }
         test_print("            )")
@@ -251,16 +252,16 @@ class Translate {
 
     private fun convertBarLineToParameter(headers : List<String>, values : List<String>,  className : String) {
         println("Headers " + headers)
+        val header_size = headers.size
+        val value_size = values.size
         var size = headers.size
-       var header_size = headers.size
-        var value_size = values.size
         if (header_size > value_size){
             size = value_size
             println("*** not sufficient values, using what is ther" + values)
             return
         }
         test_print("        " + className +"(")
-        for (i in 0..size-1 ) {
+        for (i in 0 until size) {
             test_print("            " + headers[i] + " = \"" + values[i] + "\",")
         }
         test_print("        ),")
@@ -308,7 +309,8 @@ class Translate {
 
     private fun StringToString(table: MutableList<String>, full_text: String) {
         val s = step_number_in_scenario.toString()
-        test_print("        val string" + s + " = \"\"\"\\")
+        test_print("        val string" + s + " = ")
+        test_print("            \"\"\"")
         for (line in table) {
             test_print("            " + line)
         }
@@ -320,7 +322,8 @@ class Translate {
 
     private fun tableToString(table: MutableList<String>, full_text: String) {
         val s = step_number_in_scenario.toString()
-        test_print("        val table" + s + " = \"\"\"\\")
+        test_print("        val table" + s + " = ")
+        test_print("              \"\"\"")
         for (line in table) {
             test_print("            " + line)
         }
@@ -421,20 +424,55 @@ class Translate {
 
 
     class InputIterator(name: String) {
-
         var data = mutableListOf<String>()
         var _index = 0
 
         init {
             _index = 0
-            if (!name.equals("")) {
-                val raw = File(Configuration.featureSubDirectory + name).readLines()
-                for (line in raw) {
-                    if (line.length > 0)
+            if (name.isNotEmpty()) {
+                readFile(name)
+            }
+        }
+
+        private fun readFile(fileName: String) {
+            val raw = File(Configuration.featureSubDirectory + fileName).readLines()
+            for (line in raw) {
+                if (line.startsWith("Include") ) {
+                    val parts = line.split("\"")
+                    println("Parts are " + parts)
+                    if (parts.size < 2) {
+                        println("*** Error filename not surrounded by quotes: " + line)
+                        continue
+                    }
+                    if (parts[1].length < 1) {
+                        println("*** Error zero length filename " + line)
+                        continue
+                    }
+                    val includedFileName = parts[1].trim()
+                    println("Including " + includedFileName)
+                    println("** need to check for CSV file, parse and insert")
+                    readFile(includedFileName)
+                } else {
+                    if (line.isNotEmpty() && line[0] != '#')
                         data.add(line.trim())
                 }
             }
         }
+
+//
+//        var data = mutableListOf<String>()
+//        var _index = 0
+//
+//        init {
+//            _index = 0
+//            if (!name.equals("")) {
+//                val raw = File(Configuration.featureSubDirectory + name).readLines()
+//                for (line in raw) {
+//                    if (line.length > 0)
+//                        data.add(line.trim())
+//                }
+//            }
+//        }
 
         fun peek(): String {
             if (_index < data.size) {

@@ -4,17 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="added in data definition step definition">
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/data_definition.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="fixed spacing in creating string from a multiline string">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_FlowGrid.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_FlowGrid_glue.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Test.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Test_glue.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/temptest.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/temptest.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,7 +219,14 @@
       <option name="project" value="LOCAL" />
       <updated>1737737448326</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added in parseCsvLine, but have not incorporated it into the iterator">
+      <created>1738021881248</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1738021881248</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -236,7 +235,9 @@
     <MESSAGE value="Some code cleanup" />
     <MESSAGE value="corrected split line so additional word not added" />
     <MESSAGE value="added in data definition step definition" />
-    <option name="LAST_COMMIT_MESSAGE" value="added in data definition step definition" />
+    <MESSAGE value="added in parseCsvLine, but have not incorporated it into the iterator" />
+    <MESSAGE value="fixed spacing in creating string from a multiline string" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed spacing in creating string from a multiline string" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
