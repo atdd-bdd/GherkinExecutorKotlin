@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="fixed spacing in creating string from a multiline string">
+    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="added Include, but still need to parse csv file">
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Test.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Test_data.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Test_glue_template.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/GherkinTranslator.feature" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/data_definition.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/data_definition.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,8 +76,11 @@
       <recent name="C:\Users\user\ideaprojects\GherkinExecutor" />
       <recent name="C:\Users\user\ideaprojects\GherkinExecutor\src\main\resources" />
     </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
   </component>
-  <component name="RunManager" selected="Gradle.Feature_Parse_CSV">
+  <component name="RunManager" selected="Kotlin.GherkinTranslatorKt">
     <configuration name="Feature_Data" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -119,7 +127,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="Feature_Gherkin_Test_Short" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="Feature_Gherkin_Translator" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -132,7 +140,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;gherkinexecutor.Feature_Gherkin_Test_Short&quot;" />
+            <option value="&quot;gherkinexecutor.Feature_Gherkin_Translator&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -174,11 +182,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Feature_Parse_CSV" />
         <item itemvalue="Kotlin.GherkinTranslatorKt" />
+        <item itemvalue="Gradle.Feature_Gherkin_Translator" />
+        <item itemvalue="Gradle.Feature_Parse_CSV" />
         <item itemvalue="Gradle.Feature_Data" />
         <item itemvalue="Gradle.Feature_FlowGrid" />
-        <item itemvalue="Gradle.Feature_Gherkin_Test_Short" />
       </list>
     </recent_temporary>
   </component>
@@ -226,7 +234,14 @@
       <option name="project" value="LOCAL" />
       <updated>1738021881248</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="added Include, but still need to parse csv file">
+      <created>1738023338112</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1738023338112</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -237,7 +252,8 @@
     <MESSAGE value="added in data definition step definition" />
     <MESSAGE value="added in parseCsvLine, but have not incorporated it into the iterator" />
     <MESSAGE value="fixed spacing in creating string from a multiline string" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed spacing in creating string from a multiline string" />
+    <MESSAGE value="added Include, but still need to parse csv file" />
+    <option name="LAST_COMMIT_MESSAGE" value="added Include, but still need to parse csv file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -251,6 +267,11 @@
           <url>file://$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt</url>
           <line>205</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt</url>
+          <line>151</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
