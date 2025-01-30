@@ -22,6 +22,8 @@ class Translate {
     var step_number_in_scenario = 0
     var data = InputIterator("")
     var first_scenario = true
+    var background = true
+    var cleanup = true
     fun translate_in_tests(name: String) {
         data = InputIterator(name)
         var eof = false
@@ -80,8 +82,15 @@ class Translate {
         trace("Act on keyword " + keyword + " " + full_text)
         when (keyword) {
             "Feature" -> act_on_feature(full_text)
-            "Scenario" -> act_on_scenario(full_text)
-            "Background" -> act_on_scenario(full_text)
+            "Scenario" -> act_on_scenario(full_text, true)
+            "Background" -> {
+                act_on_scenario(full_text, false)
+                background = true
+            }
+            "CleanUp" -> {
+                act_on_scenario(full_text, false)
+                cleanup = true
+            }
             "Given" -> act_on_step(full_text, comment)
             "When" -> act_on_step(full_text, comment)
             "Then" -> act_on_step(full_text, comment)
@@ -173,6 +182,8 @@ class Translate {
     }
 
     fun clean_up() {
+        if (cleanup)
+            test_print("        test_CleanUp()")
         test_print("        }")
         test_print("    }")
         test_print("")
@@ -183,7 +194,7 @@ class Translate {
         data_definition_file.close()
     }
 
-    fun act_on_scenario(full_text: String) {
+    fun act_on_scenario(full_text: String, add_background: Boolean) {
         var full_text_to_use = full_text
         if (scenarios.containsKey(full_text)) {
             full_text_to_use += "_duplicate"
@@ -192,11 +203,18 @@ class Translate {
         step_number_in_scenario = 0
         if (first_scenario) {
             first_scenario = false
-        } else
+        } else {
+            if (cleanup && add_background)
+                test_print("        test_CleanUp()")
+
             test_print("        }") // end previous scenario
+        }
         test_print("    @Test")
         test_print("    fun test_" + full_text_to_use + "(){")
         test_print("        val " + glue_object + " = " + glue_class + "()")
+        if (background && add_background)
+             test_print("        test_Background()")
+
         template_print("")
     }
 
@@ -259,8 +277,7 @@ class Translate {
         val dataTypeInitalizer = "listOf<" + className + ">"
         test_print("        val objectList" + s + " = " + dataTypeInitalizer + "(")
         var in_header_line = true
-        var data_list = listOf(listOf<String>())
-        data_list = convertToListList(table, action)
+        val data_list = convertToListList(table, action)
         var headers = listOf("")
         for (row in data_list) {
             if (in_header_line) {
@@ -278,10 +295,9 @@ class Translate {
     }
 
     private fun convertToListList(table: MutableList<String>, transpose: String): List<List<String>> {
-        var temporary =
+        val temporary =
             mutableListOf(mutableListOf<String>())
-        if (temporary.size > 0 )
-            temporary.removeAt(0)
+        temporary.removeAt(0)
         println("temporary start is " + temporary)
         for (line in table)
         {
@@ -599,10 +615,11 @@ class Configuration {
         var featureSubDirectory = "src\\test\\kotlin\\"
         var testSubDirectory = "src\\test\\kotlin\\"
         val featureFiles = listOf(
+            "background.feature"
 //           "testfeature.feature",
 //            "FlowGrid.feature",
 //            "temptest.feature"
-                       "data_definition.feature",
+//                       "data_definition.feature",
 //            "ParseCSV.feature"
 //           ?\"GherkinTranslator.feature"
         )
