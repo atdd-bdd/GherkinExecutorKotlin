@@ -26,11 +26,11 @@ class Feature_Gherkin_Test{
         val stringListList2 = listOf<List<String>>(
            listOf<String>(
             "A",
-            "",
+            "B",
             ),
            listOf<String>(
             "C",
-            "",
+            "D",
             ),
             )
         Feature_Gherkin_Test_glue_object.When_a_step_with_a_table(stringListList2)
@@ -39,11 +39,11 @@ class Feature_Gherkin_Test{
         val stringListList3 = listOf<List<String>>(
            listOf<String>(
             "1",
-            "",
+            "2",
             ),
            listOf<String>(
             "3",
-            "",
+            "4",
             ),
             )
         Feature_Gherkin_Test_glue_object.Then_a_step_with_a_table(stringListList3)
