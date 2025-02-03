@@ -3,7 +3,7 @@ Feature: Background
 Background: 
 Given Background Function 
 
-CleanUp: 
+Cleanup: 
 Given Cleanup Function 
 
 Scenario: Should have Background and Cleanup 

@@ -1,4 +1,4 @@
-Feature: Gherkin Test
+Feature: Smoke Test
 
 
 Scenario:  Steps with all tables

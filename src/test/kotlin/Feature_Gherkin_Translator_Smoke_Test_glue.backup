@@ -2,7 +2,7 @@ package gherkinexecutor
 import Translate
 import java.io.File
 import kotlin.test.assertEquals
-class Feature_Gherkin_Translator_glue {
+class Feature_Gherkin_Translator_Smoke_Test_glue {
     var featureFileName = ""
     fun Given_feature_file_is( value : List<List<String>>) {
         featureFileName = value[0][0]
@@ -39,4 +39,4 @@ class Feature_Gherkin_Translator_glue {
         assertEquals(expected, actual)
     }
 
-    }
+}
