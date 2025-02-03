@@ -60,6 +60,10 @@ class Translate {
             var word = a_word.trim()
             if (word.length <= 0)
                 continue
+            if (word.endsWith(":"))
+            {
+                word = word.trim(':')
+            }
             if (in_comment) {
                 comment.add(word)
                 continue
@@ -78,69 +82,73 @@ class Translate {
     }
 
     fun act_on_keyword(keyword: String, words: List<String>, comment: List<String>) {
-        val full_text = words.joinToString("_")
-        trace("Act on keyword " + keyword + " " + full_text)
+        val fullName = words.joinToString("_")
+        trace("Act on keyword " + keyword + " " + fullName)
         when (keyword) {
-            "Feature" -> act_on_feature(full_text)
-            "Scenario" -> act_on_scenario(full_text, true)
+            "Feature" -> act_on_feature(fullName)
+            "Scenario" -> act_on_scenario(fullName, true)
             "Background" -> {
-                act_on_scenario(full_text, false)
+                act_on_scenario(fullName, false)
                 background = true
             }
+
             "Cleanup" -> {
-                act_on_scenario(full_text, false)
+                act_on_scenario(fullName, false)
                 cleanup = true
             }
-            "Given" -> act_on_step(full_text, comment)
-            "When" -> act_on_step(full_text, comment)
-            "Then" -> act_on_step(full_text, comment)
-            "And" -> act_on_step(full_text, comment)
-            "Star" -> act_on_step(full_text, comment)
+
+            "Given" -> act_on_step(fullName, comment)
+            "When" -> act_on_step(fullName, comment)
+            "Then" -> act_on_step(fullName, comment)
+            "And" -> act_on_step(fullName, comment)
+            "Star" -> act_on_step(fullName, comment)
             "Data" -> act_on_data(words[1])
+            "Arrange" -> act_on_step(fullName, comment)
+            "Act" -> act_on_step(fullName, comment)
+            "Assert" -> act_on_step(fullName, comment)
             else -> error("keyword not recognized " + keyword)
         }
     }
 
-    fun act_on_feature(full_text: String) {
+    fun act_on_feature(fullName: String) {
         if (feature_acted_on) {
-            error("Feature keyword duplicated - it is ignored "  + full_text)
+            error("Feature keyword duplicated - it is ignored " + fullName)
             return
         }
-        val feature_name = full_text
+        val feature_name = fullName
         feature_acted_on = true
         val test_pathname =
-            Configuration.featureSubDirectory + feature_name + "\\" + feature_name+ ".kt"
+            Configuration.featureSubDirectory + feature_name + "\\" + feature_name + ".kt"
         println(" Writing " + test_pathname)
         clean_files()
         File(Configuration.featureSubDirectory + feature_name).mkdir()
         test_file = FileWriter(test_pathname, false)
         val template_filename =
-            Configuration.featureSubDirectory + feature_name + "\\" + feature_name+"_glue.tmpl"
+            Configuration.featureSubDirectory + feature_name + "\\" + feature_name + "_glue.tmpl"
         glue_template_file = FileWriter(template_filename, false)
         val data_definition_pathname =
             Configuration.featureSubDirectory + feature_name +
-                    "\\" + feature_name+"_data." +
+                    "\\" + feature_name + "_data." +
                     Configuration.data_definition_file_extension
         trace(" Writing " + data_definition_pathname)
         data_definition_file =
             FileWriter(data_definition_pathname, false)
 
-        glue_class = full_text + "_glue"
+        glue_class = fullName + "_glue"
 
-        glue_object = makeName(full_text) + "_glue_object"
-//        val data_class = full_text + "_data"
+        glue_object = makeName(fullName) + "_glue_object"
+//        val data_class = fullName + "_data"
         test_print("package " + Configuration.packageName + "." + feature_name)
         test_print("import org.junit.jupiter.api.Test")
         test_print("import org.junit.jupiter.api.TestInstance")
 //        test_print("import " + Configuration.packageName + "." + glue_class)
 //        test_print("import " + Configuration.packageName + "." + data_class)
         test_print("@TestInstance(TestInstance.Lifecycle.PER_CLASS)")
-        test_print("class " + full_text + "{")
+        test_print("class " + fullName + "{")
         test_print("")
 
         template_print("package " + Configuration.packageName + "." + feature_name)
         template_print("import kotlin.test.assertEquals")
-//        template_print("import " + Configuration.packageName + "." + data_class)
         template_print("")
         template_print("class " + glue_class + " {")
         template_print("")
@@ -155,8 +163,7 @@ class Translate {
 
     private fun act_on_data(fullText: String) {
         val names = fullText.split(" ")
-        if (names.size > 1)
-            error("Internal class not yet supported ")
+
         var fullTextToUse = names[0]
         println("Data is " + fullText)
         val (followtype, table) = look_for_follow()
@@ -172,23 +179,66 @@ class Translate {
         data_names.put(fullTextToUse, "")
         data_definition_print("data class " + fullTextToUse + "(")
         var headerLine = true
+        var doInternal = false
+        for (line in table) {
+            if (headerLine) {
+                val headers = parseLine(line)
+                checkHeaders(headers)
+                headerLine = false
+
+                if (headers.size > 2)
+                    doInternal = true
+                continue
+            }
+            val elements = parseLine(line)
+            data_definition_print("    var " + makeName(elements[0]) + ": String = \"" + elements[1] + "\",")
+        }
+        data_definition_print(")")
+
+        if (doInternal)
+            createInternalClass(fullTextToUse, table)
+    }
+
+    private fun checkHeaders(headers: MutableList<String>) {
+        val expected = listOf("Name", "Default", "Datatype", "Notes")
+        if (!(headers[0].equals(expected[0]) &&
+                    headers[1].equals(expected[1]))
+        )
+            error("Headers should start with " + expected)
+    }
+
+    private fun createInternalClass(fullText: String, table: List<String>) {
+        var fullTextToUse = fullText + "Internal"
+        if (data_names.containsKey(fullTextToUse)) {
+            error("Data name is duplicated, has been renamed " + fullTextToUse)
+            fullTextToUse += step_count
+        }
+        trace("Creating internal class for " + fullTextToUse)
+        data_names.put(fullTextToUse, "")
+        data_definition_print("data class " + fullTextToUse + "(")
+        var headerLine = true
+
+
         for (line in table) {
             if (headerLine) {
                 headerLine = false
                 continue
             }
             val elements = parseLine(line)
-            data_definition_print("    var " + makeName(elements[0]) + ": String = \"" + elements[1].trim() + "\",")
+            data_definition_print(
+                "    var " + makeName(elements[0]) + ": " + elements[2] +
+                        "= \"" + elements[1] + "\".to" + elements[2] + "(),"
+            )
         }
-        data_definition_print(") ")
+        data_definition_print(")")
     }
 
-    fun act_on_scenario(full_text: String, add_background: Boolean) {
-        var full_text_to_use = full_text
-        if (scenarios.containsKey(full_text)) {
-            full_text_to_use += step_count
-            error("Scenario name duplicated renamed " + full_text_to_use)
-        } else scenarios.put(full_text_to_use, "")
+    fun act_on_scenario(fullName: String, add_background: Boolean) {
+        var fullName_to_use = fullName
+        if (scenarios.containsKey(fullName)) {
+            fullName_to_use += step_count
+            error("Scenario name duplicated renamed " + fullName_to_use)
+        } else scenarios.put(fullName_to_use, "")
         step_number_in_scenario = 0
         if (first_scenario) {
             first_scenario = false
@@ -198,56 +248,79 @@ class Translate {
             test_print("        }") // end previous scenario
         }
         test_print("    @Test")
-        test_print("    fun test_" + full_text_to_use + "(){")
+        test_print("    fun test_" + fullName_to_use + "(){")
         test_print("        val " + glue_object + " = " + glue_class + "()")
         if (background && add_background)
             test_print("        test_Background()")
-        template_print("")
+//        template_print("")
     }
 
-    fun act_on_step(full_text: String, comment: List<String>) {
+    fun act_on_step(fullName: String, comment: List<String>) {
         step_number_in_scenario += 1
         val (followtype, table) = look_for_follow()
-        template_print("")
+//        template_print("")
         test_print("")
         if (followtype == "TABLE") {
-            var option = "ListOfList"
-            if (comment.size > 0 && comment[0].length > 0)
-                option = comment[0]
-            if (option.equals("ListOfList"))
-                tableToListOfList(table, full_text)
-            else if (option.equals("String"))
-                tableToString(table, full_text)
-            else if (option.equals("ListOfObject")) {
-                if (comment.size < 2) {
-                    error("No class name specified")
-                    return
-                }
-                var action = ""
-                val className = comment[1]
-                if (comment.size > 2) {
-                    action = comment[2]
-                    if (!action.equals("transpose"))
-                        error("Action not recognized " + action)
-                }
-                tableToListOfObject(table, full_text, className, action)
-            } else {
-                error("Option not found, default to ListOfList " + option)
-                tableToListOfList(table, full_text)
+            createTheTable(comment, table, fullName)
+        } else if (followtype == "NOTHING") {
+            noParameter(fullName)
+        } else if (followtype == "STRING") {
+            createtheStringCode(comment, table, fullName)
+        }
+    }
+
+    private fun createtheStringCode(
+        comment: List<String>,
+        table: MutableList<String>,
+        fullName: String,
+    ) {
+        var option = "String"
+        if (comment.size > 0 && comment[0].length > 0)
+            option = comment[0]
+        if (option.equals("ListOfString"))
+            StringToList(table, fullName)
+        else
+            StringToString(table, fullName)
+    }
+
+
+    private fun createTheTable(
+        comment: List<String>,
+        table: MutableList<String>,
+        fullName: String,
+    ): Boolean {
+        var option = "ListOfList"
+        if (comment.size > 0 && comment[0].length > 0)
+            option = comment[0]
+        if (option.equals("ListOfList")) {
+            if (comment.size > 1 && comment[1].length > 0) {
+                val objectName = comment[1]
+                tableToListOfListOfObject(table, fullName, objectName)
+            } else
+                tableToListOfList(table, fullName)
+        } else if (option.equals("String"))
+            tableToString(table, fullName)
+        else if (option.equals("ListOfObject")) {
+            if (comment.size < 2) {
+                error("No class name specified")
+                return true
             }
+
+            val className = comment[1]
+            var transpose = false
+            if (comment.size > 2) {
+                val action = comment[2]
+                if (!action.equals("transpose"))
+                    error("Action not recognized " + action)
+                else
+                    transpose = true
+            }
+            tableToListOfObject(table, fullName, className, transpose)
+        } else {
+            error("Option not found, default to ListOfList " + option)
+            tableToListOfList(table, fullName)
         }
-        if (followtype == "NOTHING") {
-            noParameter(full_text)
-        }
-        if (followtype == "STRING") {
-            var option = "String"
-            if (comment.size > 0 && comment[0].length > 0)
-                option = comment[0]
-            if (option.equals("ListOfString"))
-                StringToList(table, full_text)
-            else
-                StringToString(table, full_text)
-        }
+        return false
     }
 
     fun look_for_follow(): Pair<String, MutableList<String>> {
@@ -274,9 +347,9 @@ class Translate {
 
     private fun tableToListOfObject(
         table: MutableList<String>,
-        full_text: String,
+        fullName: String,
         className: String,
-        action: String,
+        transpose: Boolean,
     ) {
         trace("classNames " + className)
         val s = step_number_in_scenario.toString()
@@ -284,7 +357,7 @@ class Translate {
         val dataTypeInitalizer = "listOf<" + className + ">"
         test_print("        val objectList" + s + " = " + dataTypeInitalizer + "(")
         var in_header_line = true
-        val data_list = convertToListList(table, action)
+        val data_list = convertToListList(table, transpose)
         var headers = listOf("")
         for (row in data_list) {
             if (in_header_line) {
@@ -296,12 +369,12 @@ class Translate {
             convertBarLineToParameter(headers, values, className)
         }
         test_print("            )")
-        test_print("        " + glue_object + "." + full_text + "(objectList" + s + ")")
+        test_print("        " + glue_object + "." + fullName + "(objectList" + s + ")")
 //        test_print("")
-        make_function_template(dataType, full_text)
+        make_function_template(dataType, fullName)
     }
 
-    private fun convertToListList(table: MutableList<String>, transpose: String): List<List<String>> {
+    private fun convertToListList(table: MutableList<String>, transpose: Boolean): List<List<String>> {
         val temporary =
             mutableListOf(mutableListOf<String>())
         temporary.removeAt(0)
@@ -309,7 +382,7 @@ class Translate {
             temporary.add(parseLine(line))
         }
         var result = temporary
-        if (transpose.equals("transpose"))
+        if (transpose)
             result = transpose(temporary)
         return result
     }
@@ -335,33 +408,34 @@ class Translate {
         test_print("                ),")
     }
 
-    private fun noParameter(full_text: String) {
-        test_print("        " + glue_object + "." + full_text + "()")
-        make_function_template("", full_text)
+    private fun noParameter(fullName: String) {
+        test_print("        " + glue_object + "." + fullName + "()")
+        make_function_template("", fullName)
     }
 
-    private fun make_function_template(dataType: String, full_text: String) {
-        if (glue_functions.contains(full_text)) {
-            val current_data_type = glue_functions.get(full_text)
+    private fun make_function_template(dataType: String, fullName: String) {
+        if (glue_functions.contains(fullName)) {
+            val current_data_type = glue_functions.get(fullName)
             if (!current_data_type.equals(dataType)) {
-                error("function $full_text datatype $current_data_type not equals $dataType")
+                error("function $fullName datatype $current_data_type not equals $dataType")
                 return
             }
             return  // already have a prototype
         }
-        glue_functions.put(full_text, dataType)
+        glue_functions.put(fullName, dataType)
         if (dataType.length == 0)
-            template_print("    fun " + full_text + "(){")
+            template_print("    fun " + fullName + "(){")
         else
-            template_print("    fun " + full_text + "( value " + ": " + dataType + ") {")
+            template_print("    fun " + fullName + "( value " + ": " + dataType + ") {")
         template_print("        println(\"*******\")")
         if (dataType.length != 0)
             template_print("        println(value)")
         template_print("         assertEquals(true, false)")
-        template_print("    } ")
+        template_print("    }")
+        template_print("")
     }
 
-    private fun StringToList(table: MutableList<String>, full_text: String) {
+    private fun StringToList(table: MutableList<String>, fullName: String) {
         val s = step_number_in_scenario.toString()
         val dataType = "List<String>"
         val dataTypeInitalizer = "listOf<String>"
@@ -370,38 +444,38 @@ class Translate {
             test_print("            \"" + line + "\",")
         }
         test_print("            )")
-        test_print("        " + glue_object + "." + full_text + "(stringList" + s + ")")
+        test_print("        " + glue_object + "." + fullName + "(stringList" + s + ")")
 //        test_print("")
-        make_function_template(dataType, full_text)
+        make_function_template(dataType, fullName)
     }
 
-    private fun StringToString(table: MutableList<String>, full_text: String) {
+    private fun StringToString(table: MutableList<String>, fullName: String) {
         val s = step_number_in_scenario.toString()
-        test_print("        val string" + s + " = ")
+        test_print("        val string" + s + " =")
         test_print("            \"\"\"")
         for (line in table) {
             test_print("            " + line)
         }
         test_print("            \"\"\".trimIndent()")
-        test_print("        " + glue_object + "." + full_text + "(string" + s + ")")
+        test_print("        " + glue_object + "." + fullName + "(string" + s + ")")
 //        test_print("")
-        make_function_template("String", full_text)
+        make_function_template("String", fullName)
     }
 
-    private fun tableToString(table: MutableList<String>, full_text: String) {
+    private fun tableToString(table: MutableList<String>, fullName: String) {
         val s = step_number_in_scenario.toString()
-        test_print("        val table" + s + " = ")
+        test_print("        val table" + s + " =")
         test_print("            \"\"\"")
         for (line in table) {
             test_print("            " + line)
         }
         test_print("            \"\"\".trimIndent()")
-        test_print("        " + glue_object + "." + full_text + "(table" + s + ")")
+        test_print("        " + glue_object + "." + fullName + "(table" + s + ")")
 //        test_print("")
-        make_function_template("String", full_text)
+        make_function_template("String", fullName)
     }
 
-    private fun tableToListOfList(table: MutableList<String>, full_text: String) {
+    private fun tableToListOfList(table: MutableList<String>, fullName: String) {
         val s = step_number_in_scenario.toString()
         val dataType = "List<List<String>>"
         val dataTypeInitalizer = "listOf<List<String>>"
@@ -410,9 +484,32 @@ class Translate {
             convertBarLineToList(line)
         }
         test_print("            )")
-        test_print("        " + glue_object + "." + full_text + "(stringListList" + s + ")")
+        test_print("        " + glue_object + "." + fullName + "(stringListList" + s + ")")
 //        test_print("")
-        make_function_template(dataType, full_text)
+        make_function_template(dataType, fullName)
+    }
+
+    private fun tableToListOfListOfObject(table: MutableList<String>, fullName: String, objectName: String) {
+        val s = step_number_in_scenario.toString()
+        val dataType = "List<List<" + objectName + ">>"
+        val dataTypeInitalizer = "listOf<List<" + objectName + ">>"
+        test_print("        val objectListList" + s + " = " + dataTypeInitalizer + "(")
+        for (line in table) {
+            convertBarLineToListofObject(line, objectName)
+        }
+        test_print("            )")
+        test_print("        " + glue_object + "." + fullName + "(objectListList" + s + ")")
+//        test_print("")
+        make_function_template(dataType, fullName)
+    }
+
+    private fun convertBarLineToListofObject(line: String, objectName: String) {
+        test_print("           listOf<" + objectName + ">(")
+        val elements = parseLine(line)
+        for (element in elements) {
+            test_print("            " + objectName + "(\"" + element + "\"),")
+        }
+        test_print("            ),")
     }
 
     private fun convertBarLineToList(line: String) {
@@ -428,9 +525,16 @@ class Translate {
         var lineShort = line.trim()
         if (lineShort[0] == '|')
             lineShort = lineShort.substringAfter('|')
-        else
+        else {
             error("table not begin with | " + line)
+            return mutableListOf<String>("ERROR IN TABLE LINE " + line)
+        }
         val last = lineShort.length - 1
+        if (last < 0)
+        {
+            error("table format error " + line)
+            return mutableListOf<String>("ERROR IN TABLE LINE " + line)
+        }
         if (lineShort[last] == '|')
             lineShort = lineShort.substring(0, last)
         else
@@ -439,7 +543,7 @@ class Translate {
         val elements_trimmed = mutableListOf<String>()
         for (element in elements) {
             var current = element.trim()
-            current = current.replace(Configuration.spaceCharacters, ' ')
+             current = current.replace(Configuration.spaceCharacters, ' ')
             elements_trimmed.add(current)
         }
         return elements_trimmed
@@ -450,9 +554,11 @@ class Translate {
         var line = data.peek().trim()
         while (line.length > 0 && (line[0] == '|' || line[0] == '#')) {
             line = data.next().trim()
-            if (line[0] == '|') {
+            if (line[0] == '|' && line.endsWith('|')) {
                 ret_value.add(line)
             }
+            else
+                error("Invalid line in table " + line)
             line = data.peek().trim()
         }
         return ret_value
@@ -460,7 +566,7 @@ class Translate {
 
     fun read_string(): MutableList<String> {
         val ret_value = mutableListOf<String>()
-        val firstLine=data.peek()
+        val firstLine = data.peek()
         val countIndent = countIndent(firstLine)
         data.next()
         var line = data.next()
@@ -609,7 +715,7 @@ fun convertCSVtoTable(csvData: String): String {
 fun transpose(matrix: List<List<String>>): MutableList<MutableList<String>> {
     val transposed = MutableList(matrix[0].size) { MutableList(matrix.size) { "" } }
     val sizeRow = matrix[0].size
-    for (element in matrix){
+    for (element in matrix) {
         if (element.size != sizeRow) {
             error("*** Table has uneven rows - not transposed")
             error("     Will probably exit ")
@@ -672,24 +778,25 @@ fun error(value: String) {
 
 class Configuration {
     companion object {
-         var trace_on = false   // Set to true to see trace
+        var trace_on = false   // Set to true to see trace
         var spaceCharacters = '^'  // Will replace with space in tables
         var currentDirectory = ""
         var featureSubDirectory = "src\\test\\kotlin\\"
         var testSubDirectory = "src\\test\\kotlin\\"
         var packageName = "gherkinexecutor"
-        var data_definition_file_extension = "kt" // change to tmpl if altering data file
+        var data_definition_file_extension = "tmpl" // change to kt if altering data file
         val featureFiles = mutableListOf(
-             "tictactoe.feature",
-//            "smoketest.feature",
+//            "tictactoe.feature",
+            "smoketest.feature",
 //            "GherkinTranslator.feature",
 //            "include.feature",
 //            "testfeature.feature",
-            "examples.feature",
+//            "examples.feature",
 //            "FlowGrid.feature",
-//            "data_definition.feature",
+//            "Robot Game.feature",
+////            "data_definition.feature",
 //            "ParseCSV.feature",
-//            "fulltest.feature",
+            "test.feature",
 //            "GherkinTranslatorSmokeTest.feature",
 //            "GherkinTranslatorFullTest.feature"
         )
@@ -697,9 +804,9 @@ class Configuration {
 }
 
 fun main(args: Array<String>) {
-    println("Gherkin Executor ")
+    println("Gherkin Executor")
     Configuration.currentDirectory = System.getProperty("user.dir")
-    println("Arguments ")
+    println("Arguments")
     for (arg in args) {
         println("   " + arg)
         Configuration.featureFiles.add(arg)

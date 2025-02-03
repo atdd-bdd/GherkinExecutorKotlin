@@ -1,13 +1,13 @@
 Feature: Robots 
 
 Scenario: Movement of Two Bots Not Colliding 
-Given map is: 
+Given map is: # ListOfList
 | R, Bot2  |   |                 |                |   |
 |          |   |                 |                |   |
 |          |   | R, Bot1, South  | R, Bot3, West  |   |
 |          |   |                 | B              |   |
 |          |   | B               |                |   |
-When actions are 
+When actions are # ListOfObject IDAndAction
 | ID      | Action|
 | Bot1    | Move | 
 | Bot3    | Move |   
@@ -25,7 +25,7 @@ Given map is:
 |          |   | R, Bot1, South  | R, Bot3, West  |   |
 |          |   |                 | B              |   |
 |          |   | B               |                |   |
-When actions are 
+When actions are # ListOfObject IDAndAction
 | ID      | Action|
 | Bot3    | Move |   
 | Bot1    | Move | 
@@ -64,7 +64,7 @@ Given vision for a bot is
 | W  | W  | W  |
 | B  | X  | R  |
 |    |    | B  |
-* Allowed actions are:
+* Allowed actions are: # ListOfObject AllowableActions
 # Any Action does not include Turn 
 # Any Holding is Yes and No 
 | Direction  | Holding  | Action  | Allowed  |
@@ -77,6 +77,19 @@ Given vision for a bot is
 | South      | Any      | Take    | No       |
 | East       | Any      | Any     | No       |
 |            |          |         |          |
+
+Data IDAndAction 
+| Name    | Default  | DataType  | Notes  |
+| ID      | 0        | Int       |        |
+| Action  | ^        | String    |        |
+
+Data AllowableActions
+| Name       | Default  |
+| Direction  | North    |
+| Holding    | Any      |
+| Action     | Any      |
+| Allowed    | No       |
+
 
 Scenario:  Aroma Domain Term
 * Aromas are 

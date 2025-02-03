@@ -10,7 +10,7 @@ Then test file should match expected # ListOfObject FileNames
 | Feature_Full_Test\\Feature_Full_Test.exp  | Feature_Full_Test\\Feature_Full_Test.kt  |
 And data file should match expected # ListOfObject FileNames
 | Expected                             | Actual                              |
-| Feature_Full_Test\\Feature_Full_Test_data.exp  | Feature_Full_Test\\Feature_Full_Test_data.kt  |
+| Feature_Full_Test\\Feature_Full_Test_data.exp  | Feature_Full_Test\\Feature_Full_Test_data.tmpl  |
 And glue template file should match expected # ListOfObject FileNames
 | Expected                             | Actual                              |
 | Feature_Full_Test\\Feature_Full_Test_glue.exp  | Feature_Full_Test\\Feature_Full_Test_glue.tmpl  |

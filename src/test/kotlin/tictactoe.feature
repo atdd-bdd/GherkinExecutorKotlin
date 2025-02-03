@@ -34,14 +34,14 @@ Given board is
 |   |   |   |
 |   |   |   |
 |   |   |   |
-When one move is 
-| 1,2,x| 
+When one move is # ListOfList Move
+| 1,2,X| 
 Then board is now # String
 |   | X  |   |
 |   |    |   |
 |   |    |   |
 
-Scenario:  Make a move
+Scenario:  Make multiple moves
 Given board is
 |   |   |   |
 |   |   |   |
@@ -56,7 +56,7 @@ Then board is now # String
 |   |    |    |
 
 Data Move
-| Name    | Default  | Notes    |
-| Row     | 0        |          |
-| Column  | 0        |          |
-| Mark    | ^        | A space  |
+| Name    | Default  | DataType  | Notes    |
+| Row     | 0        | Int       |          |
+| Column  | 0        | Int       |          |
+| Mark    | ^        | Char      | A space  |

@@ -27,9 +27,9 @@ Scenario: Temperature
 | -40  | -40  | Below zero  |
 
 Data Temperature
-| Name   | Default  |
-| F      | 0        |
-| C      | 0        |
-| Notes  |          |
+| Name   | Default  | DataType  | Notes  |
+| F      | 0        | Int       |        |
+| C      | 0        | Int       |        |
+| Notes  |          | String    |        |
 
 

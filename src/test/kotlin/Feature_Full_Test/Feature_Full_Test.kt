@@ -6,13 +6,13 @@ class Feature_Full_Test{
 
     @Test
     fun test_Scenario_Some_scenario_here(){
-        val Feature_Full_Test_glue_object = Feature_Full_Test_glue()
+        val feature_Full_Test_glue_object = Feature_Full_Test_glue()
 
-        val string1 = 
+        val string1 =
             """
             This is an include string
             """.trimIndent()
-        Feature_Full_Test_glue_object.Given_a_string(string1)
+        feature_Full_Test_glue_object.Given_a_string(string1)
 
         val stringListList2 = listOf<List<String>>(
            listOf<String>(
@@ -26,29 +26,29 @@ class Feature_Full_Test{
             "3",
             ),
             )
-        Feature_Full_Test_glue_object.Then_a_table(stringListList2)
+        feature_Full_Test_glue_object.Then_a_table(stringListList2)
         }
     @Test
     fun test_Scenario_Convert_a_CSV_file_to_Gherkin_Table(){
-        val Feature_Full_Test_glue_object = Feature_Full_Test_glue()
+        val feature_Full_Test_glue_object = Feature_Full_Test_glue()
 
-        val string1 = 
+        val string1 =
             """
             a,"b,c","c"","
             1,2,"3,""b,"",,"
             """.trimIndent()
-        Feature_Full_Test_glue_object.Given(string1)
+        feature_Full_Test_glue_object.Given(string1)
 
-        val string2 = 
+        val string2 =
             """
             |a|b,c|c",|
             |1|2|3,"b,",,|
             """.trimIndent()
-        Feature_Full_Test_glue_object.When_converted_result_is(string2)
+        feature_Full_Test_glue_object.When_converted_result_is(string2)
         }
     @Test
     fun test_Scenario_Transpose_a_table(){
-        val Feature_Full_Test_glue_object = Feature_Full_Test_glue()
+        val feature_Full_Test_glue_object = Feature_Full_Test_glue()
 
         val stringListList1 = listOf<List<String>>(
            listOf<String>(
@@ -62,7 +62,7 @@ class Feature_Full_Test{
             "f",
             ),
             )
-        Feature_Full_Test_glue_object.Given_input_table(stringListList1)
+        feature_Full_Test_glue_object.Given_input_table(stringListList1)
 
         val stringListList2 = listOf<List<String>>(
            listOf<String>(
@@ -78,93 +78,93 @@ class Feature_Full_Test{
             "f",
             ),
             )
-        Feature_Full_Test_glue_object.When_transposed_result_is(stringListList2)
+        feature_Full_Test_glue_object.When_transposed_result_is(stringListList2)
         }
     @Test
     fun test_Background(){
-        val Feature_Full_Test_glue_object = Feature_Full_Test_glue()
+        val feature_Full_Test_glue_object = Feature_Full_Test_glue()
 
-        Feature_Full_Test_glue_object.Given_Background_Function()
+        feature_Full_Test_glue_object.Given_Background_Function()
         }
     @Test
     fun test_Cleanup(){
-        val Feature_Full_Test_glue_object = Feature_Full_Test_glue()
+        val feature_Full_Test_glue_object = Feature_Full_Test_glue()
 
-        Feature_Full_Test_glue_object.Given_Cleanup_Function()
+        feature_Full_Test_glue_object.Given_Cleanup_Function()
         test_Cleanup()
         }
     @Test
     fun test_Scenario_Should_have_Background_and_Cleanup(){
-        val Feature_Full_Test_glue_object = Feature_Full_Test_glue()
+        val feature_Full_Test_glue_object = Feature_Full_Test_glue()
         test_Background()
 
-        Feature_Full_Test_glue_object.Given_a_regular_function()
+        feature_Full_Test_glue_object.Given_a_regular_function()
         test_Cleanup()
         }
     @Test
     fun test_Scenario_Should_also_have_Background_and_Cleanup(){
-        val Feature_Full_Test_glue_object = Feature_Full_Test_glue()
+        val feature_Full_Test_glue_object = Feature_Full_Test_glue()
         test_Background()
 
-        Feature_Full_Test_glue_object.Given_a_regular_function()
+        feature_Full_Test_glue_object.Given_a_regular_function()
         test_Cleanup()
         }
     @Test
     fun test_Scenario_One_with_Data(){
-        val Feature_Full_Test_glue_object = Feature_Full_Test_glue()
+        val feature_Full_Test_glue_object = Feature_Full_Test_glue()
         test_Background()
 
         val objectList1 = listOf<MyClass>(
-        MyClass(
-            One = "v1",
-            Two = "v2",
-        ),
-        MyClass(
-            One = "v1a",
-            Two = "v1b",
-        ),
+            MyClass(
+                one = "v1",
+                two = "v2",
+                ),
+            MyClass(
+                one = "v1a",
+                two = "v1b",
+                ),
             )
-        Feature_Full_Test_glue_object.Given_a_step(objectList1)
+        feature_Full_Test_glue_object.Given_a_step(objectList1)
         test_Cleanup()
         }
     @Test
     fun test_Scenario_One_with_Data_Transpose(){
-        val Feature_Full_Test_glue_object = Feature_Full_Test_glue()
+        val feature_Full_Test_glue_object = Feature_Full_Test_glue()
         test_Background()
 
         val objectList1 = listOf<MyClass>(
-        MyClass(
-            One = "v1",
-            Two = "v2",
-        ),
-        MyClass(
-            One = "v1a",
-            Two = "v1b",
-        ),
+            MyClass(
+                one = "v1",
+                two = "v2",
+                ),
+            MyClass(
+                one = "v1a",
+                two = "v1b",
+                ),
             )
-        Feature_Full_Test_glue_object.Given_a_step(objectList1)
+        feature_Full_Test_glue_object.Given_a_step(objectList1)
         test_Cleanup()
         }
     @Test
     fun test_Scenario_Filter_Data(){
-        val Feature_Full_Test_glue_object = Feature_Full_Test_glue()
+        val feature_Full_Test_glue_object = Feature_Full_Test_glue()
         test_Background()
 
         val objectList1 = listOf<NameValue>(
-        NameValue(
-            ID = "a",
-            Value = "1",
-        ),
-        NameValue(
-            ID = "b",
-            Value = "2",
-        ),
-        NameValue(
-            ID = "a",
-            Value = "3",
-        ),
+            NameValue(
+                iD = "a",
+                value = "1",
+                ),
+            NameValue(
+                iD = "b",
+                value = "2",
+                ),
+            NameValue(
+                iD = "a",
+                value = "3",
+                ),
             )
-        Feature_Full_Test_glue_object.Given_list_of_numbers(objectList1)
+        feature_Full_Test_glue_object.Given_list_of_numbers(objectList1)
 
         val stringListList2 = listOf<List<String>>(
            listOf<String>(
@@ -172,39 +172,39 @@ class Feature_Full_Test{
             "a",
             ),
             )
-        Feature_Full_Test_glue_object.When_filtered_by(stringListList2)
+        feature_Full_Test_glue_object.When_filtered_by(stringListList2)
 
         val stringListList3 = listOf<List<String>>(
            listOf<String>(
             "4",
             ),
             )
-        Feature_Full_Test_glue_object.Then_sum_is(stringListList3)
+        feature_Full_Test_glue_object.Then_sum_is(stringListList3)
         test_Cleanup()
         }
     @Test
     fun test_Scenario_Temperature(){
-        val Feature_Full_Test_glue_object = Feature_Full_Test_glue()
+        val feature_Full_Test_glue_object = Feature_Full_Test_glue()
         test_Background()
 
         val objectList1 = listOf<Temperature>(
-        Temperature(
-            F = "32",
-            C = "0",
-            Notes = "Freezing",
-        ),
-        Temperature(
-            F = "212",
-            C = "100",
-            Notes = "Boiling",
-        ),
-        Temperature(
-            F = "-40",
-            C = "-40",
-            Notes = "Below zero",
-        ),
+            Temperature(
+                f = "32",
+                c = "0",
+                notes = "Freezing",
+                ),
+            Temperature(
+                f = "212",
+                c = "100",
+                notes = "Boiling",
+                ),
+            Temperature(
+                f = "-40",
+                c = "-40",
+                notes = "Below zero",
+                ),
             )
-        Feature_Full_Test_glue_object.Star_Convert_F_to_C(objectList1)
+        feature_Full_Test_glue_object.Star_Convert_F_to_C(objectList1)
         test_Cleanup()
         }
     }

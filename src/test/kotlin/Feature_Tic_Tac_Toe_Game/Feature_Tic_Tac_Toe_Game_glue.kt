@@ -21,9 +21,9 @@ class TicTacToeGame {
         return ListOfListToString(this.gameBoard)
     }
 
-    fun makeAMove(row: Int, column: Int, mark: String) {
+    fun makeAMove(row: Int, column: Int, mark: Char) {
         println("Row " + row + " Col " + column + "Mark" + mark)
-        gameBoard[row - 1][column - 1] = mark
+        gameBoard[row - 1][column - 1] = mark.toString()
         println("Game Board " + gameBoard)
         println("End Game Board")
     }
@@ -75,29 +75,30 @@ class Feature_Tic_Tac_Toe_Game_glue {
     fun When_move_is( value : List<Move>) {
         val oneMove = value[0]
         println(oneMove)
-        ticTacToeGame.makeAMove(oneMove.row.toInt(), oneMove.column.toInt(), oneMove.mark)
+        val internalMove = oneMove.convert()
+        ticTacToeGame.makeAMove(internalMove.row, internalMove.column,
+            internalMove.mark)
     }
 
     fun Then_board_is_now( value : String) {
        val current = ticTacToeGame.toString()
         assertEquals(value, current)
     }
-//    fun When_move_is( value : List<List<String>>) {
-//        val oneMove = value[0]
-//        println(oneMove)
-//     }
 
-    fun When_one_move_is( value : List<List<String>>) {
-        println("*******")
-        println(value)
+    fun When_one_move_is( value : List<List<Move>>) {
+        val oneMove = value[0][0]
+        val internalMove = oneMove.convert()
+        ticTacToeGame.makeAMove(internalMove.row, internalMove.column,
+            internalMove.mark)
     }
 
 
 
     fun When_moves_are( value : List<Move>) {
         for (oneMove in value) {
-            println(oneMove)
-            ticTacToeGame.makeAMove(oneMove.row.toInt(), oneMove.column.toInt(), oneMove.mark)
+            val internalMove = oneMove.convert()
+            ticTacToeGame.makeAMove(internalMove.row, internalMove.column,
+                internalMove.mark)
         }
     }
 }

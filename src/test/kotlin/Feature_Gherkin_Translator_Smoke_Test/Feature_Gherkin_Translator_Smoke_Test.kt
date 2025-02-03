@@ -6,40 +6,40 @@ class Feature_Gherkin_Translator_Smoke_Test{
 
     @Test
     fun test_Scenario_Run_the_Test_and_check_the_output(){
-        val Feature_Gherkin_Translator_Smoke_Test_glue_object = Feature_Gherkin_Translator_Smoke_Test_glue()
+        val feature_Gherkin_Translator_Smoke_Test_glue_object = Feature_Gherkin_Translator_Smoke_Test_glue()
 
         val stringListList1 = listOf<List<String>>(
            listOf<String>(
             "smoketest.feature",
             ),
             )
-        Feature_Gherkin_Translator_Smoke_Test_glue_object.Given_feature_file_is(stringListList1)
+        feature_Gherkin_Translator_Smoke_Test_glue_object.Given_feature_file_is(stringListList1)
 
-        Feature_Gherkin_Translator_Smoke_Test_glue_object.When_translated()
+        feature_Gherkin_Translator_Smoke_Test_glue_object.When_translated()
 
         val objectList3 = listOf<FileNames>(
-        FileNames(
-            Expected = "Feature_Smoke_Test\\Feature_Smoke_Test.exp",
-            Actual = "Feature_Smoke_Test\\Feature_Smoke_Test.kt",
-        ),
+            FileNames(
+                expected = "Feature_Smoke_Test\\Feature_Smoke_Test.kt",
+                actual = "Feature_Smoke_Test\\Feature_Smoke_Test.exp",
+                ),
             )
-        Feature_Gherkin_Translator_Smoke_Test_glue_object.Then_test_file_should_match_expected(objectList3)
+        feature_Gherkin_Translator_Smoke_Test_glue_object.Then_test_file_should_match_expected(objectList3)
 
         val objectList4 = listOf<FileNames>(
-        FileNames(
-            Expected = "Feature_Smoke_Test\\Feature_Smoke_Test_data.kt",
-            Actual = "Feature_Smoke_Test\\Feature_Smoke_Test_data.exp",
-        ),
+            FileNames(
+                expected = "Feature_Smoke_Test\\Feature_Smoke_Test_data.exp",
+                actual = "Feature_Smoke_Test\\Feature_Smoke_Test_data.tmpl",
+                ),
             )
-        Feature_Gherkin_Translator_Smoke_Test_glue_object.And_data_file_should_match_expected(objectList4)
+        feature_Gherkin_Translator_Smoke_Test_glue_object.And_data_file_should_match_expected(objectList4)
 
         val objectList5 = listOf<FileNames>(
-        FileNames(
-            Expected = "Feature_Smoke_Test\\Feature_Smoke_Test_glue.tmpl",
-            Actual = "Feature_Smoke_Test\\Feature_Smoke_Test_glue.exp",
-        ),
+            FileNames(
+                expected = "Feature_Smoke_Test\\Feature_Smoke_Test_glue.exp",
+                actual = "Feature_Smoke_Test\\Feature_Smoke_Test_glue.tmpl",
+                ),
             )
-        Feature_Gherkin_Translator_Smoke_Test_glue_object.And_glue_template_file_should_match_expected(objectList5)
+        feature_Gherkin_Translator_Smoke_Test_glue_object.And_glue_template_file_should_match_expected(objectList5)
         }
     }
 

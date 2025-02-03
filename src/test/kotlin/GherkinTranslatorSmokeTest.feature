@@ -7,13 +7,13 @@ Given feature file is
 When translated
 Then test file should match expected # ListOfObject FileNames
 | Expected                | Actual                 |
-| Feature_Smoke_Test\\Feature_Smoke_Test.exp| Feature_Smoke_Test\\Feature_Smoke_Test.kt  |
+| Feature_Smoke_Test\\Feature_Smoke_Test.kt | Feature_Smoke_Test\\Feature_Smoke_Test.exp  |
 And data file should match expected # ListOfObject FileNames
 | Expected                     | Actual                      |
-| Feature_Smoke_Test\\Feature_Smoke_Test_data.kt | Feature_Smoke_Test\\Feature_Smoke_Test_data.exp    |
+| Feature_Smoke_Test\\Feature_Smoke_Test_data.exp | Feature_Smoke_Test\\Feature_Smoke_Test_data.tmpl    |
 And glue template file should match expected # ListOfObject FileNames
 | Expected                     | Actual                        |
-| Feature_Smoke_Test\\Feature_Smoke_Test_glue.tmpl | Feature_Smoke_Test\\Feature_Smoke_Test_glue.exp  |
+| Feature_Smoke_Test\\Feature_Smoke_Test_glue.exp | Feature_Smoke_Test\\Feature_Smoke_Test_glue.tmpl  |
 
 Data FileNames
 | Name      | Default     |

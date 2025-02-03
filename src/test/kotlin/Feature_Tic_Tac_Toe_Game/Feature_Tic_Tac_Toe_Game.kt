@@ -107,12 +107,12 @@ class Feature_Tic_Tac_Toe_Game{
             )
         feature_Tic_Tac_Toe_Game_glue_object.Given_board_is(stringListList1)
 
-        val stringListList2 = listOf<List<String>>(
-           listOf<String>(
-            "1,2,x",
+        val objectListList2 = listOf<List<Move>>(
+           listOf<Move>(
+            Move("1,2,X"),
             ),
             )
-        feature_Tic_Tac_Toe_Game_glue_object.When_one_move_is(stringListList2)
+        feature_Tic_Tac_Toe_Game_glue_object.When_one_move_is(objectListList2)
 
         val table3 = 
             """
@@ -123,7 +123,7 @@ class Feature_Tic_Tac_Toe_Game{
         feature_Tic_Tac_Toe_Game_glue_object.Then_board_is_now(table3)
         }
     @Test
-    fun test_Scenario_Make_a_move0(){
+    fun test_Scenario_Make_multiple_moves(){
         val feature_Tic_Tac_Toe_Game_glue_object = Feature_Tic_Tac_Toe_Game_glue()
 
         val stringListList1 = listOf<List<String>>(

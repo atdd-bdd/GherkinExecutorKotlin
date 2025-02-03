@@ -18,26 +18,26 @@ class Feature_Gherkin_Translator_Smoke_Test_glue {
     }
 
     fun Then_test_file_should_match_expected( value : List<FileNames>) {
-        println("Expected " + value[0].Expected)
-        println("Actual " + value[0].Actual)
-        val expected = File(Configuration.featureSubDirectory + value[0].Expected).readText()
-        val actual = File(Configuration.featureSubDirectory + value[0].Actual).readText()
+        println("expected " + value[0].expected)
+        println("actual " + value[0].actual)
+        val expected = File(Configuration.featureSubDirectory + value[0].expected).readText()
+        val actual = File(Configuration.featureSubDirectory + value[0].actual).readText()
         assertEquals(expected, actual)
     }
 
     fun And_data_file_should_match_expected( value : List<FileNames>) {
-        println("Expected " + value[0].Expected)
-        println("Actual " + value[0].Actual)
-        val expected = File(Configuration.featureSubDirectory + value[0].Expected).readText()
-        val actual = File(Configuration.featureSubDirectory + value[0].Actual).readText()
+        println("expected " + value[0].expected)
+        println("actual " + value[0].actual)
+        val expected = File(Configuration.featureSubDirectory + value[0].expected).readText()
+        val actual = File(Configuration.featureSubDirectory + value[0].actual).readText()
         assertEquals(expected, actual)
     }
 
     fun And_glue_template_file_should_match_expected( value : List<FileNames>) {
-        println("Expected " + value[0].Expected)
-        println("Actual " + value[0].Actual)
-        val expected = File(Configuration.featureSubDirectory + value[0].Expected).readText()
-        val actual = File(Configuration.featureSubDirectory + value[0].Actual).readText()
+        println("expected " + value[0].expected)
+        println("actual " + value[0].actual)
+        val expected = File(Configuration.featureSubDirectory + value[0].expected).readText()
+        val actual = File(Configuration.featureSubDirectory + value[0].actual).readText()
         assertEquals(expected, actual)
     }
     }
