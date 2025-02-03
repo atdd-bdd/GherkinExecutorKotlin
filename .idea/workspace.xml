@@ -4,40 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="added ListOfList to String,  used indent of first line for all lines">
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/test.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tryout.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_glue.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test.exp" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test.exp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.exp" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.exp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_glue.exp" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_glue.exp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_glue.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Full_Test/Feature_Gherkin_Translator_Full_Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Full_Test/Feature_Gherkin_Translator_Full_Test.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Full_Test/Feature_Gherkin_Translator_Full_Test_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Full_Test/Feature_Gherkin_Translator_Full_Test_data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Full_Test/Feature_Gherkin_Translator_Full_Test_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Full_Test/Feature_Gherkin_Translator_Full_Test_glue.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Smoke_Test/Feature_Gherkin_Translator_Smoke_Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Smoke_Test/Feature_Gherkin_Translator_Smoke_Test.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Smoke_Test/Feature_Gherkin_Translator_Smoke_Test_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Smoke_Test/Feature_Gherkin_Translator_Smoke_Test_data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Smoke_Test/Feature_Gherkin_Translator_Smoke_Test_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Smoke_Test/Feature_Gherkin_Translator_Smoke_Test_glue.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Smoke_Test/Feature_Gherkin_Translator_Smoke_Test_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Smoke_Test/Feature_Gherkin_Translator_Smoke_Test_glue.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Smoke_Test/Feature_Smoke_Test.exp" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Smoke_Test/Feature_Smoke_Test.exp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Smoke_Test/Feature_Smoke_Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Smoke_Test/Feature_Smoke_Test.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Smoke_Test/Feature_Smoke_Test_glue.exp" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Smoke_Test/Feature_Smoke_Test_glue.exp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Smoke_Test/Feature_Smoke_Test_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Smoke_Test/Feature_Smoke_Test_glue.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_glue.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_glue.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/GherkinTranslatorFullTest.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/GherkinTranslatorFullTest.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/GherkinTranslatorSmokeTest.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/GherkinTranslatorSmokeTest.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Robot Game.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Robot Game.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/examples.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/examples.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/smoketest.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/smoketest.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/tictactoe.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/tictactoe.feature" afterDir="false" />
-    </list>
+    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="add internal data object" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -304,7 +271,21 @@
       <option name="project" value="LOCAL" />
       <updated>1738595171519</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="add internal data object">
+      <created>1738609423631</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1738609423633</updated>
+    </task>
+    <task id="LOCAL-00012" summary="add internal data object">
+      <created>1738609571685</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1738609571685</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -340,7 +321,8 @@
     <MESSAGE value="added background and cleanup options" />
     <MESSAGE value="some cleanup" />
     <MESSAGE value="added ListOfList to String,  used indent of first line for all lines" />
-    <option name="LAST_COMMIT_MESSAGE" value="added ListOfList to String,  used indent of first line for all lines" />
+    <MESSAGE value="add internal data object" />
+    <option name="LAST_COMMIT_MESSAGE" value="add internal data object" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
