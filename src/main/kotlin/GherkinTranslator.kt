@@ -4,10 +4,10 @@ import java.io.FileWriter
 
 class Translate {
     private val scenarios = mutableMapOf(Pair("", "")) // used to check if duplicate scenario names
-    private val glueFunctions = mutableMapOf(Pair("", "")) // used to make sure only one glue implementaiton
+    private val glueFunctions = mutableMapOf(Pair("", "")) // used to make sure only one glue implementation
     private val dataNames = mutableMapOf(Pair("", "")) // used to check for duplicate data
     private var stepCount = 0 // use to label duplicate scenarios
-    val basePath = Configuration.testSubDirectory
+    private val basePath = Configuration.testSubDirectory
     private var glueClass = ""  // glue class name
     private var glueObject = ""  // glue object name
     private var stepNumberInScenario: Int = 0  // use to label variables in scenario
@@ -58,7 +58,7 @@ class Translate {
         var inComment = false
         for (aWord in allWords) {
             var word = aWord.trim()
-            if (word.length <= 0)
+            if (word.isEmpty())
                 continue
             if (word.endsWith(":")) {
                 word = word.trim(':')
@@ -70,7 +70,7 @@ class Translate {
             if (word[0] == '#') {
                 inComment = true
                 word = word.trim('#')
-                if (word.length > 0) {
+                if (word.isNotEmpty()) {
                     comment.add(word)
                 }
                 continue
@@ -257,12 +257,16 @@ class Translate {
         stepNumberInScenario += 1
         val (followType, table) = lookForFollow()
         testPrint("")
-        if (followType == "TABLE") {
-            createTheTable(comment, table, fullName)
-        } else if (followType == "NOTHING") {
-            noParameter(fullName)
-        } else if (followType == "STRING") {
-            createTheStringCode(comment, table, fullName)
+        when (followType) {
+            "TABLE" -> {
+                createTheTable(comment, table, fullName)
+            }
+            "NOTHING" -> {
+                noParameter(fullName)
+            }
+            "STRING" -> {
+                createTheStringCode(comment, table, fullName)
+            }
         }
     }
 
@@ -272,7 +276,7 @@ class Translate {
         fullName: String,
     ) {
         var option = "String"
-        if (comment.size > 0 && comment[0].length > 0)
+        if (comment.size > 0 && comment[0].isNotEmpty())
             option = comment[0]
         if (option.equals("ListOfString"))
             stringToList(table, fullName)
@@ -287,7 +291,7 @@ class Translate {
         fullName: String,
     ): Boolean {
         var option = "ListOfList"
-        if (comment.size > 0 && comment[0].length > 0)
+        if (comment.size > 0 && comment[0].isNotEmpty())
             option = comment[0]
         if (option.equals("ListOfList")) {
             if (comment.size > 1 && comment[1].length > 0) {
@@ -323,12 +327,12 @@ class Translate {
     private fun lookForFollow(): Pair<String, MutableList<String>> {
         var line = data.peek()
         val empty = mutableListOf<String>()
-        while (line.length > 0 && line[0] == '#') {
+        while (line.isNotEmpty() && line[0] == '#') {
             data.next()
             line = data.peek()
         }
         line = line.trim()
-        if (line.length == 0) return Pair("NOTHING", empty)
+        if (line.isEmpty()) return Pair("NOTHING", empty)
         if (line[0] == '|') {
             val retValue = readTable()
             trace("Table is " + retValue)
@@ -420,7 +424,7 @@ class Translate {
             return  // already have a prototype
         }
         glueFunctions.put(fullName, dataType)
-        if (dataType.length == 0)
+        if (dataType.isEmpty())
             templatePrint("    fun " + fullName + "(){")
         else
             templatePrint("    fun " + fullName + "( value " + ": " + dataType + ") {")
@@ -548,7 +552,7 @@ class Translate {
     private fun readTable(): MutableList<String> {
         val retValue = mutableListOf<String>()
         var line = data.peek().trim()
-        while (line.length > 0 && (line[0] == '|' || line[0] == '#')) {
+        while (line.isNotEmpty() && (line[0] == '|' || line[0] == '#')) {
             line = data.next().trim()
             if (line[0] == '|' && line.endsWith('|')) {
                 retValue.add(line)
@@ -603,7 +607,7 @@ class Translate {
         glueTemplateFile.write("\n")
     }
 
-    fun endUp() {
+    private fun endUp() {
         if (cleanup)
             testPrint("        test_Cleanup()")
         testPrint("        }")   // End last scenario 
@@ -617,11 +621,11 @@ class Translate {
 
     class InputIterator(name: String) {
         var data = mutableListOf<String>()
-        var index = 0
+        private var index = 0
 
         companion object {
             var includeCount = 0
-            val EOF = "EOF"
+            const val EOF = "EOF"
         }
 
         init {
@@ -646,7 +650,7 @@ class Translate {
                         error("Error filename not surrounded by quotes: " + line)
                         continue
                     }
-                    if (parts[1].length < 1) {
+                    if (parts[1].isEmpty()) {
                         error("Error zero length filename " + line)
                         continue
                     }
