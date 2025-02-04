@@ -14,13 +14,26 @@ data class Move(
             throw IllegalArgumentException("Invalid move string format")
         }
     }
-    fun convert(): MoveInternal {
-        return MoveInternal(this.row.toInt(), this.column.toInt(), this.mark[0])
-    }
+    fun toMoveInternal() : MoveInternal{
+        return MoveInternal(
+            row.toInt(),
+            column.toInt(),
+            mark[0],
+        ) }
+
 }
+
 data class MoveInternal(
-    var row: Int= 0,
-    var column: Int= 0 ,
-    var mark: Char= ' ',
-)
+    var row: Int= "0".toInt(),
+    var column: Int= "0".toInt(),
+    var mark: Char= " "[0],
+) {
+    fun toMove() : Move{
+        return Move(
+            row.toString(),
+            column.toString(),
+            mark.toString(),
+        ) }
+}
+
 

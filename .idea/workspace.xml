@@ -8,18 +8,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="More cleanup,  changed data test">
+    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="Added data conversion methods">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Data/Feature_Data_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Data/Feature_Data_data.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Data/Feature_Data_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Data/Feature_Data_data.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_data.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_glue.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.exp" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.exp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/data_definition.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/data_definition.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_data.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_data.tmpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_glue.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +93,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Feature_Gherkin_Translator_Full_Test">
+  <component name="RunManager" selected="Gradle.Feature_Examples">
     <configuration name="Feature_Data" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -113,6 +108,29 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;gherkinexecutor.Feature_Data.Feature_Data&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Feature_Examples" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;gherkinexecutor.Feature_Examples.Feature_Examples&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -145,7 +163,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="Feature_Simple_Test" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="Feature_Tic_Tac_Toe_Game" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -158,28 +176,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;gherkinexecutor.Feature_Simple_Test.Feature_Simple_Test&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="Tests in 'GherkinExecutor.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
+            <option value="&quot;gherkinexecutor.Feature_Tic_Tac_Toe_Game.Feature_Tic_Tac_Toe_Game&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -192,7 +189,7 @@
     <configuration name="GherkinTranslatorKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GherkinTranslatorKt" />
       <module name="GherkinExecutor.main" />
-      <option name="PROGRAM_PARAMETERS" value="examples.feature" />
+      <option name="PROGRAM_PARAMETERS" value="tictactoe.feature" />
       <shortenClasspath name="NONE" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -200,11 +197,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Feature_Examples" />
+        <item itemvalue="Gradle.Feature_Tic_Tac_Toe_Game" />
+        <item itemvalue="Kotlin.GherkinTranslatorKt" />
         <item itemvalue="Gradle.Feature_Gherkin_Translator_Full_Test" />
         <item itemvalue="Gradle.Feature_Data" />
-        <item itemvalue="Kotlin.GherkinTranslatorKt" />
-        <item itemvalue="Gradle.Feature_Simple_Test" />
-        <item itemvalue="Gradle.Tests in 'GherkinExecutor.test'" />
       </list>
     </recent_temporary>
   </component>
@@ -329,7 +326,14 @@
       <option name="project" value="LOCAL" />
       <updated>1738683370545</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Added data conversion methods">
+      <created>1738691396418</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1738691396419</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -368,7 +372,8 @@
     <MESSAGE value="add internal data object" />
     <MESSAGE value="cleaned up code - renamed stuff" />
     <MESSAGE value="More cleanup,  changed data test" />
-    <option name="LAST_COMMIT_MESSAGE" value="More cleanup,  changed data test" />
+    <MESSAGE value="Added data conversion methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added data conversion methods" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -229,8 +229,6 @@ class Translate {
 
                 if (headers.size > 2)
                     doInternal = true
-                println("header " + headers)
-                println("do internal"+doInternal)
                 continue
             }
             val elements = parseLine(line)

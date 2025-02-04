@@ -75,7 +75,7 @@ class Feature_Tic_Tac_Toe_Game_glue {
     fun When_move_is( value : List<Move>) {
         val oneMove = value[0]
         println(oneMove)
-        val internalMove = oneMove.convert()
+        val internalMove = oneMove.toMoveInternal()
         ticTacToeGame.makeAMove(internalMove.row, internalMove.column,
             internalMove.mark)
     }
@@ -87,7 +87,7 @@ class Feature_Tic_Tac_Toe_Game_glue {
 
     fun When_one_move_is( value : List<List<Move>>) {
         val oneMove = value[0][0]
-        val internalMove = oneMove.convert()
+        val internalMove = oneMove.toMoveInternal()
         ticTacToeGame.makeAMove(internalMove.row, internalMove.column,
             internalMove.mark)
     }
@@ -96,7 +96,7 @@ class Feature_Tic_Tac_Toe_Game_glue {
 
     fun When_moves_are( value : List<Move>) {
         for (oneMove in value) {
-            val internalMove = oneMove.convert()
+            val internalMove = oneMove.toMoveInternal()
             ticTacToeGame.makeAMove(internalMove.row, internalMove.column,
                 internalMove.mark)
         }

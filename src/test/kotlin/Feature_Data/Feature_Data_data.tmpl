@@ -6,9 +6,9 @@ data class MyClass(
  {
     fun toInternalClass() : InternalClass{
         return InternalClass(
-    one.toString(),
-    two.toInt(),
-    ) }
+        one.toString(),
+        two.toInt(),
+        ) }
     }
 data class InternalClass(
     var one: String= "aaa".toString(),
@@ -16,9 +16,9 @@ data class InternalClass(
     ) {
     fun toMyClass() : MyClass{
         return MyClass(
-    one.toString(),
-    two.toString(),
-    ) }
+        one.toString(),
+        two.toString(),
+        ) }
     }
 data class ATest(
     var anInt: String = "0",
@@ -28,10 +28,10 @@ data class ATest(
  {
     fun toATestInternal() : ATestInternal{
         return ATestInternal(
-    anInt.toInt(),
-    aString.toString(),
-    aDouble.toDouble(),
-    ) }
+        anInt.toInt(),
+        aString.toString(),
+        aDouble.toDouble(),
+        ) }
     }
 data class ATestInternal(
     var anInt: Int= "0".toInt(),
@@ -40,10 +40,10 @@ data class ATestInternal(
     ) {
     fun toATest() : ATest{
         return ATest(
-    anInt.toString(),
-    aString.toString(),
-    aDouble.toString(),
-    ) }
+        anInt.toString(),
+        aString.toString(),
+        aDouble.toString(),
+        ) }
     }
 data class NameValue(
     var iD: String = "",
