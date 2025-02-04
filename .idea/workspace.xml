@@ -9,17 +9,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="add internal data object">
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Simple_Test/Feature_Simple_Test_glue.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Simple_Test/Feature_Simple_Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Simple_Test/Feature_Simple_Test.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Simple_Test/Feature_Simple_Test_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Simple_Test/Feature_Simple_Test_data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Simple_Test/Feature_Simple_Test_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Simple_Test/Feature_Simple_Test_data.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Simple_Test/Feature_Simple_Test_glue.tmpl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_data.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_glue.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/test.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/SimpleTest.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.exp" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.exp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.tmpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Full_Test/Feature_Gherkin_Translator_Full_Test_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Full_Test/Feature_Gherkin_Translator_Full_Test_glue.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Smoke_Test/Feature_Gherkin_Translator_Smoke_Test_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Smoke_Test/Feature_Gherkin_Translator_Smoke_Test_glue.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +92,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Feature_Simple_Test">
+  <component name="RunManager" selected="Gradle.Feature_Gherkin_Translator_Full_Test">
     <configuration name="Feature_Gherkin_Translator_Full_Test" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -199,10 +193,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Feature_Gherkin_Translator_Full_Test" />
         <item itemvalue="Gradle.Feature_Simple_Test" />
         <item itemvalue="Kotlin.GherkinTranslatorKt" />
         <item itemvalue="Gradle.Tests in 'GherkinExecutor.test'" />
-        <item itemvalue="Gradle.Feature_Gherkin_Translator_Full_Test" />
         <item itemvalue="Gradle.Feature_Gherkin_Translator_Smoke_Test" />
       </list>
     </recent_temporary>
@@ -300,7 +294,21 @@
       <option name="project" value="LOCAL" />
       <updated>1738609571685</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="add internal data object">
+      <created>1738679886213</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1738679886213</updated>
+    </task>
+    <task id="LOCAL-00014" summary="add internal data object">
+      <created>1738679905977</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1738679905977</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -354,7 +362,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt</url>
-          <line>85</line>
+          <line>84</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
