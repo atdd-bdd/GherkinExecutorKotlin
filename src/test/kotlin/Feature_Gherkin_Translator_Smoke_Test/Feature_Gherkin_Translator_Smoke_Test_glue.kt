@@ -13,7 +13,7 @@ class Feature_Gherkin_Translator_Smoke_Test_glue {
     fun When_translated(){
         val translate = Translate()
         println("Translating " + featureFileName)
-        translate.translate_in_tests(featureFileName)
+        translate.translateInTests(featureFileName)
 
     }
 

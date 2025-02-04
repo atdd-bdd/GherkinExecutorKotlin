@@ -4,8 +4,8 @@ data class MyClass(
     var two: String = "1",
 )
 data class MyClassInternal(
-    var one: String= aaa,
-    var two: int= 1,
+    var one: String= "aaa".toString(),
+    var two: int= "1".toint(),
 )
 data class NameValue(
     var iD: String = "",
@@ -17,7 +17,7 @@ data class Temperature(
     var notes: String = "",
 )
 data class TemperatureInternal(
-    var f: Int= 0,
-    var c: Int= 0,
-    var notes: String= ,
+    var f: Int= "0".toInt(),
+    var c: Int= "0".toInt(),
+    var notes: String= "".toString(),
 )

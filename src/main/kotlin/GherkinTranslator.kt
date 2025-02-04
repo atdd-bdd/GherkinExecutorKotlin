@@ -3,29 +3,29 @@ import java.io.FileWriter
 
 
 class Translate {
-    val scenarios = mutableMapOf(Pair("", "")) // used to check if duplicate scenario names
-    val glue_functions = mutableMapOf(Pair("", "")) // used to make sure only one glue implementaiton
-    val data_names = mutableMapOf(Pair("", "")) // used to check for duplicate data
-    var step_count = 0 // use to label duplicate scenarios
+    private val scenarios = mutableMapOf(Pair("", "")) // used to check if duplicate scenario names
+    private val glueFunctions = mutableMapOf(Pair("", "")) // used to make sure only one glue implementaiton
+    private val dataNames = mutableMapOf(Pair("", "")) // used to check for duplicate data
+    private var stepCount = 0 // use to label duplicate scenarios
     val basePath = Configuration.testSubDirectory
-    var glue_class = ""  // glue class name
-    var glue_object = ""  // glue object name
-    var step_number_in_scenario = 0  // use to label variables in scenario
+    private var glueClass = ""  // glue class name
+    private var glueObject = ""  // glue object name
+    private var stepNumberInScenario: Int = 0  // use to label variables in scenario
     var data = InputIterator("")
-    var first_scenario = true // If first scenario
-    var background = false  // Have seen background
-    var cleanup = false // Have seen cleanup
+    private var firstScenario = true // If first scenario
+    private var background = false  // Have seen background
+    private var cleanup = false // Have seen cleanup
 
     // Create the output files, save names for deletions
-    val test_filename = basePath + "Test" + ".tmp"
-    var test_file = FileWriter(test_filename)
-    val glue_template_filename = basePath + "Glue" + ".tmp"
-    var glue_template_file = FileWriter(glue_template_filename)
-    val data_definition_filename = basePath + "DataDefinition" + ".tmp"
-    var data_definition_file = FileWriter(data_definition_filename)
-    var feature_acted_on = false // Have found a feature step
+    private val testFilename = basePath + "Test" + ".tmp"
+    private var testFile = FileWriter(testFilename)
+    private val glueTemplateFilename = basePath + "Glue" + ".tmp"
+    private var glueTemplateFile = FileWriter(glueTemplateFilename)
+    private val dataDefinitionFilename = basePath + "DataDefinition" + ".tmp"
+    private var dataDefinitionFile = FileWriter(dataDefinitionFilename)
+    private var featureActedOn = false // Have found a feature step
 
-    fun translate_in_tests(name: String) {
+    fun translateInTests(name: String) {
         data = InputIterator(name)
         var eof = false
         while (!eof) {
@@ -34,42 +34,41 @@ class Translate {
                 eof = true
                 continue
             }
-            act_on_line(line)
+            actOnLine(line)
         }
         endUp()
     }
 
-    fun act_on_line(line: String) {
-        val (words, comment) = split_line(line)
+    private fun actOnLine(line: String) {
+        val (words, comment) = splitLine(line)
         if (words.size > 0) {
             var keyword = words[0].trim(':')
             if (keyword == "*") {
                 keyword = "Star"
             }
             words[0] = keyword
-            act_on_keyword(keyword, words, comment)
+            actOnKeyword(keyword, words, comment)
         }
     }
 
-    fun split_line(line: String): Pair<MutableList<String>, List<String>> {
-        val all_words = line.split(" ")
+    private fun splitLine(line: String): Pair<MutableList<String>, List<String>> {
+        val allWords = line.split(" ")
         val words = mutableListOf<String>()
         val comment = mutableListOf<String>()
-        var in_comment = false
-        for (a_word in all_words) {
-            var word = a_word.trim()
+        var inComment = false
+        for (aWord in allWords) {
+            var word = aWord.trim()
             if (word.length <= 0)
                 continue
-            if (word.endsWith(":"))
-            {
+            if (word.endsWith(":")) {
                 word = word.trim(':')
             }
-            if (in_comment) {
+            if (inComment) {
                 comment.add(word)
                 continue
             }
             if (word[0] == '#') {
-                in_comment = true
+                inComment = true
                 word = word.trim('#')
                 if (word.length > 0) {
                     comment.add(word)
@@ -81,78 +80,78 @@ class Translate {
         return Pair(words, comment)
     }
 
-    fun act_on_keyword(keyword: String, words: List<String>, comment: List<String>) {
+    private fun actOnKeyword(keyword: String, words: List<String>, comment: List<String>) {
         val fullName = words.joinToString("_")
         trace("Act on keyword " + keyword + " " + fullName)
         when (keyword) {
-            "Feature" -> act_on_feature(fullName)
-            "Scenario" -> act_on_scenario(fullName, true)
+            "Feature" -> actOnFeature(fullName)
+            "Scenario" -> actOnScenario(fullName, true)
             "Background" -> {
-                act_on_scenario(fullName, false)
+                actOnScenario(fullName, false)
                 background = true
             }
 
             "Cleanup" -> {
-                act_on_scenario(fullName, false)
+                actOnScenario(fullName, false)
                 cleanup = true
             }
 
-            "Given" -> act_on_step(fullName, comment)
-            "When" -> act_on_step(fullName, comment)
-            "Then" -> act_on_step(fullName, comment)
-            "And" -> act_on_step(fullName, comment)
-            "Star" -> act_on_step(fullName, comment)
-            "Data" -> act_on_data(words[1])
-            "Arrange" -> act_on_step(fullName, comment)
-            "Act" -> act_on_step(fullName, comment)
-            "Assert" -> act_on_step(fullName, comment)
+            "Given" -> actOnStep(fullName, comment)
+            "When" -> actOnStep(fullName, comment)
+            "Then" -> actOnStep(fullName, comment)
+            "And" -> actOnStep(fullName, comment)
+            "Star" -> actOnStep(fullName, comment)
+            "Data" -> actOnData(words[1])
+            "Arrange" -> actOnStep(fullName, comment)
+            "Act" -> actOnStep(fullName, comment)
+            "Assert" -> actOnStep(fullName, comment)
             else -> error("keyword not recognized " + keyword)
         }
     }
 
-    fun act_on_feature(fullName: String) {
-        if (feature_acted_on) {
+    private fun actOnFeature(fullName: String) {
+        if (featureActedOn) {
             error("Feature keyword duplicated - it is ignored " + fullName)
             return
         }
-        val feature_name = fullName
-        feature_acted_on = true
-        val test_pathname =
-            Configuration.featureSubDirectory + feature_name + "\\" + feature_name + ".kt"
-        println(" Writing " + test_pathname)
-        clean_files()
-        File(Configuration.featureSubDirectory + feature_name).mkdir()
-        test_file = FileWriter(test_pathname, false)
-        val template_filename =
-            Configuration.featureSubDirectory + feature_name + "\\" + feature_name + "_glue.tmpl"
-        glue_template_file = FileWriter(template_filename, false)
-        val data_definition_pathname =
-            Configuration.featureSubDirectory + feature_name +
-                    "\\" + feature_name + "_data." +
-                    Configuration.data_definition_file_extension
-        trace(" Writing " + data_definition_pathname)
-        data_definition_file =
-            FileWriter(data_definition_pathname, false)
+        val featureName = fullName
+        featureActedOn = true
+        val testPathname =
+            Configuration.featureSubDirectory + featureName + "\\" + featureName + ".kt"
+        println(" Writing " + testPathname)
+        cleanFiles()
+        File(Configuration.featureSubDirectory + featureName).mkdir()
+        testFile = FileWriter(testPathname, false)
+        val templateFilename =
+            Configuration.featureSubDirectory + featureName + "\\" + featureName + "_glue.tmpl"
+        glueTemplateFile = FileWriter(templateFilename, false)
+        val dataDefinitionPathname =
+            Configuration.featureSubDirectory + featureName +
+                    "\\" + featureName + "_data." +
+                    Configuration.dataDefinitionFileExtension
+        trace(" Writing " + dataDefinitionPathname)
+        dataDefinitionFile =
+            FileWriter(dataDefinitionPathname, false)
 
-        glue_class = fullName + "_glue"
+        glueClass = fullName + "_glue"
 
-        glue_object = makeName(fullName) + "_glue_object"
+        glueObject = makeName(fullName) + "_glue_object"
 //        val data_class = fullName + "_data"
-        test_print("package " + Configuration.packageName + "." + feature_name)
-        test_print("import org.junit.jupiter.api.Test")
-        test_print("import org.junit.jupiter.api.TestInstance")
+        testPrint("package " + Configuration.packageName + "." + featureName)
+        testPrint("import org.junit.jupiter.api.Test")
+        testPrint("import org.junit.jupiter.api.TestInstance")
 //        test_print("import " + Configuration.packageName + "." + glue_class)
 //        test_print("import " + Configuration.packageName + "." + data_class)
-        test_print("@TestInstance(TestInstance.Lifecycle.PER_CLASS)")
-        test_print("class " + fullName + "{")
-        test_print("")
+        testPrint("@TestInstance(TestInstance.Lifecycle.PER_CLASS)")
+        testPrint("class " + fullName + "{")
+        testPrint("")
 
-        template_print("package " + Configuration.packageName + "." + feature_name)
-        template_print("import kotlin.test.assertEquals")
-        template_print("")
-        template_print("class " + glue_class + " {")
-        template_print("")
-        data_definition_print("package " + Configuration.packageName + "." + feature_name)
+        templatePrint("package " + Configuration.packageName + "." + featureName)
+        templatePrint("import kotlin.test.assertEquals")
+        templatePrint("")
+        templatePrint("class " + glueClass + " {")
+        templatePrint("")
+        dataDefinitionPrint("package " + Configuration.packageName + "." + featureName)
     }
 
     private fun makeName(input: String): String {
@@ -161,23 +160,23 @@ class Translate {
     }
 
 
-    private fun act_on_data(fullText: String) {
+    private fun actOnData(fullText: String) {
         val names = fullText.split(" ")
 
         var fullTextToUse = names[0]
         println("Data is " + fullText)
-        val (followtype, table) = look_for_follow()
-        if (!followtype.equals("TABLE")) {
+        val (followType, table) = lookForFollow()
+        if (!followType.equals("TABLE")) {
             error("Error table does not follow data " + fullText)
             return
         }
-        if (data_names.containsKey(fullText)) {
+        if (dataNames.containsKey(fullText)) {
             error("Data name is duplicated, has been renamed " + fullTextToUse)
-            fullTextToUse += step_count
+            fullTextToUse += stepCount
         }
         trace("Creating class for " + fullTextToUse)
-        data_names.put(fullTextToUse, "")
-        data_definition_print("data class " + fullTextToUse + "(")
+        dataNames.put(fullTextToUse, "")
+        dataDefinitionPrint("data class " + fullTextToUse + "(")
         var headerLine = true
         var doInternal = false
         for (line in table) {
@@ -191,9 +190,9 @@ class Translate {
                 continue
             }
             val elements = parseLine(line)
-            data_definition_print("    var " + makeName(elements[0]) + ": String = \"" + elements[1] + "\",")
+            dataDefinitionPrint("    var " + makeName(elements[0]) + ": String = \"" + elements[1] + "\",")
         }
-        data_definition_print(")")
+        dataDefinitionPrint(")")
 
         if (doInternal)
             createInternalClass(fullTextToUse, table)
@@ -209,13 +208,13 @@ class Translate {
 
     private fun createInternalClass(fullText: String, table: List<String>) {
         var fullTextToUse = fullText + "Internal"
-        if (data_names.containsKey(fullTextToUse)) {
+        if (dataNames.containsKey(fullTextToUse)) {
             error("Data name is duplicated, has been renamed " + fullTextToUse)
-            fullTextToUse += step_count
+            fullTextToUse += stepCount
         }
         trace("Creating internal class for " + fullTextToUse)
-        data_names.put(fullTextToUse, "")
-        data_definition_print("data class " + fullTextToUse + "(")
+        dataNames.put(fullTextToUse, "")
+        dataDefinitionPrint("data class " + fullTextToUse + "(")
         var headerLine = true
 
 
@@ -225,51 +224,49 @@ class Translate {
                 continue
             }
             val elements = parseLine(line)
-            data_definition_print(
+            dataDefinitionPrint(
                 "    var " + makeName(elements[0]) + ": " + elements[2] +
                         "= \"" + elements[1] + "\".to" + elements[2] + "(),"
             )
         }
-        data_definition_print(")")
+        dataDefinitionPrint(")")
     }
 
-    fun act_on_scenario(fullName: String, add_background: Boolean) {
-        var fullName_to_use = fullName
+    private fun actOnScenario(fullName: String, addBackground: Boolean) {
+        var fullNameToUse = fullName
         if (scenarios.containsKey(fullName)) {
-            fullName_to_use += step_count
-            error("Scenario name duplicated renamed " + fullName_to_use)
-        } else scenarios.put(fullName_to_use, "")
-        step_number_in_scenario = 0
-        if (first_scenario) {
-            first_scenario = false
+            fullNameToUse += stepCount
+            error("Scenario name duplicated renamed " + fullNameToUse)
+        } else scenarios.put(fullNameToUse, "")
+        stepNumberInScenario = 0
+        if (firstScenario) {
+            firstScenario = false
         } else {
-            if (cleanup && add_background)
-                test_print("        test_Cleanup()")
-            test_print("        }") // end previous scenario
+            if (cleanup && addBackground)
+                testPrint("        test_Cleanup()")
+            testPrint("        }") // end previous scenario
         }
-        test_print("    @Test")
-        test_print("    fun test_" + fullName_to_use + "(){")
-        test_print("        val " + glue_object + " = " + glue_class + "()")
-        if (background && add_background)
-            test_print("        test_Background()")
-//        template_print("")
+        testPrint("    @Test")
+        testPrint("    fun test_" + fullNameToUse + "(){")
+        testPrint("        val " + glueObject + " = " + glueClass + "()")
+        if (background && addBackground)
+            testPrint("        test_Background()")
     }
 
-    fun act_on_step(fullName: String, comment: List<String>) {
-        step_number_in_scenario += 1
-        val (followtype, table) = look_for_follow()
-//        template_print("")
-        test_print("")
-        if (followtype == "TABLE") {
+    private fun actOnStep(fullName: String, comment: List<String>) {
+        stepNumberInScenario += 1
+        val (followType, table) = lookForFollow()
+        testPrint("")
+        if (followType == "TABLE") {
             createTheTable(comment, table, fullName)
-        } else if (followtype == "NOTHING") {
+        } else if (followType == "NOTHING") {
             noParameter(fullName)
-        } else if (followtype == "STRING") {
-            createtheStringCode(comment, table, fullName)
+        } else if (followType == "STRING") {
+            createTheStringCode(comment, table, fullName)
         }
     }
 
-    private fun createtheStringCode(
+    private fun createTheStringCode(
         comment: List<String>,
         table: MutableList<String>,
         fullName: String,
@@ -278,9 +275,9 @@ class Translate {
         if (comment.size > 0 && comment[0].length > 0)
             option = comment[0]
         if (option.equals("ListOfString"))
-            StringToList(table, fullName)
+            stringToList(table, fullName)
         else
-            StringToString(table, fullName)
+            stringToString(table, fullName)
     }
 
 
@@ -323,7 +320,7 @@ class Translate {
         return false
     }
 
-    fun look_for_follow(): Pair<String, MutableList<String>> {
+    private fun lookForFollow(): Pair<String, MutableList<String>> {
         var line = data.peek()
         val empty = mutableListOf<String>()
         while (line.length > 0 && line[0] == '#') {
@@ -333,14 +330,14 @@ class Translate {
         line = line.trim()
         if (line.length == 0) return Pair("NOTHING", empty)
         if (line[0] == '|') {
-            val ret_value = read_table()
-            trace("Table is " + ret_value)
-            return Pair("TABLE", ret_value)
+            val retValue = readTable()
+            trace("Table is " + retValue)
+            return Pair("TABLE", retValue)
         }
         if (line.equals("\"\"\"")) {
-            val ret_value = read_string()
-            trace("Multi Line String is " + ret_value)
-            return Pair("STRING", ret_value)
+            val retValue = readString()
+            trace("Multi Line String is " + retValue)
+            return Pair("STRING", retValue)
         }
         return Pair("NOTHING", empty)
     }
@@ -352,26 +349,26 @@ class Translate {
         transpose: Boolean,
     ) {
         trace("classNames " + className)
-        val s = step_number_in_scenario.toString()
+        val s = stepNumberInScenario.toString()
         val dataType = "List<" + className + ">"
-        val dataTypeInitalizer = "listOf<" + className + ">"
-        test_print("        val objectList" + s + " = " + dataTypeInitalizer + "(")
-        var in_header_line = true
-        val data_list = convertToListList(table, transpose)
+        val dataTypeInitializer = "listOf<" + className + ">"
+        testPrint("        val objectList" + s + " = " + dataTypeInitializer + "(")
+        var inHeaderLine = true
+        val dataList = convertToListList(table, transpose)
         var headers = listOf("")
-        for (row in data_list) {
-            if (in_header_line) {
+        for (row in dataList) {
+            if (inHeaderLine) {
                 headers = row
-                in_header_line = false
+                inHeaderLine = false
                 continue
             }
             val values = row
             convertBarLineToParameter(headers, values, className)
         }
-        test_print("            )")
-        test_print("        " + glue_object + "." + fullName + "(objectList" + s + ")")
+        testPrint("            )")
+        testPrint("        " + glueObject + "." + fullName + "(objectList" + s + ")")
 //        test_print("")
-        make_function_template(dataType, fullName)
+        makeFunctionTemplate(dataType, fullName)
     }
 
     private fun convertToListList(table: MutableList<String>, transpose: Boolean): List<List<String>> {
@@ -394,9 +391,9 @@ class Translate {
             size = values.size
             error("not sufficient values, using what is there" + values)
         }
-        test_print("            " + className + "(")
+        testPrint("            " + className + "(")
         for (i in 0 until size) {
-            test_print(
+            testPrint(
                 "                " + makeName(headers[i]) + " = \"" +
                         values[i].replace(
                             Configuration.spaceCharacters,
@@ -405,120 +402,120 @@ class Translate {
                         + "\","
             )
         }
-        test_print("                ),")
+        testPrint("                ),")
     }
 
     private fun noParameter(fullName: String) {
-        test_print("        " + glue_object + "." + fullName + "()")
-        make_function_template("", fullName)
+        testPrint("        " + glueObject + "." + fullName + "()")
+        makeFunctionTemplate("", fullName)
     }
 
-    private fun make_function_template(dataType: String, fullName: String) {
-        if (glue_functions.contains(fullName)) {
-            val current_data_type = glue_functions.get(fullName)
-            if (!current_data_type.equals(dataType)) {
-                error("function $fullName datatype $current_data_type not equals $dataType")
+    private fun makeFunctionTemplate(dataType: String, fullName: String) {
+        if (glueFunctions.contains(fullName)) {
+            val currentDataType = glueFunctions.get(fullName)
+            if (!currentDataType.equals(dataType)) {
+                error("function $fullName datatype $currentDataType not equals $dataType")
                 return
             }
             return  // already have a prototype
         }
-        glue_functions.put(fullName, dataType)
+        glueFunctions.put(fullName, dataType)
         if (dataType.length == 0)
-            template_print("    fun " + fullName + "(){")
+            templatePrint("    fun " + fullName + "(){")
         else
-            template_print("    fun " + fullName + "( value " + ": " + dataType + ") {")
-        template_print("        println(\"*******\")")
+            templatePrint("    fun " + fullName + "( value " + ": " + dataType + ") {")
+        templatePrint("        println(\"*******\")")
         if (dataType.length != 0)
-            template_print("        println(value)")
-        template_print("         assertEquals(true, false)")
-        template_print("    }")
-        template_print("")
+            templatePrint("        println(value)")
+        templatePrint("         assertEquals(true, false)")
+        templatePrint("    }")
+        templatePrint("")
     }
 
-    private fun StringToList(table: MutableList<String>, fullName: String) {
-        val s = step_number_in_scenario.toString()
+    private fun stringToList(table: MutableList<String>, fullName: String) {
+        val s = stepNumberInScenario.toString()
         val dataType = "List<String>"
-        val dataTypeInitalizer = "listOf<String>"
-        test_print("        val stringList" + s + " = " + dataTypeInitalizer + "(")
+        val dataTypeInitializer = "listOf<String>"
+        testPrint("        val stringList" + s + " = " + dataTypeInitializer + "(")
         for (line in table) {
-            test_print("            \"" + line + "\",")
+            testPrint("            \"" + line + "\",")
         }
-        test_print("            )")
-        test_print("        " + glue_object + "." + fullName + "(stringList" + s + ")")
+        testPrint("            )")
+        testPrint("        " + glueObject + "." + fullName + "(stringList" + s + ")")
 //        test_print("")
-        make_function_template(dataType, fullName)
+        makeFunctionTemplate(dataType, fullName)
     }
 
-    private fun StringToString(table: MutableList<String>, fullName: String) {
-        val s = step_number_in_scenario.toString()
-        test_print("        val string" + s + " =")
-        test_print("            \"\"\"")
+    private fun stringToString(table: MutableList<String>, fullName: String) {
+        val s = stepNumberInScenario.toString()
+        testPrint("        val string" + s + " =")
+        testPrint("            \"\"\"")
         for (line in table) {
-            test_print("            " + line)
+            testPrint("            " + line)
         }
-        test_print("            \"\"\".trimIndent()")
-        test_print("        " + glue_object + "." + fullName + "(string" + s + ")")
+        testPrint("            \"\"\".trimIndent()")
+        testPrint("        " + glueObject + "." + fullName + "(string" + s + ")")
 //        test_print("")
-        make_function_template("String", fullName)
+        makeFunctionTemplate("String", fullName)
     }
 
     private fun tableToString(table: MutableList<String>, fullName: String) {
-        val s = step_number_in_scenario.toString()
-        test_print("        val table" + s + " =")
-        test_print("            \"\"\"")
+        val s = stepNumberInScenario.toString()
+        testPrint("        val table" + s + " =")
+        testPrint("            \"\"\"")
         for (line in table) {
-            test_print("            " + line)
+            testPrint("            " + line)
         }
-        test_print("            \"\"\".trimIndent()")
-        test_print("        " + glue_object + "." + fullName + "(table" + s + ")")
+        testPrint("            \"\"\".trimIndent()")
+        testPrint("        " + glueObject + "." + fullName + "(table" + s + ")")
 //        test_print("")
-        make_function_template("String", fullName)
+        makeFunctionTemplate("String", fullName)
     }
 
     private fun tableToListOfList(table: MutableList<String>, fullName: String) {
-        val s = step_number_in_scenario.toString()
+        val s = stepNumberInScenario.toString()
         val dataType = "List<List<String>>"
-        val dataTypeInitalizer = "listOf<List<String>>"
-        test_print("        val stringListList" + s + " = " + dataTypeInitalizer + "(")
+        val dataTypeInitializer = "listOf<List<String>>"
+        testPrint("        val stringListList" + s + " = " + dataTypeInitializer + "(")
         for (line in table) {
             convertBarLineToList(line)
         }
-        test_print("            )")
-        test_print("        " + glue_object + "." + fullName + "(stringListList" + s + ")")
+        testPrint("            )")
+        testPrint("        " + glueObject + "." + fullName + "(stringListList" + s + ")")
 //        test_print("")
-        make_function_template(dataType, fullName)
+        makeFunctionTemplate(dataType, fullName)
     }
 
     private fun tableToListOfListOfObject(table: MutableList<String>, fullName: String, objectName: String) {
-        val s = step_number_in_scenario.toString()
+        val s = stepNumberInScenario.toString()
         val dataType = "List<List<" + objectName + ">>"
-        val dataTypeInitalizer = "listOf<List<" + objectName + ">>"
-        test_print("        val objectListList" + s + " = " + dataTypeInitalizer + "(")
+        val dataTypeInitializer = "listOf<List<" + objectName + ">>"
+        testPrint("        val objectListList" + s + " = " + dataTypeInitializer + "(")
         for (line in table) {
-            convertBarLineToListofObject(line, objectName)
+            convertBarLineToListOfObject(line, objectName)
         }
-        test_print("            )")
-        test_print("        " + glue_object + "." + fullName + "(objectListList" + s + ")")
+        testPrint("            )")
+        testPrint("        " + glueObject + "." + fullName + "(objectListList" + s + ")")
 //        test_print("")
-        make_function_template(dataType, fullName)
+        makeFunctionTemplate(dataType, fullName)
     }
 
-    private fun convertBarLineToListofObject(line: String, objectName: String) {
-        test_print("           listOf<" + objectName + ">(")
+    private fun convertBarLineToListOfObject(line: String, objectName: String) {
+        testPrint("           listOf<" + objectName + ">(")
         val elements = parseLine(line)
         for (element in elements) {
-            test_print("            " + objectName + "(\"" + element + "\"),")
+            testPrint("            " + objectName + "(\"" + element + "\"),")
         }
-        test_print("            ),")
+        testPrint("            ),")
     }
 
     private fun convertBarLineToList(line: String) {
-        test_print("           listOf<String>(")
+        testPrint("           listOf<String>(")
         val elements = parseLine(line)
         for (element in elements) {
-            test_print("            \"" + element + "\",")
+            testPrint("            \"" + element + "\",")
         }
-        test_print("            ),")
+        testPrint("            ),")
     }
 
     private fun parseLine(line: String): MutableList<String> {
@@ -527,11 +524,10 @@ class Translate {
             lineShort = lineShort.substringAfter('|')
         else {
             error("table not begin with | " + line)
-            return mutableListOf<String>("ERROR IN TABLE LINE " + line)
+            return mutableListOf("ERROR IN TABLE LINE " + line)
         }
         val last = lineShort.length - 1
-        if (last < 0)
-        {
+        if (last < 0) {
             error("table format error " + line)
             return mutableListOf<String>("ERROR IN TABLE LINE " + line)
         }
@@ -540,41 +536,40 @@ class Translate {
         else
             error("table not end with | " + line)
         val elements = lineShort.split("|")
-        val elements_trimmed = mutableListOf<String>()
+        val elementsTrimmed = mutableListOf<String>()
         for (element in elements) {
             var current = element.trim()
-             current = current.replace(Configuration.spaceCharacters, ' ')
-            elements_trimmed.add(current)
+            current = current.replace(Configuration.spaceCharacters, ' ')
+            elementsTrimmed.add(current)
         }
-        return elements_trimmed
+        return elementsTrimmed
     }
 
-    fun read_table(): MutableList<String> {
-        val ret_value = mutableListOf<String>()
+    private fun readTable(): MutableList<String> {
+        val retValue = mutableListOf<String>()
         var line = data.peek().trim()
         while (line.length > 0 && (line[0] == '|' || line[0] == '#')) {
             line = data.next().trim()
             if (line[0] == '|' && line.endsWith('|')) {
-                ret_value.add(line)
-            }
-            else
+                retValue.add(line)
+            } else
                 error("Invalid line in table " + line)
             line = data.peek().trim()
         }
-        return ret_value
+        return retValue
     }
 
-    fun read_string(): MutableList<String> {
-        val ret_value = mutableListOf<String>()
+    private fun readString(): MutableList<String> {
+        val retValue = mutableListOf<String>()
         val firstLine = data.peek()
         val countIndent = countIndent(firstLine)
         data.next()
         var line = data.next()
         while (!line.trim().equals("\"\"\"")) {
-            ret_value.add(line.substring(countIndent))
+            retValue.add(line.substring(countIndent))
             line = data.next()
         }
-        return ret_value
+        return retValue
     }
 
     private fun countIndent(firstLine: String): Int {
@@ -583,62 +578,62 @@ class Translate {
 
     }
 
-    private fun clean_files() {
-        test_file.close()
-        glue_template_file.close()
-        data_definition_file.close()
-        File(test_filename).delete()
-        File(glue_template_filename).delete()
-        File(data_definition_filename).delete()
+    private fun cleanFiles() {
+        testFile.close()
+        glueTemplateFile.close()
+        dataDefinitionFile.close()
+        File(testFilename).delete()
+        File(glueTemplateFilename).delete()
+        File(dataDefinitionFilename).delete()
 
     }
 
-    fun test_print(line: String) {
-        test_file.write(line)
-        test_file.write("\n")
+    private fun testPrint(line: String) {
+        testFile.write(line)
+        testFile.write("\n")
     }
 
-    fun data_definition_print(line: String) {
-        data_definition_file.write(line)
-        data_definition_file.write("\n")
+    private fun dataDefinitionPrint(line: String) {
+        dataDefinitionFile.write(line)
+        dataDefinitionFile.write("\n")
     }
 
-    fun template_print(line: String) {
-        glue_template_file.write(line)
-        glue_template_file.write("\n")
+    private fun templatePrint(line: String) {
+        glueTemplateFile.write(line)
+        glueTemplateFile.write("\n")
     }
 
     fun endUp() {
         if (cleanup)
-            test_print("        test_Cleanup()")
-        test_print("        }")
-        test_print("    }")
-        test_print("")
-        template_print("    }")
-        test_file.close()
-        glue_template_file.close()
-        data_definition_file.close()
+            testPrint("        test_Cleanup()")
+        testPrint("        }")   // End last scenario 
+        testPrint("    }") // End the class
+        testPrint("")
+        templatePrint("    }")   // End the class 
+        testFile.close()
+        glueTemplateFile.close()
+        dataDefinitionFile.close()
     }
 
     class InputIterator(name: String) {
         var data = mutableListOf<String>()
-        var _index = 0
+        var index = 0
 
         companion object {
-            var inc_count = 0
+            var includeCount = 0
             val EOF = "EOF"
         }
 
         init {
-            _index = 0
+            index = 0
             if (name.isNotEmpty()) {
                 readFile(name)
             }
         }
 
         private fun readFile(fileName: String) {
-            inc_count++
-            if (inc_count > 20) {
+            includeCount++
+            if (includeCount > 20) {
                 error("Too many levels of include")
                 return
             }
@@ -667,7 +662,7 @@ class Translate {
                         data.add(line.trim())
                 }
             }
-            inc_count--
+            includeCount--
         }
 
         private fun includeCSVFile(includedFileName: String) {
@@ -681,8 +676,8 @@ class Translate {
         }
 
         fun peek(): String {
-            if (_index < data.size) {
-                val item = data[_index]
+            if (index < data.size) {
+                val item = data[index]
                 return item
             } else {
                 return EOF
@@ -690,9 +685,9 @@ class Translate {
         }
 
         fun next(): String {
-            if (_index < data.size) {
-                val item = data[_index]
-                _index++
+            if (index < data.size) {
+                val item = data[index]
+                index++
                 return item
             } else {
                 return EOF
@@ -766,7 +761,7 @@ fun parseCsvLine(line: String): List<String> {
 }
 
 fun trace(value: String) {
-    if (Configuration.trace_on) {
+    if (Configuration.traceOn) {
         println(value)
 
     }
@@ -778,13 +773,13 @@ fun error(value: String) {
 
 class Configuration {
     companion object {
-        var trace_on = false   // Set to true to see trace
+        var traceOn = false   // Set to true to see trace
         var spaceCharacters = '^'  // Will replace with space in tables
         var currentDirectory = ""
         var featureSubDirectory = "src\\test\\kotlin\\"
         var testSubDirectory = "src\\test\\kotlin\\"
         var packageName = "gherkinexecutor"
-        var data_definition_file_extension = "tmpl" // change to kt if altering data file
+        var dataDefinitionFileExtension = "tmpl" // change to kt if altering data file
         val featureFiles = mutableListOf(
             "tictactoe.feature",
 //            "smoketest.feature",
@@ -814,6 +809,6 @@ fun main(args: Array<String>) {
     for (name in Configuration.featureFiles) {
         val translate = Translate()
         println("Translating " + name)
-        translate.translate_in_tests(name)
+        translate.translateInTests(name)
     }
 }
