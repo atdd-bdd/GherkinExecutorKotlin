@@ -101,7 +101,7 @@ class Translate {
             "Then" -> actOnStep(fullName, comment)
             "And" -> actOnStep(fullName, comment)
             "Star" -> actOnStep(fullName, comment)
-            "Data" -> actOnData(words[1])
+            "Data" -> actOnData(words)
             "Arrange" -> actOnStep(fullName, comment)
             "Act" -> actOnStep(fullName, comment)
             "Assert" -> actOnStep(fullName, comment)
@@ -159,24 +159,66 @@ class Translate {
         return input[0].lowercaseChar() + input.substring(1)
     }
 
+    data class DataValues(val name:String, val default: String, val dataType : String = "String", val notes:String ="")
 
-    private fun actOnData(fullText: String) {
-        val names = fullText.split(" ")
-
-        var fullTextToUse = names[0]
-        println("Data is " + fullText)
+    private fun actOnData(words: List<String>) {
+        var internalClassName = ""
+        if (words.size < 2)
+        {
+            error("Need to specify data class name")
+        }
+        var className = words[1]
+        if (words.size > 2)
+            internalClassName = words[2]
+        else
+            internalClassName = className + "Internal"
+        println("Data is " + words)
         val (followType, table) = lookForFollow()
         if (!followType.equals("TABLE")) {
-            error("Error table does not follow data " + fullText)
+            error("Error table does not follow data " + words[0] + " " + words[1])
             return
         }
-        if (dataNames.containsKey(fullText)) {
-            error("Data name is duplicated, has been renamed " + fullTextToUse)
-            fullTextToUse += stepCount
+        if (dataNames.containsKey(className)) {
+            error("Data name is duplicated, has been renamed " + className)
+            className += stepCount
         }
-        trace("Creating class for " + fullTextToUse)
-        dataNames.put(fullTextToUse, "")
-        dataDefinitionPrint("data class " + fullTextToUse + "(")
+        trace("Creating class for " + className)
+        dataNames.put(className, "")
+        dataDefinitionPrint("data class " + className + "(")
+        val variables = mutableListOf<DataValues>()
+        val doInternal = createVariableList(table, variables)
+        for (variable in variables) {
+            dataDefinitionPrint("    var " + makeName(variable.name) + ": String = \"" +
+                    variable.default + "\",")
+        }
+
+        dataDefinitionPrint("    )")
+
+        if (doInternal) {
+            createConversionMethod(internalClassName, variables)
+            createInternalClass(internalClassName, className, variables)
+        }
+    }
+
+    private fun createConversionMethod(
+        internalClassName: String,
+        variables: MutableList<DataValues>,
+    ) {
+        dataDefinitionPrint(" {")
+        dataDefinitionPrint("    fun to" + internalClassName + "() : " + internalClassName + "{")
+        dataDefinitionPrint("        return " + internalClassName + "(")
+        for (variable in variables) {
+            dataDefinitionPrint("        " + makeName(variable.name) + ".to" + variable.dataType + "(),")
+        }
+        dataDefinitionPrint("        ) }") // end function
+
+        dataDefinitionPrint("    }") // end class
+    }
+
+    private fun createVariableList(
+        table: MutableList<String>,
+        variables: MutableList<DataValues>,
+    ): Boolean {
         var headerLine = true
         var doInternal = false
         for (line in table) {
@@ -187,15 +229,23 @@ class Translate {
 
                 if (headers.size > 2)
                     doInternal = true
+                println("header " + headers)
+                println("do internal"+doInternal)
                 continue
             }
             val elements = parseLine(line)
-            dataDefinitionPrint("    var " + makeName(elements[0]) + ": String = \"" + elements[1] + "\",")
+            if (elements.size < 2) {
+                error(" Data line has less than 2 entries " + line)
+                continue
+            }
+            if (elements.size > 3)
+                variables.add(DataValues(elements[0], elements[1], elements[2], elements[3]))
+            else if (elements.size > 2)
+                variables.add(DataValues(elements[0], elements[1], elements[2]))
+            else
+                variables.add(DataValues(elements[0], elements[1]))
         }
-        dataDefinitionPrint(")")
-
-        if (doInternal)
-            createInternalClass(fullTextToUse, table)
+        return doInternal
     }
 
     private fun checkHeaders(headers: MutableList<String>) {
@@ -206,30 +256,30 @@ class Translate {
             error("Headers should start with " + expected)
     }
 
-    private fun createInternalClass(fullText: String, table: List<String>) {
-        var fullTextToUse = fullText + "Internal"
-        if (dataNames.containsKey(fullTextToUse)) {
-            error("Data name is duplicated, has been renamed " + fullTextToUse)
-            fullTextToUse += stepCount
+    private fun createInternalClass(className: String, otherClassName: String, variables: List<DataValues>) {
+        var classNameInternal = className
+        if (dataNames.containsKey(classNameInternal)) {
+            error("Data name is duplicated, has been renamed " + classNameInternal)
+            classNameInternal += stepCount
         }
-        trace("Creating internal class for " + fullTextToUse)
-        dataNames.put(fullTextToUse, "")
-        dataDefinitionPrint("data class " + fullTextToUse + "(")
-        var headerLine = true
-
-
-        for (line in table) {
-            if (headerLine) {
-                headerLine = false
-                continue
-            }
-            val elements = parseLine(line)
-            dataDefinitionPrint(
-                "    var " + makeName(elements[0]) + ": " + elements[2] +
-                        "= \"" + elements[1] + "\".to" + elements[2] + "(),"
-            )
+        trace("Creating internal class for " + classNameInternal)
+        dataNames.put(classNameInternal, "")
+        dataDefinitionPrint("data class " + classNameInternal + "(")
+        for (variable in variables){
+        dataDefinitionPrint(
+                "    var " + makeName(variable.name) + ": " + variable.dataType +
+                        "= \"" + variable.default + "\".to" + variable.dataType + "(),")
+    }
+        dataDefinitionPrint("    ) {")
+        dataDefinitionPrint("    fun to"+otherClassName+"() : " + otherClassName + "{")
+        dataDefinitionPrint("        return " +otherClassName + "(")
+        for (variable in variables)
+        {
+            dataDefinitionPrint("        " + makeName(variable.name) + ".toString(),")
         }
-        dataDefinitionPrint(")")
+        dataDefinitionPrint("        ) }") // end function
+
+        dataDefinitionPrint("    }") // end class
     }
 
     private fun actOnScenario(fullName: String, addBackground: Boolean) {

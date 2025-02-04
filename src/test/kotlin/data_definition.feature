@@ -4,7 +4,7 @@ Feature: Data
 Data MyClass InternalClass
 | Name  | Default  | Type    | Notes     |
 | One   | aaa      | String  | a string  |
-| Two   | 1        | int     | an int    |
+| Two   | 1        | Int     | an Int    |
 
 Scenario Simple
 Given table is # ListOfObject ATest 
@@ -18,6 +18,11 @@ Data ATest
 | aString  | ^        | String    |       |
 | aDouble  | 1.2      | Double    |       |
 
+# Should not create an internal class
+Data NameValue 
+| Name   | Default  |
+| ID     |          |
+| Value  | 0        |
 
 
 Scenario: One with Data
