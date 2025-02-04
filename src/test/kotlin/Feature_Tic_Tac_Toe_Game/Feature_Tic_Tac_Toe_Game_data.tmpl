@@ -2,10 +2,10 @@ package gherkinexecutor.Feature_Tic_Tac_Toe_Game
 data class Move(
     var row: String = "0",
     var column: String = "0",
-    var mark: String = "",
-) 
+    var mark: String = " ",
+)
 data class MoveInternal(
-    var row: Int= 0,
-    var column: Int= 0,
-    var mark: Char= ,
-) 
+    var row: Int= "0".toInt(),
+    var column: Int= "0".toInt(),
+    var mark: Char= " ".toChar(),
+)

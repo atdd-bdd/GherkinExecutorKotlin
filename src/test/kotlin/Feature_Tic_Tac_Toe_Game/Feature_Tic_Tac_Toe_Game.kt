@@ -36,7 +36,7 @@ class Feature_Tic_Tac_Toe_Game{
             )
         feature_Tic_Tac_Toe_Game_glue_object.When_move_is(objectList2)
 
-        val table3 = 
+        val table3 =
             """
             | 0  | X  | 0  |
             | x  | 0  | x  |
@@ -76,7 +76,7 @@ class Feature_Tic_Tac_Toe_Game{
             )
         feature_Tic_Tac_Toe_Game_glue_object.When_move_is(objectList2)
 
-        val table3 = 
+        val table3 =
             """
             |   | X  |   |
             |   |    |   |
@@ -114,7 +114,7 @@ class Feature_Tic_Tac_Toe_Game{
             )
         feature_Tic_Tac_Toe_Game_glue_object.When_one_move_is(objectListList2)
 
-        val table3 = 
+        val table3 =
             """
             |   | X  |   |
             |   |    |   |
@@ -159,7 +159,7 @@ class Feature_Tic_Tac_Toe_Game{
             )
         feature_Tic_Tac_Toe_Game_glue_object.When_moves_are(objectList2)
 
-        val table3 = 
+        val table3 =
             """
             |   | X  |    |
             |   |    | O  |

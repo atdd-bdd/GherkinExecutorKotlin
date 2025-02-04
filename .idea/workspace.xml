@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="add internal data object" />
+    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="add internal data object">
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Simple_Test/Feature_Simple_Test_glue.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Simple_Test/Feature_Simple_Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Simple_Test/Feature_Simple_Test.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Simple_Test/Feature_Simple_Test_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Simple_Test/Feature_Simple_Test_data.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Simple_Test/Feature_Simple_Test_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Simple_Test/Feature_Simple_Test_data.tmpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Simple_Test/Feature_Simple_Test_glue.tmpl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_data.tmpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_glue.tmpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/test.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/SimpleTest.feature" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,6 +69,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "preferences.fileTypes",
     "two.files.diff.last.used.file": "C:/Users/user/ideaprojects/GherkinExecutor/src/test/kotlin/Feature_Gherkin_Test.kt"
   }
@@ -81,30 +98,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Kotlin.GherkinTranslatorKt">
-    <configuration name="Feature_FlowGrid" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;gherkinexecutor.Feature_FlowGrid.Feature_FlowGrid&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Gradle.Feature_Simple_Test">
     <configuration name="Feature_Gherkin_Translator_Full_Test" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -151,7 +145,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="Feature_Robots" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="Feature_Simple_Test" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -164,7 +158,28 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;gherkinexecutor.Feature_Robots.Feature_Robots&quot;" />
+            <option value="&quot;gherkinexecutor.Feature_Simple_Test.Feature_Simple_Test&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Tests in 'GherkinExecutor.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -184,11 +199,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Feature_Simple_Test" />
         <item itemvalue="Kotlin.GherkinTranslatorKt" />
+        <item itemvalue="Gradle.Tests in 'GherkinExecutor.test'" />
         <item itemvalue="Gradle.Feature_Gherkin_Translator_Full_Test" />
         <item itemvalue="Gradle.Feature_Gherkin_Translator_Smoke_Test" />
-        <item itemvalue="Gradle.Feature_FlowGrid" />
-        <item itemvalue="Gradle.Feature_Robots" />
       </list>
     </recent_temporary>
   </component>

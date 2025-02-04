@@ -786,8 +786,8 @@ class Configuration {
         var packageName = "gherkinexecutor"
         var data_definition_file_extension = "tmpl" // change to kt if altering data file
         val featureFiles = mutableListOf(
-//            "tictactoe.feature",
-            "smoketest.feature",
+            "tictactoe.feature",
+//            "smoketest.feature",
 //            "GherkinTranslator.feature",
 //            "include.feature",
 //            "testfeature.feature",
@@ -796,7 +796,7 @@ class Configuration {
 //            "Robot Game.feature",
 ////            "data_definition.feature",
 //            "ParseCSV.feature",
-            "test.feature",
+            "SimpleTest.feature",
 //            "GherkinTranslatorSmokeTest.feature",
 //            "GherkinTranslatorFullTest.feature"
         )
