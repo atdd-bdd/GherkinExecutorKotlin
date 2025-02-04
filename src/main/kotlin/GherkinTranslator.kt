@@ -11,7 +11,7 @@ class Translate {
     private var glueClass = ""  // glue class name
     private var glueObject = ""  // glue object name
     private var stepNumberInScenario: Int = 0  // use to label variables in scenario
-    var data = InputIterator("")
+    var dataIn = InputIterator("")
     private var firstScenario = true // If first scenario
     private var background = false  // Have seen background
     private var cleanup = false // Have seen cleanup
@@ -26,10 +26,10 @@ class Translate {
     private var featureActedOn = false // Have found a feature step
 
     fun translateInTests(name: String) {
-        data = InputIterator(name)
+        dataIn = InputIterator(name)
         var eof = false
         while (!eof) {
-            val line = data.next()
+            val line = dataIn.next()
             if (line.equals(InputIterator.EOF)) {
                 eof = true
                 continue
@@ -325,11 +325,11 @@ class Translate {
     }
 
     private fun lookForFollow(): Pair<String, MutableList<String>> {
-        var line = data.peek()
+        var line = dataIn.peek()
         val empty = mutableListOf<String>()
         while (line.isNotEmpty() && line[0] == '#') {
-            data.next()
-            line = data.peek()
+            dataIn.next()
+            line = dataIn.peek()
         }
         line = line.trim()
         if (line.isEmpty()) return Pair("NOTHING", empty)
@@ -551,27 +551,27 @@ class Translate {
 
     private fun readTable(): MutableList<String> {
         val retValue = mutableListOf<String>()
-        var line = data.peek().trim()
+        var line = dataIn.peek().trim()
         while (line.isNotEmpty() && (line[0] == '|' || line[0] == '#')) {
-            line = data.next().trim()
+            line = dataIn.next().trim()
             if (line[0] == '|' && line.endsWith('|')) {
                 retValue.add(line)
             } else
                 error("Invalid line in table " + line)
-            line = data.peek().trim()
+            line = dataIn.peek().trim()
         }
         return retValue
     }
 
     private fun readString(): MutableList<String> {
         val retValue = mutableListOf<String>()
-        val firstLine = data.peek()
+        val firstLine = dataIn.peek()
         val countIndent = countIndent(firstLine)
-        data.next()
-        var line = data.next()
+        dataIn.next()
+        var line = dataIn.next()
         while (!line.trim().equals("\"\"\"")) {
             retValue.add(line.substring(countIndent))
-            line = data.next()
+            line = dataIn.next()
         }
         return retValue
     }
@@ -620,7 +620,7 @@ class Translate {
     }
 
     class InputIterator(name: String) {
-        var data = mutableListOf<String>()
+        var linesIn = mutableListOf<String>()
         private var index = 0
 
         companion object {
@@ -663,7 +663,7 @@ class Translate {
                         readFile(includedFileName)
                 } else {
                     if (line.isNotEmpty() && line[0] != '#')
-                        data.add(line.trim())
+                        linesIn.add(line.trim())
                 }
             }
             includeCount--
@@ -675,13 +675,13 @@ class Translate {
                 if (line.isEmpty())
                     continue
                 val contents = convertCSVtoTable(line)
-                data.add(contents.trim())
+                linesIn.add(contents.trim())
             }
         }
 
         fun peek(): String {
-            if (index < data.size) {
-                val item = data[index]
+            if (index < linesIn.size) {
+                val item = linesIn[index]
                 return item
             } else {
                 return EOF
@@ -689,8 +689,8 @@ class Translate {
         }
 
         fun next(): String {
-            if (index < data.size) {
-                val item = data[index]
+            if (index < linesIn.size) {
+                val item = linesIn[index]
                 index++
                 return item
             } else {
@@ -785,7 +785,7 @@ class Configuration {
         var packageName = "gherkinexecutor"
         var dataDefinitionFileExtension = "tmpl" // change to kt if altering data file
         val featureFiles = mutableListOf(
-            "tictactoe.feature",
+//            "tictactoe.feature",
 //            "smoketest.feature",
 //            "GherkinTranslator.feature",
 //            "include.feature",
@@ -793,9 +793,9 @@ class Configuration {
 //            "examples.feature",
 //            "FlowGrid.feature",
 //            "Robot Game.feature",
-////            "data_definition.feature",
+            "data_definition.feature",
 //            "ParseCSV.feature",
-            "SimpleTest.feature",
+//            "SimpleTest.feature",
 //            "GherkinTranslatorSmokeTest.feature",
 //            "GherkinTranslatorFullTest.feature"
         )

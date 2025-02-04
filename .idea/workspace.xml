@@ -9,7 +9,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="cleaned up code - renamed stuff">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test.exp" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test.exp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.exp" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.exp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.tmpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_glue.exp" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_glue.exp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_glue.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_glue.tmpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/data_definition.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/data_definition.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,8 +200,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Feature_Gherkin_Translator_Full_Test" />
-        <item itemvalue="Gradle.Feature_Simple_Test" />
         <item itemvalue="Kotlin.GherkinTranslatorKt" />
+        <item itemvalue="Gradle.Feature_Simple_Test" />
         <item itemvalue="Gradle.Tests in 'GherkinExecutor.test'" />
         <item itemvalue="Gradle.Feature_Gherkin_Translator_Smoke_Test" />
       </list>
@@ -311,7 +321,14 @@
       <option name="project" value="LOCAL" />
       <updated>1738682842083</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="cleaned up code - renamed stuff">
+      <created>1738683370545</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1738683370545</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="UnknownFeatures">

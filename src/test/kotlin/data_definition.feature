@@ -1,9 +1,24 @@
 Feature: Data 
 
-Data MyClass 
+# Should used InternalClass as the name 
+Data MyClass InternalClass
 | Name  | Default  | Type    | Notes     |
 | One   | aaa      | String  | a string  |
 | Two   | 1        | int     | an int    |
+
+Scenario Simple
+Given table is # ListOfObject ATest 
+| anInt  | aString    | aDouble  |
+| 1      | something  | 1.2      |
+
+# will create an internal class name 
+Data ATest 
+| Name     | Default  | Datatype  | Note  |
+| anInt    | 0        | Int       |       |
+| aString  | ^        | String    |       |
+| aDouble  | 1.2      | Double    |       |
+
+
 
 Scenario: One with Data
 Given a step  # ListOfObject MyClass
