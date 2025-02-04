@@ -8,12 +8,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="add internal data object">
+    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="cleaned up code - renamed stuff">
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.exp" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.exp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Full_Test/Feature_Gherkin_Translator_Full_Test_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Full_Test/Feature_Gherkin_Translator_Full_Test_glue.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Smoke_Test/Feature_Gherkin_Translator_Smoke_Test_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Smoke_Test/Feature_Gherkin_Translator_Smoke_Test_glue.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -308,7 +304,14 @@
       <option name="project" value="LOCAL" />
       <updated>1738679905977</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="cleaned up code - renamed stuff">
+      <created>1738682842082</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1738682842083</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -345,7 +348,8 @@
     <MESSAGE value="some cleanup" />
     <MESSAGE value="added ListOfList to String,  used indent of first line for all lines" />
     <MESSAGE value="add internal data object" />
-    <option name="LAST_COMMIT_MESSAGE" value="add internal data object" />
+    <MESSAGE value="cleaned up code - renamed stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleaned up code - renamed stuff" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
