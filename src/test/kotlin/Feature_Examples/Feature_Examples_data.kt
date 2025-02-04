@@ -3,6 +3,23 @@ data class NameValue(
     var iD: String = "",
     var value: String = "0",
 )
+{
+    fun toNameValueInternal() : NameValueInternal{
+        return NameValueInternal(
+            iD.toString(),
+            value.toInt(),
+        ) }
+}
+data class NameValueInternal(
+    var iD: String= "".toString(),
+    var value: Int= "0".toInt(),
+) {
+    fun toNameValue() : NameValue{
+        return NameValue(
+            iD.toString(),
+            value.toString(),
+        ) }
+}
 data class Temperature(
     var f: String = "0",
     var c: String = "0",

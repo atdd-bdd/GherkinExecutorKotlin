@@ -2,18 +2,12 @@ package gherkinexecutor.Feature_Examples
 
 import kotlin.test.assertEquals
 
-class NameValueInternal(val ID: String = "", val value: Int = 0) {}
-
-fun fromNameValue(input: NameValue): NameValueInternal {
-    return NameValueInternal(input.iD, input.value.toInt())
-
-}
 
 class SolutionForListOfNumber {
     private var values = mutableListOf<NameValueInternal>()
     private var filterValue = ""
     fun add(value: NameValue) {
-        values.add(fromNameValue(value))
+        values.add(value.toNameValueInternal())
     }
 
     fun setFilterValue(value: String) {
@@ -23,7 +17,7 @@ class SolutionForListOfNumber {
     fun sum(): Int {
         var sum = 0
         for (element in values) {
-            if (element.ID == filterValue)
+            if (element.iD == filterValue)
                 sum += (element.value)
         }
         return sum

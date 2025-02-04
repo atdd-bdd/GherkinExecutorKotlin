@@ -13,9 +13,9 @@ Then sum is
 | 4 | 
 
 Data NameValue 
-| Name   | Default  |
-| ID     |          |
-| Value  | 0        |
+| Name   | Default  | DataType  | Notes  |
+| ID     |          | String    |        |
+| Value  | 0        | Int       |        |
 
 
 Scenario: Temperature 
