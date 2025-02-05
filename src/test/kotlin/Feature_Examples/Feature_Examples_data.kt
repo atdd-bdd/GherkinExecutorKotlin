@@ -1,7 +1,7 @@
 package gherkinexecutor.Feature_Examples
 data class NameValue(
-    var iD: String = "",
-    var value: String = "0",
+    val iD: String = "",
+    val value: String = "0",
 )
 {
     fun toNameValueInternal() : NameValueInternal{
@@ -11,8 +11,8 @@ data class NameValue(
         ) }
 }
 data class NameValueInternal(
-    var iD: String= "".toString(),
-    var value: Int= "0".toInt(),
+    val iD: String= "".toString(),
+    val value: Int= "0".toInt(),
 ) {
     fun toNameValue() : NameValue{
         return NameValue(
@@ -21,9 +21,9 @@ data class NameValueInternal(
         ) }
 }
 data class Temperature(
-    var f: String = "0",
-    var c: String = "0",
-    var notes: String = "",
+    val f: String = "0",
+    val c: String = "0",
+    val notes: String = "",
 )
 {
     fun toTemperatureInternal() : TemperatureInternal{
@@ -34,9 +34,9 @@ data class Temperature(
         ) }
 }
 data class TemperatureInternal(
-    var f: Int= "0".toInt(),
-    var c: Int= "0".toInt(),
-    var notes: String= "".toString(),
+    val f: Int= "0".toInt(),
+    val c: Int= "0".toInt(),
+    val notes: String= "".toString(),
 ) {
     fun toTemperature() : Temperature{
         return Temperature(

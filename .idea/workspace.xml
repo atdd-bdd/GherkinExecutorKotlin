@@ -8,9 +8,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="Using generated data in TickTacToe">
+    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="changed data to vals">
+      <change afterPath="$PROJECT_DIR$/src/main/FileWriterWrapper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Production.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Production.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Data/Feature_Data_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Data/Feature_Data_data.tmpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_data.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_data.tmpl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_glue.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_glue.tmpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_glue.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/examples.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/examples.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,6 +91,7 @@
       <recent name="C:\Users\user\ideaprojects\GherkinExecutor\src\main\resources" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="Feature_Examples" />
       <recent name="Feature_Gherkin_Translator_Smoke_Test" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
@@ -90,7 +101,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Feature_Examples">
+  <component name="RunManager" selected="Gradle.Feature_Tic_Tac_Toe_Game">
     <configuration name="Feature_Data" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -194,9 +205,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Feature_Tic_Tac_Toe_Game" />
         <item itemvalue="Gradle.Feature_Examples" />
         <item itemvalue="Kotlin.GherkinTranslatorKt" />
-        <item itemvalue="Gradle.Feature_Tic_Tac_Toe_Game" />
         <item itemvalue="Gradle.Feature_Gherkin_Translator_Full_Test" />
         <item itemvalue="Gradle.Feature_Data" />
       </list>
@@ -337,7 +348,14 @@
       <option name="project" value="LOCAL" />
       <updated>1738692044351</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Update example glue code to use internal">
+      <created>1738692463679</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1738692463679</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -378,7 +396,9 @@
     <MESSAGE value="More cleanup,  changed data test" />
     <MESSAGE value="Added data conversion methods" />
     <MESSAGE value="Using generated data in TickTacToe" />
-    <option name="LAST_COMMIT_MESSAGE" value="Using generated data in TickTacToe" />
+    <MESSAGE value="Update example glue code to use internal" />
+    <MESSAGE value="changed data to vals" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed data to vals" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -395,18 +415,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt</url>
-          <line>84</line>
+          <line>85</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_glue.kt</url>
-          <line>9</line>
-          <option name="timeStamp" value="10" />
+          <url>file://$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt</url>
+          <line>276</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/GherkinExecutor$Feature_Tic_Tac_Toe_Game.ic" NAME="Feature_Tic_Tac_Toe_Game Coverage Results" MODIFIED="1738768487047" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/GherkinExecutor$Feature_Gherkin_Translator_Full_Test.ic" NAME="Feature_Gherkin_Translator_Full_Test Coverage Results" MODIFIED="1738604987041" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/GherkinExecutor$TryoutKt.ic" NAME="TryoutKt Coverage Results" MODIFIED="1738206168252" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>

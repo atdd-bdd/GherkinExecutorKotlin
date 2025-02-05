@@ -1,32 +1,8 @@
 package gherkinexecutor.Feature_Examples
 
+import gherkinexecutor.Feature_Examples.TemperatureCalculations
 import kotlin.test.assertEquals
 
-
-class SolutionForListOfNumber {
-    private var values = mutableListOf<NameValueInternal>()
-    private var filterValue = ""
-    fun add(value: NameValue) {
-        values.add(value.toNameValueInternal())
-    }
-
-    fun setFilterValue(value: String) {
-        filterValue = value
-    }
-
-    fun sum(): Int {
-        var sum = 0
-        for (element in values) {
-            if (element.iD == filterValue)
-                sum += (element.value)
-        }
-        return sum
-    }
-}
-
-fun convertFarenheitToCelsius(input: Int): Int {
-    return ((input - 32) * 5) / 9
-}
 
 class Feature_Examples_glue {
 
@@ -34,13 +10,14 @@ class Feature_Examples_glue {
 
     fun Given_list_of_numbers(value: List<NameValue>) {
         for (element in value) {
-            solution.add(element)
+            solution.add(element.toNameValueInternal())
         }
 
     }
 
-    fun When_filtered_by(value: List<List<String>>) {
-        solution.setFilterValue((value[0][1]))
+
+    fun When_filtered_by_ID_value( value : List<List<String>>) {
+            solution.setFilterValue((value[0][0]))
     }
 
     fun Then_sum_is(value: List<List<String>>) {
@@ -51,10 +28,11 @@ class Feature_Examples_glue {
 
     fun Star_Convert_F_to_C(value: List<Temperature>) {
         for (element in value) {
+            val temp = element.toTemperatureInternal()
             assertEquals(
-                element.c.toInt(),
-                convertFarenheitToCelsius(element.f.toInt()),
-                element.notes
+                temp.c,
+                TemperatureCalculations.convertFarenheitToCelsius(temp.f),
+                temp.notes
             )
         }
     }

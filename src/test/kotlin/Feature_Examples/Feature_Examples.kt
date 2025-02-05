@@ -26,11 +26,10 @@ class Feature_Examples{
 
         val stringListList2 = listOf<List<String>>(
            listOf<String>(
-            "ID",
             "a",
             ),
             )
-        feature_Examples_glue_object.When_filtered_by(stringListList2)
+        feature_Examples_glue_object.When_filtered_by_ID_value(stringListList2)
 
         val stringListList3 = listOf<List<String>>(
            listOf<String>(

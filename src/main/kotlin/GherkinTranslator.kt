@@ -19,6 +19,7 @@ class Translate {
     // Create the output files, save names for deletions
     private val testFilename = basePath + "Test" + ".tmp"
     private var testFile = FileWriter(testFilename)
+//    private lateinit var aTestFile: FileWriter  - to not create tmp file
     private val glueTemplateFilename = basePath + "Glue" + ".tmp"
     private var glueTemplateFile = FileWriter(glueTemplateFilename)
     private val dataDefinitionFilename = basePath + "DataDefinition" + ".tmp"
@@ -172,7 +173,7 @@ class Translate {
             internalClassName = words[2]
         else
             internalClassName = className + "Internal"
-        println("Data is " + words)
+//        println("Data is " + words)
         val (followType, table) = lookForFollow()
         if (!followType.equals("TABLE")) {
             error("Error table does not follow data " + words[0] + " " + words[1])
@@ -188,7 +189,7 @@ class Translate {
         val variables = mutableListOf<DataValues>()
         val doInternal = createVariableList(table, variables)
         for (variable in variables) {
-            dataDefinitionPrint("    var " + makeName(variable.name) + ": String = \"" +
+            dataDefinitionPrint("    val " + makeName(variable.name) + ": String = \"" +
                     variable.default + "\",")
         }
 
@@ -265,7 +266,7 @@ class Translate {
         dataDefinitionPrint("data class " + classNameInternal + "(")
         for (variable in variables){
         dataDefinitionPrint(
-                "    var " + makeName(variable.name) + ": " + variable.dataType +
+                "    val " + makeName(variable.name) + ": " + variable.dataType +
                         "= \"" + variable.default + "\".to" + variable.dataType + "(),")
     }
         dataDefinitionPrint("    ) {")

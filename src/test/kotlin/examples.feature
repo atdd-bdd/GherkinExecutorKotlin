@@ -7,8 +7,8 @@ Given list of numbers # ListOfObject NameValue
 | a     | 1      |
 | b     | 2      |
 | a     | 3      |
-When filtered by 
-| ID | a  |
+When filtered by ID value
+| a  |
 Then sum is 
 | 4 | 
 
