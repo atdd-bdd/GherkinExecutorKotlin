@@ -72,7 +72,7 @@ class Feature_Full_Test_glue {
         assertEquals(true, false)
     }
 
-    fun When_filtered_by( value : List<List<String>>) {
+    fun When_filtered_by_ID_value( value : List<List<String>>) {
         println("*******")
         println(value)
         assertEquals(true, false)
@@ -84,7 +84,7 @@ class Feature_Full_Test_glue {
         assertEquals(true, false)
     }
 
-    fun Star_Convert_F_to_C( value : List<Temperature>) {
+    fun Star_Convert_F_to_C( value : List<TemperatureComparison>) {
         println("*******")
         println(value)
         assertEquals(true, false)

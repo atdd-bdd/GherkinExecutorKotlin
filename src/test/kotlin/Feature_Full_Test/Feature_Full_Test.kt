@@ -183,11 +183,10 @@ class Feature_Full_Test{
 
         val stringListList2 = listOf<List<String>>(
            listOf<String>(
-            "ID",
             "a",
             ),
             )
-        feature_Full_Test_glue_object.When_filtered_by(stringListList2)
+        feature_Full_Test_glue_object.When_filtered_by_ID_value(stringListList2)
 
         val stringListList3 = listOf<List<String>>(
            listOf<String>(
@@ -202,18 +201,18 @@ class Feature_Full_Test{
         val feature_Full_Test_glue_object = Feature_Full_Test_glue()
         test_Background()
 
-        val objectList1 = listOf<Temperature>(
-            Temperature(
+        val objectList1 = listOf<TemperatureComparison>(
+            TemperatureComparison(
                 f = "32",
                 c = "0",
                 notes = "Freezing",
                 ),
-            Temperature(
+            TemperatureComparison(
                 f = "212",
                 c = "100",
                 notes = "Boiling",
                 ),
-            Temperature(
+            TemperatureComparison(
                 f = "-40",
                 c = "-40",
                 notes = "Below zero",

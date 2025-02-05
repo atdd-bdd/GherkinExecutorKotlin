@@ -26,9 +26,9 @@ class Feature_Examples_glue {
     }
 
 
-    fun Star_Convert_F_to_C(value: List<Temperature>) {
+    fun Star_Convert_F_to_C(value: List<TemperatureComparison>) {
         for (element in value) {
-            val temp = element.toTemperatureInternal()
+            val temp = element.toTemperatureComparisonInternal()
             assertEquals(
                 temp.c,
                 TemperatureCalculations.convertFarenheitToCelsius(temp.f),

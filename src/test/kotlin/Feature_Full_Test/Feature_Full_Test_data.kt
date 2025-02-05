@@ -1,8 +1,9 @@
 package gherkinexecutor.Feature_Full_Test
 data class MyClass(
-    var one: String = "aaa",
-    var two: String = "1",
-) {
+    val one: String = "aaa",
+    val two: String = "1",
+)
+{
     fun toInternalClass() : InternalClass{
         return InternalClass(
             one.toString(),
@@ -10,8 +11,8 @@ data class MyClass(
         ) }
 }
 data class InternalClass(
-    var one: String= "aaa".toString(),
-    var two: Int= "1".toInt(),
+    val one: String= "aaa".toString(),
+    val two: Int= "1".toInt(),
 ) {
     fun toMyClass() : MyClass{
         return MyClass(
@@ -20,10 +21,11 @@ data class InternalClass(
         ) }
 }
 data class ATest(
-    var anInt: String = "0",
-    var aString: String = " ",
-    var aDouble: String = "1.2",
-) {
+    val anInt: String = "0",
+    val aString: String = " ",
+    val aDouble: String = "1.2",
+)
+{
     fun toATestInternal() : ATestInternal{
         return ATestInternal(
             anInt.toInt(),
@@ -32,9 +34,9 @@ data class ATest(
         ) }
 }
 data class ATestInternal(
-    var anInt: Int= "0".toInt(),
-    var aString: String= " ".toString(),
-    var aDouble: Double= "1.2".toDouble(),
+    val anInt: Int= "0".toInt(),
+    val aString: String= " ".toString(),
+    val aDouble: Double= "1.2".toDouble(),
 ) {
     fun toATest() : ATest{
         return ATest(
@@ -44,29 +46,50 @@ data class ATestInternal(
         ) }
 }
 data class NameValue(
-    var iD: String = "",
-    var value: String = "0",
+    val iD: String = "",
+    val value: String = "0",
 )
-
-data class Temperature(
-    var f: String = "0",
-    var c: String = "0",
-    var notes: String = "",
+data class NameValue0(
+    val iD: String = "",
+    val value: String = "0",
+)
+{
+    fun toNameValueInternal() : NameValueInternal{
+        return NameValueInternal(
+            iD.toString(),
+            value.toInt(),
+        ) }
+}
+data class NameValueInternal(
+    val iD: String= "".toString(),
+    val value: Int= "0".toInt(),
 ) {
-    fun toTemperatureInternal() : TemperatureInternal{
-        return TemperatureInternal(
+    fun toNameValue0() : NameValue0{
+        return NameValue0(
+            iD.toString(),
+            value.toString(),
+        ) }
+}
+data class TemperatureComparison(
+    val f: String = "0",
+    val c: String = "0",
+    val notes: String = "",
+)
+{
+    fun toTemperatureComparisonInternal() : TemperatureComparisonInternal{
+        return TemperatureComparisonInternal(
             f.toInt(),
             c.toInt(),
             notes.toString(),
         ) }
 }
-data class TemperatureInternal(
-    var f: Int= "0".toInt(),
-    var c: Int= "0".toInt(),
-    var notes: String= "".toString(),
+data class TemperatureComparisonInternal(
+    val f: Int= "0".toInt(),
+    val c: Int= "0".toInt(),
+    val notes: String= "".toString(),
 ) {
-    fun toTemperature() : Temperature{
-        return Temperature(
+    fun toTemperatureComparison() : TemperatureComparison{
+        return TemperatureComparison(
             f.toString(),
             c.toString(),
             notes.toString(),

@@ -148,7 +148,7 @@ class Translate {
         testPrint("")
 
         templatePrint("package " + Configuration.packageName + "." + featureName)
-        templatePrint("import kotlin.test.assertEquals")
+        templatePrint("import kotlin.test.fail")
         templatePrint("")
         templatePrint("class " + glueClass + " {")
         templatePrint("")
@@ -157,7 +157,8 @@ class Translate {
 
     private fun makeName(input: String): String {
         if (input.isEmpty()) return "NAME_IS_EMPTY"
-        return input[0].lowercaseChar() + input.substring(1)
+        val temp = input.replace(' ','_')
+        return temp[0].lowercaseChar() + temp.substring(1)
     }
 
     data class DataValues(val name:String, val default: String, val dataType : String = "String", val notes:String ="")
@@ -173,7 +174,6 @@ class Translate {
             internalClassName = words[2]
         else
             internalClassName = className + "Internal"
-//        println("Data is " + words)
         val (followType, table) = lookForFollow()
         if (!followType.equals("TABLE")) {
             error("Error table does not follow data " + words[0] + " " + words[1])
@@ -348,7 +348,7 @@ class Translate {
                 tableToListOfListOfObject(table, fullName, objectName)
             } else
                 tableToListOfList(table, fullName)
-        } else if (option.equals("String"))
+        } else if (option.equals("String") ||option.equals("string")  )
             tableToString(table, fullName)
         else if (option.equals("ListOfObject")) {
             if (comment.size < 2) {
@@ -360,7 +360,7 @@ class Translate {
             var transpose = false
             if (comment.size > 2) {
                 val action = comment[2]
-                if (!action.equals("transpose"))
+                if (!(action.equals("transpose")|| action.equals("Transpose")))
                     error("Action not recognized " + action)
                 else
                     transpose = true
@@ -480,7 +480,7 @@ class Translate {
         templatePrint("        println(\"*******\")")
         if (dataType.length != 0)
             templatePrint("        println(value)")
-        templatePrint("         assertEquals(true, false)")
+        templatePrint("        fail(\"Must implement\")")
         templatePrint("    }")
         templatePrint("")
     }
@@ -495,7 +495,6 @@ class Translate {
         }
         testPrint("            )")
         testPrint("        " + glueObject + "." + fullName + "(stringList" + s + ")")
-//        test_print("")
         makeFunctionTemplate(dataType, fullName)
     }
 
@@ -508,7 +507,6 @@ class Translate {
         }
         testPrint("            \"\"\".trimIndent()")
         testPrint("        " + glueObject + "." + fullName + "(string" + s + ")")
-//        test_print("")
         makeFunctionTemplate("String", fullName)
     }
 
@@ -549,7 +547,6 @@ class Translate {
         }
         testPrint("            )")
         testPrint("        " + glueObject + "." + fullName + "(objectListList" + s + ")")
-//        test_print("")
         makeFunctionTemplate(dataType, fullName)
     }
 
@@ -839,14 +836,15 @@ class Configuration {
 //            "GherkinTranslator.feature",
 //            "include.feature",
 //            "testfeature.feature",
-//            "examples.feature",
+              "examples.feature",
+            "tablesandstrings.feature",
 //            "FlowGrid.feature",
 //            "Robot Game.feature",
-            "data_definition.feature",
+              "data_definition.feature",
 //            "ParseCSV.feature",
 //            "SimpleTest.feature",
 //            "GherkinTranslatorSmokeTest.feature",
-//            "GherkinTranslatorFullTest.feature"
+              "GherkinTranslatorFullTest.feature"
         )
     }
 }

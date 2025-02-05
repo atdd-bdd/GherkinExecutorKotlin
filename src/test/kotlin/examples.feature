@@ -20,13 +20,13 @@ Data NameValue
 
 Scenario: Temperature 
 # Business rule , Calculation 
-* Convert F to C # ListOfObject Temperature 
+* Convert F to C # ListOfObject TemperatureComparison 
 | F    | C    | Notes       |
 | 32   | 0    | Freezing    |
 | 212  | 100  | Boiling     |
 | -40  | -40  | Below zero  |
 
-Data Temperature
+Data TemperatureComparison
 | Name   | Default  | DataType  | Notes  |
 | F      | 0        | Int       |        |
 | C      | 0        | Int       |        |

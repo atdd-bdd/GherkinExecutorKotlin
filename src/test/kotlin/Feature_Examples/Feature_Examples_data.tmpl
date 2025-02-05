@@ -20,26 +20,26 @@ data class NameValueInternal(
         value.toString(),
         ) }
     }
-data class Temperature(
+data class TemperatureComparison(
     val f: String = "0",
     val c: String = "0",
     val notes: String = "",
     )
  {
-    fun toTemperatureInternal() : TemperatureInternal{
-        return TemperatureInternal(
+    fun toTemperatureComparisonInternal() : TemperatureComparisonInternal{
+        return TemperatureComparisonInternal(
         f.toInt(),
         c.toInt(),
         notes.toString(),
         ) }
     }
-data class TemperatureInternal(
+data class TemperatureComparisonInternal(
     val f: Int= "0".toInt(),
     val c: Int= "0".toInt(),
     val notes: String= "".toString(),
     ) {
-    fun toTemperature() : Temperature{
-        return Temperature(
+    fun toTemperatureComparison() : TemperatureComparison{
+        return TemperatureComparison(
         f.toString(),
         c.toString(),
         notes.toString(),
