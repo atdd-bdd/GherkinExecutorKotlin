@@ -8,26 +8,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="Put implementations into Production.kt">
+    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="changed expectations for full test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Data/Feature_Data_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Data/Feature_Data_glue.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_data.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_glue.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_glue.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test.exp" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test.exp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.exp" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.exp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_data.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_glue.exp" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_glue.exp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples_glue_backup.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_glue.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Full_Test/Feature_Full_Test_glue.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Full_Test/Feature_Gherkin_Translator_Full_Test_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Full_Test/Feature_Gherkin_Translator_Full_Test_data.tmpl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Full_Test/Feature_Gherkin_Translator_Full_Test_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Full_Test/Feature_Gherkin_Translator_Full_Test_glue.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/examples.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/examples.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Gherkin_Translator_Smoke_Test_glue.backup" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,6 +90,7 @@
       <recent name="C:\Users\user\ideaprojects\GherkinExecutor\src\main\resources" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="" />
       <recent name="Feature_Examples" />
       <recent name="Feature_Gherkin_Translator_Smoke_Test" />
     </key>
@@ -110,7 +101,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Feature_Tables_and_Strings">
+  <component name="RunManager" selected="Kotlin.GherkinTranslatorKt">
     <configuration name="Feature_Examples" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -125,6 +116,29 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;gherkinexecutor.Feature_Examples.Feature_Examples&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Feature_Full_Test" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;gherkinexecutor.Feature_Full_Test.Feature_Full_Test&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -180,29 +194,6 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="Feature_Tic_Tac_Toe_Game" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;gherkinexecutor.Feature_Tic_Tac_Toe_Game.Feature_Tic_Tac_Toe_Game&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
     <configuration name="GherkinTranslatorKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GherkinTranslatorKt" />
       <module name="GherkinExecutor.main" />
@@ -214,11 +205,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Feature_Tables_and_Strings" />
         <item itemvalue="Kotlin.GherkinTranslatorKt" />
+        <item itemvalue="Gradle.Feature_Full_Test" />
         <item itemvalue="Gradle.Feature_Gherkin_Translator_Full_Test" />
+        <item itemvalue="Gradle.Feature_Tables_and_Strings" />
         <item itemvalue="Gradle.Feature_Examples" />
-        <item itemvalue="Gradle.Feature_Tic_Tac_Toe_Game" />
       </list>
     </recent_temporary>
   </component>
@@ -371,7 +362,21 @@
       <option name="project" value="LOCAL" />
       <updated>1738768667888</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Added examples for all types of tables">
+      <created>1738774052262</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1738774052263</updated>
+    </task>
+    <task id="LOCAL-00022" summary="changed expectations for full test">
+      <created>1738776039912</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1738776039912</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -415,7 +420,9 @@
     <MESSAGE value="Update example glue code to use internal" />
     <MESSAGE value="changed data to vals" />
     <MESSAGE value="Put implementations into Production.kt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Put implementations into Production.kt" />
+    <MESSAGE value="Added examples for all types of tables" />
+    <MESSAGE value="changed expectations for full test" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed expectations for full test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -429,16 +436,6 @@
           <url>file://$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt</url>
           <line>205</line>
           <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt</url>
-          <line>85</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt</url>
-          <line>277</line>
-          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
