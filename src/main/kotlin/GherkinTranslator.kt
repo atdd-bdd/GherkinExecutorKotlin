@@ -524,20 +524,19 @@ class Translate {
         makeFunctionTemplate(dataType, fullName)
     }
 
-    private fun convertBarLineToListOfObject(line: String, objectName: String) {
-        testPrint("           listOf<" + objectName + ">(")
-        val elements = parseLine(line)
-        for (element in elements) {
-            testPrint("            " + objectName + "(\"" + element + "\"),")
-        }
-        testPrint("            ),")
-    }
-
     private fun convertBarLineToList(line: String) {
         testPrint("           listOf<String>(")
         val elements = parseLine(line)
         for (element in elements) {
             testPrint("            \"" + element + "\",")
+        }
+        testPrint("            ),")
+    }
+    private fun convertBarLineToListOfObject(line: String, objectName: String) {
+        testPrint("           listOf<" + objectName + ">(")
+        val elements = parseLine(line)
+        for (element in elements) {
+            testPrint("            " + objectName + "(\"" + element + "\"),")
         }
         testPrint("            ),")
     }
