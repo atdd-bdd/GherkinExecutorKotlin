@@ -19,7 +19,8 @@ class Translate {
     // Create the output files, save names for deletions
     private val testFilename = basePath + "Test" + ".tmp"
     private var testFile = FileWriter(testFilename)
-//    private lateinit var aTestFile: FileWriter  - to not create tmp file
+
+    //    private lateinit var aTestFile: FileWriter  - to not create tmp file
     private val glueTemplateFilename = basePath + "Glue" + ".tmp"
     private var glueTemplateFile = FileWriter(glueTemplateFilename)
     private val dataDefinitionFilename = basePath + "DataDefinition" + ".tmp"
@@ -59,8 +60,7 @@ class Translate {
         var inComment = false
         for (aWord in allWords) {
             var word = aWord.trim()
-            if (word.isEmpty())
-                continue
+            if (word.isEmpty()) continue
             if (word.endsWith(":")) {
                 word = word.trim(':')
             }
@@ -117,22 +117,17 @@ class Translate {
         }
         val featureName = fullName
         featureActedOn = true
-        val testPathname =
-            Configuration.featureSubDirectory + featureName + "\\" + featureName + ".kt"
+        val testPathname = Configuration.featureSubDirectory + featureName + "\\" + featureName + ".kt"
         println(" Writing " + testPathname)
         cleanFiles()
         File(Configuration.featureSubDirectory + featureName).mkdir()
         testFile = FileWriter(testPathname, false)
-        val templateFilename =
-            Configuration.featureSubDirectory + featureName + "\\" + featureName + "_glue.tmpl"
+        val templateFilename = Configuration.featureSubDirectory + featureName + "\\" + featureName + "_glue.tmpl"
         glueTemplateFile = FileWriter(templateFilename, false)
         val dataDefinitionPathname =
-            Configuration.featureSubDirectory + featureName +
-                    "\\" + featureName + "_data." +
-                    Configuration.dataDefinitionFileExtension
+            Configuration.featureSubDirectory + featureName + "\\" + featureName + "_data." + Configuration.dataDefinitionFileExtension
         trace(" Writing " + dataDefinitionPathname)
-        dataDefinitionFile =
-            FileWriter(dataDefinitionPathname, false)
+        dataDefinitionFile = FileWriter(dataDefinitionPathname, false)
 
         glueClass = fullName + "_glue"
 
@@ -157,23 +152,25 @@ class Translate {
 
     private fun makeName(input: String): String {
         if (input.isEmpty()) return "NAME_IS_EMPTY"
-        val temp = input.replace(' ','_')
+        val temp = input.replace(' ', '_')
         return temp[0].lowercaseChar() + temp.substring(1)
     }
 
-    data class DataValues(val name:String, val default: String, val dataType : String = "String", val notes:String ="")
+    data class DataValues(
+        val name: String,
+        val default: String,
+        val dataType: String = "String",
+        val notes: String = "",
+    )
 
     private fun actOnData(words: List<String>) {
         var internalClassName = ""
-        if (words.size < 2)
-        {
+        if (words.size < 2) {
             error("Need to specify data class name")
         }
         var className = words[1]
-        if (words.size > 2)
-            internalClassName = words[2]
-        else
-            internalClassName = className + "Internal"
+        if (words.size > 2) internalClassName = words[2]
+        else internalClassName = className + "Internal"
         val (followType, table) = lookForFollow()
         if (!followType.equals("TABLE")) {
             error("Error table does not follow data " + words[0] + " " + words[1])
@@ -189,8 +186,9 @@ class Translate {
         val variables = mutableListOf<DataValues>()
         val doInternal = createVariableList(table, variables)
         for (variable in variables) {
-            dataDefinitionPrint("    val " + makeName(variable.name) + ": String = \"" +
-                    variable.default + "\",")
+            dataDefinitionPrint(
+                "    val " + makeName(variable.name) + ": String = \"" + variable.default + "\","
+            )
         }
 
         dataDefinitionPrint("    )")
@@ -228,8 +226,7 @@ class Translate {
                 checkHeaders(headers)
                 headerLine = false
 
-                if (headers.size > 2)
-                    doInternal = true
+                if (headers.size > 2) doInternal = true
                 continue
             }
             val elements = parseLine(line)
@@ -237,22 +234,16 @@ class Translate {
                 error(" Data line has less than 2 entries " + line)
                 continue
             }
-            if (elements.size > 3)
-                variables.add(DataValues(elements[0], elements[1], elements[2], elements[3]))
-            else if (elements.size > 2)
-                variables.add(DataValues(elements[0], elements[1], elements[2]))
-            else
-                variables.add(DataValues(elements[0], elements[1]))
+            if (elements.size > 3) variables.add(DataValues(elements[0], elements[1], elements[2], elements[3]))
+            else if (elements.size > 2) variables.add(DataValues(elements[0], elements[1], elements[2]))
+            else variables.add(DataValues(elements[0], elements[1]))
         }
         return doInternal
     }
 
     private fun checkHeaders(headers: MutableList<String>) {
         val expected = listOf("Name", "Default", "Datatype", "Notes")
-        if (!(headers[0].equals(expected[0]) &&
-                    headers[1].equals(expected[1]))
-        )
-            error("Headers should start with " + expected)
+        if (!(headers[0].equals(expected[0]) && headers[1].equals(expected[1]))) error("Headers should start with " + expected)
     }
 
     private fun createInternalClass(className: String, otherClassName: String, variables: List<DataValues>) {
@@ -264,16 +255,15 @@ class Translate {
         trace("Creating internal class for " + classNameInternal)
         dataNames.put(classNameInternal, "")
         dataDefinitionPrint("data class " + classNameInternal + "(")
-        for (variable in variables){
-        dataDefinitionPrint(
-                "    val " + makeName(variable.name) + ": " + variable.dataType +
-                        "= \"" + variable.default + "\".to" + variable.dataType + "(),")
-    }
+        for (variable in variables) {
+            dataDefinitionPrint(
+                "    val " + makeName(variable.name) + ": " + variable.dataType + "= \"" + variable.default + "\".to" + variable.dataType + "(),"
+            )
+        }
         dataDefinitionPrint("    ) {")
-        dataDefinitionPrint("    fun to"+otherClassName+"() : " + otherClassName + "{")
-        dataDefinitionPrint("        return " +otherClassName + "(")
-        for (variable in variables)
-        {
+        dataDefinitionPrint("    fun to" + otherClassName + "() : " + otherClassName + "{")
+        dataDefinitionPrint("        return " + otherClassName + "(")
+        for (variable in variables) {
             dataDefinitionPrint("        " + makeName(variable.name) + ".toString(),")
         }
         dataDefinitionPrint("        ) }") // end function
@@ -291,15 +281,13 @@ class Translate {
         if (firstScenario) {
             firstScenario = false
         } else {
-            if (cleanup && addBackground)
-                testPrint("        test_Cleanup()")
+            if (cleanup && addBackground) testPrint("        test_Cleanup()")
             testPrint("        }") // end previous scenario
         }
         testPrint("    @Test")
         testPrint("    fun test_" + fullNameToUse + "(){")
         testPrint("        val " + glueObject + " = " + glueClass + "()")
-        if (background && addBackground)
-            testPrint("        test_Background()")
+        if (background && addBackground) testPrint("        test_Background()")
     }
 
     private fun actOnStep(fullName: String, comment: List<String>) {
@@ -310,9 +298,11 @@ class Translate {
             "TABLE" -> {
                 createTheTable(comment, table, fullName)
             }
+
             "NOTHING" -> {
                 noParameter(fullName)
             }
+
             "STRING" -> {
                 createTheStringCode(comment, table, fullName)
             }
@@ -325,12 +315,9 @@ class Translate {
         fullName: String,
     ) {
         var option = "String"
-        if (comment.size > 0 && comment[0].isNotEmpty())
-            option = comment[0]
-        if (option.equals("ListOfString"))
-            stringToList(table, fullName)
-        else
-            stringToString(table, fullName)
+        if (comment.size > 0 && comment[0].isNotEmpty()) option = comment[0]
+        if (option.equals("ListOfString")) stringToList(table, fullName)
+        else stringToString(table, fullName)
     }
 
 
@@ -340,16 +327,13 @@ class Translate {
         fullName: String,
     ): Boolean {
         var option = "ListOfList"
-        if (comment.size > 0 && comment[0].isNotEmpty())
-            option = comment[0]
+        if (comment.size > 0 && comment[0].isNotEmpty()) option = comment[0]
         if (option.equals("ListOfList")) {
             if (comment.size > 1 && comment[1].length > 0) {
                 val objectName = comment[1]
                 tableToListOfListOfObject(table, fullName, objectName)
-            } else
-                tableToListOfList(table, fullName)
-        } else if (option.equals("String") ||option.equals("string")  )
-            tableToString(table, fullName)
+            } else tableToListOfList(table, fullName)
+        } else if (option.equals("String") || option.equals("string")) tableToString(table, fullName)
         else if (option.equals("ListOfObject")) {
             if (comment.size < 2) {
                 error("No class name specified")
@@ -360,10 +344,8 @@ class Translate {
             var transpose = false
             if (comment.size > 2) {
                 val action = comment[2]
-                if (!(action.equals("transpose")|| action.equals("Transpose")))
-                    error("Action not recognized " + action)
-                else
-                    transpose = true
+                if (!(action.equals("transpose") || action.equals("Transpose"))) error("Action not recognized " + action)
+                else transpose = true
             }
             tableToListOfObject(table, fullName, className, transpose)
         } else {
@@ -425,15 +407,13 @@ class Translate {
     }
 
     private fun convertToListList(table: MutableList<String>, transpose: Boolean): List<List<String>> {
-        val temporary =
-            mutableListOf(mutableListOf<String>())
+        val temporary = mutableListOf(mutableListOf<String>())
         temporary.removeAt(0)
         for (line in table) {
             temporary.add(parseLine(line))
         }
         var result = temporary
-        if (transpose)
-            result = transpose(temporary)
+        if (transpose) result = transpose(temporary)
         return result
     }
 
@@ -447,12 +427,9 @@ class Translate {
         testPrint("            " + className + "(")
         for (i in 0 until size) {
             testPrint(
-                "                " + makeName(headers[i]) + " = \"" +
-                        values[i].replace(
-                            Configuration.spaceCharacters,
-                            ' '
-                        )
-                        + "\","
+                "                " + makeName(headers[i]) + " = \"" + values[i].replace(
+                    Configuration.spaceCharacters, ' '
+                ) + "\","
             )
         }
         testPrint("                ),")
@@ -473,13 +450,10 @@ class Translate {
             return  // already have a prototype
         }
         glueFunctions.put(fullName, dataType)
-        if (dataType.isEmpty())
-            templatePrint("    fun " + fullName + "(){")
-        else
-            templatePrint("    fun " + fullName + "( value " + ": " + dataType + ") {")
+        if (dataType.isEmpty()) templatePrint("    fun " + fullName + "(){")
+        else templatePrint("    fun " + fullName + "( value " + ": " + dataType + ") {")
         templatePrint("        println(\"*******\")")
-        if (dataType.length != 0)
-            templatePrint("        println(value)")
+        if (dataType.length != 0) templatePrint("        println(value)")
         templatePrint("        fail(\"Must implement\")")
         templatePrint("    }")
         templatePrint("")
@@ -570,8 +544,7 @@ class Translate {
 
     private fun parseLine(line: String): MutableList<String> {
         var lineShort = line.trim()
-        if (lineShort[0] == '|')
-            lineShort = lineShort.substringAfter('|')
+        if (lineShort[0] == '|') lineShort = lineShort.substringAfter('|')
         else {
             error("table not begin with | " + line)
             return mutableListOf("ERROR IN TABLE LINE " + line)
@@ -581,10 +554,8 @@ class Translate {
             error("table format error " + line)
             return mutableListOf<String>("ERROR IN TABLE LINE " + line)
         }
-        if (lineShort[last] == '|')
-            lineShort = lineShort.substring(0, last)
-        else
-            error("table not end with | " + line)
+        if (lineShort[last] == '|') lineShort = lineShort.substring(0, last)
+        else error("table not end with | " + line)
         val elements = lineShort.split("|")
         val elementsTrimmed = mutableListOf<String>()
         for (element in elements) {
@@ -602,8 +573,7 @@ class Translate {
             line = dataIn.next().trim()
             if (line[0] == '|' && line.endsWith('|')) {
                 retValue.add(line)
-            } else
-                error("Invalid line in table " + line)
+            } else error("Invalid line in table " + line)
             line = dataIn.peek().trim()
         }
         return retValue
@@ -654,16 +624,46 @@ class Translate {
     }
 
     private fun endUp() {
-        if (cleanup)
-            testPrint("        test_Cleanup()")
-        testPrint("        }")   // End last scenario 
+        if (cleanup) testPrint("        test_Cleanup()")
+        testPrint("        }")   // End last scenario
         testPrint("    }") // End the class
         testPrint("")
-        templatePrint("    }")   // End the class 
+        templatePrint("    }")   // End the class
         testFile.close()
         glueTemplateFile.close()
         dataDefinitionFile.close()
     }
+
+    fun transpose(matrix: List<List<String>>): MutableList<MutableList<String>> {
+        val transposed = MutableList(matrix[0].size) { MutableList(matrix.size) { "" } }
+        val sizeRow = matrix[0].size
+        for (element in matrix) {
+            if (element.size != sizeRow) {
+                error("*** Table has uneven rows - not transposed")
+                error("     Will probably exit ")
+            }
+        }
+        for (i in matrix.indices) {
+
+            for (j in matrix[i].indices) {
+                transposed[j][i] = matrix[i][j]
+            }
+        }
+        return transposed
+    }
+
+
+    fun trace(value: String) {
+        if (Configuration.traceOn) {
+            println(value)
+
+        }
+
+    }
+    fun error(value: String) {
+        println("*** " + value)
+    }
+
 
     class InputIterator(name: String) {
         var linesIn = mutableListOf<String>()
@@ -705,11 +705,9 @@ class Translate {
                     if (includedFileName.endsWith(".csv")) {
                         includeCSVFile(includedFileName)
 
-                    } else
-                        readFile(includedFileName)
+                    } else readFile(includedFileName)
                 } else {
-                    if (line.isNotEmpty() && line[0] != '#')
-                        linesIn.add(line.trim())
+                    if (line.isNotEmpty() && line[0] != '#') linesIn.add(line.trim())
                 }
             }
             includeCount--
@@ -718,11 +716,54 @@ class Translate {
         private fun includeCSVFile(includedFileName: String) {
             val raw = File(Configuration.featureSubDirectory + includedFileName).readLines()
             for (line in raw) {
-                if (line.isEmpty())
-                    continue
+                if (line.isEmpty()) continue
                 val contents = convertCSVtoTable(line)
                 linesIn.add(contents.trim())
             }
+        }
+
+        fun convertCSVtoTable(csvData: String): String {
+            val lines = csvData.split("\n")
+            val data = lines.map { parseCsvLine(it) }
+            val formattedData = data.map { row ->
+                "|" + row.joinToString("|") + "|"
+            }
+            return formattedData.joinToString("\n")
+        }
+
+        fun parseCsvLine(line: String): List<String> {
+            val result = mutableListOf<String>()
+            var current = StringBuilder()
+            var inQuotes = false
+
+            val length = line.length
+            var i = 0
+
+            while (i < length) {
+                val char = line[i]
+                when {
+                    char == '"' -> {
+                        if (inQuotes && i + 1 < length && line[i + 1] == '"') {
+                            current.append('"')
+                            i++
+                        } else {
+                            inQuotes = !inQuotes
+                        }
+                    }
+
+                    char == ',' && !inQuotes -> {
+                        result.add(current.toString())
+                        current = StringBuilder()
+                    }
+
+                    else -> {
+                        current.append(char)
+                    }
+                }
+                i++
+            }
+            result.add(current.toString())
+            return result
         }
 
         fun peek(): String {
@@ -743,83 +784,18 @@ class Translate {
                 return EOF
             }
         }
-
-    }
-
-}
-
-fun convertCSVtoTable(csvData: String): String {
-    val lines = csvData.split("\n")
-    val data = lines.map { parseCsvLine(it) }
-    val formattedData = data.map { row ->
-        "|" + row.joinToString("|") + "|"
-    }
-    return formattedData.joinToString("\n")
-}
-
-fun transpose(matrix: List<List<String>>): MutableList<MutableList<String>> {
-    val transposed = MutableList(matrix[0].size) { MutableList(matrix.size) { "" } }
-    val sizeRow = matrix[0].size
-    for (element in matrix) {
-        if (element.size != sizeRow) {
-            error("*** Table has uneven rows - not transposed")
-            error("     Will probably exit ")
-        }
-    }
-    for (i in matrix.indices) {
-
-        for (j in matrix[i].indices) {
-            transposed[j][i] = matrix[i][j]
-        }
-    }
-    return transposed
-}
-
-fun parseCsvLine(line: String): List<String> {
-    val result = mutableListOf<String>()
-    var current = StringBuilder()
-    var inQuotes = false
-
-    val length = line.length
-    var i = 0
-
-    while (i < length) {
-        val char = line[i]
-        when {
-            char == '"' -> {
-                if (inQuotes && i + 1 < length && line[i + 1] == '"') {
-                    current.append('"')
-                    i++
-                } else {
-                    inQuotes = !inQuotes
-                }
-            }
-
-            char == ',' && !inQuotes -> {
-                result.add(current.toString())
-                current = StringBuilder()
-            }
-
-            else -> {
-                current.append(char)
+        fun trace(value: String) {
+            if (Configuration.traceOn) {
+                println(value)
             }
         }
-        i++
+        fun error(value: String) {
+            println("*** " + value)
+        }
     }
-    result.add(current.toString())
-    return result
+
 }
 
-fun trace(value: String) {
-    if (Configuration.traceOn) {
-        println(value)
-
-    }
-}
-
-fun error(value: String) {
-    println("*** " + value)
-}
 
 class Configuration {
     companion object {
@@ -827,8 +803,8 @@ class Configuration {
         var spaceCharacters = '^'  // Will replace with space in tables
         var currentDirectory = ""
         var featureSubDirectory = "src\\test\\kotlin\\"
-        var testSubDirectory = "src\\test\\kotlin\\"
         var packageName = "gherkinexecutor"
+        var testSubDirectory = "src\\test\\kotlin\\"       // + packageName + "\\"
         var dataDefinitionFileExtension = "tmpl" // change to kt if altering data file
         val featureFiles = mutableListOf(
 //            "tictactoe.feature",
@@ -836,15 +812,14 @@ class Configuration {
 //            "GherkinTranslator.feature",
 //            "include.feature",
 //            "testfeature.feature",
-              "examples.feature",
-            "tablesandstrings.feature",
+            "examples.feature", "tablesandstrings.feature",
 //            "FlowGrid.feature",
 //            "Robot Game.feature",
-              "data_definition.feature",
+            "data_definition.feature",
 //            "ParseCSV.feature",
 //            "SimpleTest.feature",
 //            "GherkinTranslatorSmokeTest.feature",
-              "GherkinTranslatorFullTest.feature"
+            "GherkinTranslatorFullTest.feature"
         )
     }
 }
