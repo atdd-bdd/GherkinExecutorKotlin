@@ -28,8 +28,8 @@ class TicTacToeGame {
 }
 
 fun ListOfListToString(value: List<List<String>>): String {
-    var maxSize = 0;
-    var maxSizes = mutableListOf<Int>()
+
+    val maxSizes = mutableListOf<Int>()
     for (row in value) {
         var column= 0
         for (cell in row) {

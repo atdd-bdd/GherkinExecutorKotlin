@@ -1,4 +1,4 @@
-package gherkinexecutor.Feature_Examples
+package Feature_Examples
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

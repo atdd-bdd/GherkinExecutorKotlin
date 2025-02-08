@@ -1,4 +1,4 @@
-Feature: Data 
+Feature: Data Definition
 
 # Should used InternalClass as the name 
 Data MyClass InternalClass

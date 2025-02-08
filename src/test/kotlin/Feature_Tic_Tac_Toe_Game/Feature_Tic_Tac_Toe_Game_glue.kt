@@ -1,4 +1,4 @@
-package gherkinexecutor.Feature_Tic_Tac_Toe_Game
+package Feature_Tic_Tac_Toe_Game
 
 import kotlin.test.assertEquals
 

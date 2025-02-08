@@ -1,4 +1,4 @@
-package gherkinexecutor.Feature_Examples
+package Feature_Examples
 
 class TemperatureCalculations {
     companion object {

@@ -1,0 +1,68 @@
+---  Given
+a,"b,c","c"","
+1,2,"3,""b,"",,"
+---  When_converted_result_is
+|a|b,c|c",|
+|1|2|3,"b,",,|
+---  Given_Background_Function
+---  Given_list_of_numbers
+[NameValue(iD=a, value=1), NameValue(iD=b, value=2), NameValue(iD=a, value=3)]
+---  When_filtered_by_ID_value
+[[a]]
+---  Then_sum_is
+[[4]]
+---  Given_Cleanup_Function
+---  Given_a_string
+This is an include string
+---  Then_a_table
+[[a, b,c, d,], [1, 2, 3]]
+---  Given_Background_Function
+---  Star_A_table_to_List_of_List_of_String
+[[aa, bb], [cc, dd]]
+---  Star_A_table_to_List_of_Object
+[ExampleClass(fieldA=a, fieldB=b), ExampleClass(fieldA=c, fieldB=d)]
+---  Star_A_table_to_List_of_Object
+[ExampleClass(fieldA=a, fieldB=b), ExampleClass(fieldA=c, fieldB=d)]
+---  Star_A_table_to_List_of_Object_with_Defaults
+[ExampleClass(fieldA=a, fieldB=x), ExampleClass(fieldA=c, fieldB=x)]
+---  Star_A_table_to_List_of_Object_with_Blanks_in_Name
+[ExampleClassWithBlanks(field_1=a, field_2=b), ExampleClassWithBlanks(field_1=c, field_2=d)]
+---  Star_A_table_to_String
+| aa  | bb  |
+| cc  | dd  |
+---  Given_Cleanup_Function
+---  Given_Background_Function
+---  Given_table_is
+[ATest(anInt=1, aString=something, aDouble=1.2)]
+---  Given_Cleanup_Function
+---  Given_Background_Function
+---  Given_Background_Function
+---  Star_A_multiline_string_to_a_string
+One line
+Two line
+---  Star_A_multiline_string_to_a_List_of_String
+[Three line, Four line]
+---  Given_Cleanup_Function
+---  Given_Background_Function
+---  Star_Convert_F_to_C
+[TemperatureComparison(f=32, c=0, notes=Freezing), TemperatureComparison(f=212, c=100, notes=Boiling), TemperatureComparison(f=-40, c=-40, notes=Below zero)]
+---  Given_Cleanup_Function
+---  Given_input_table
+[[a, b, c], [d, e, f]]
+---  When_transposed_result_is
+[[a, d], [b, e], [c, f]]
+---  Given_Background_Function
+---  Given_a_step
+[MyClass(one=v1, two=v2), MyClass(one=v1a, two=v1b)]
+---  Given_Cleanup_Function
+---  Given_Background_Function
+---  Given_a_regular_function
+---  Given_Cleanup_Function
+---  Given_Background_Function
+---  Given_a_step
+[MyClass(one=v1, two=v2), MyClass(one=v1a, two=v1b)]
+---  Given_Cleanup_Function
+---  Given_Cleanup_Function
+---  Given_Background_Function
+---  Given_a_regular_function
+---  Given_Cleanup_Function

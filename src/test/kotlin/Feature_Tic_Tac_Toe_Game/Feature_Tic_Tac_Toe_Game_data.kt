@@ -1,4 +1,4 @@
-package gherkinexecutor.Feature_Tic_Tac_Toe_Game
+package Feature_Tic_Tac_Toe_Game
 data class Move(
     var row: String = "0",
     var column: String = "0",
@@ -28,12 +28,12 @@ data class MoveInternal(
     var column: Int= "0".toInt(),
     var mark: Char= " "[0],
 ) {
-    fun toMove() : Move{
-        return Move(
-            row.toString(),
-            column.toString(),
-            mark.toString(),
-        ) }
+//    fun toMove() : Move{
+//        return Move(
+//            row.toString(),
+//            column.toString(),
+//            mark.toString(),
+//        ) }
 }
 
 

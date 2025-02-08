@@ -35,10 +35,12 @@ Scenario: Here are table options
 | c       |
 
 
-* A table to List of List of Object with String Constructor # ListOfList URL
-| https://kenpugh.com   |
-| https://atdd-bdd.com  |
+#* A table to List of List of Object with String Constructor # ListOfList URL
+#| https://kenpugh.com   |
+#| https://atdd-bdd.com  |
 # Note - the class must be imported into the test and the glue code 
+# This scenario has been commented out so that the Translator Acceptance Tests can run 
+# without having to import URL.   See the tictactoe game for an example.  
 
 * A table to List of Object with Blanks in Name # ListOfObject ExampleClassWithBlanks
 | Field 1  | Field 2  |

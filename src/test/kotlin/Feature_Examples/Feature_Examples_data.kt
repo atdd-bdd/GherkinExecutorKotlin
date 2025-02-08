@@ -1,4 +1,4 @@
-package gherkinexecutor.Feature_Examples
+package Feature_Examples
 data class NameValue(
     val iD: String = "",
     val value: String = "0",
@@ -6,19 +6,19 @@ data class NameValue(
 {
     fun toNameValueInternal() : NameValueInternal{
         return NameValueInternal(
-            iD.toString(),
+            iD,
             value.toInt(),
         ) }
 }
 data class NameValueInternal(
-    val iD: String= "".toString(),
+    val iD: String= "",
     val value: Int= "0".toInt(),
 ) {
-    fun toNameValue() : NameValue{
-        return NameValue(
-            iD.toString(),
-            value.toString(),
-        ) }
+//    fun toNameValue() : NameValue{
+//        return NameValue(
+//            iD,
+//            value.toString(),
+//        ) }
 }
 data class TemperatureComparison(
     val f: String = "0",
@@ -30,18 +30,18 @@ data class TemperatureComparison(
         return TemperatureComparisonInternal(
             f.toInt(),
             c.toInt(),
-            notes.toString(),
+            notes,
         ) }
 }
 data class TemperatureComparisonInternal(
     val f: Int= "0".toInt(),
     val c: Int= "0".toInt(),
-    val notes: String= "".toString(),
+    val notes: String= "",
 ) {
-    fun toTemperatureComparison() : TemperatureComparison{
-        return TemperatureComparison(
-            f.toString(),
-            c.toString(),
-            notes.toString(),
-        ) }
+//    fun toTemperatureComparison() : TemperatureComparison{
+//        return TemperatureComparison(
+//            f.toString(),
+//            c.toString(),
+//            notes.toString(),
+//        ) }
 }

@@ -1,6 +1,5 @@
-package gherkinexecutor.Feature_Examples
+package Feature_Examples
 
-import gherkinexecutor.Feature_Examples.TemperatureCalculations
 import kotlin.test.assertEquals
 
 

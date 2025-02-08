@@ -18,8 +18,8 @@ Commit
 """
 When displayed 
 Then grid is               # String
-| R  | C  |
-| C  | C  |
+| R  | C  | E  |
+| C  | C  | F  |
 
 Scenario: One Test that fails 
 Given log contains       # String

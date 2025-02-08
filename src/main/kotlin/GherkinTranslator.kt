@@ -7,14 +7,15 @@ class Translate {
     private val glueFunctions = mutableMapOf(Pair("", "")) // used to make sure only one glue implementation
     private val dataNames = mutableMapOf(Pair("", "")) // used to check for duplicate data
     private var stepCount = 0 // use to label duplicate scenarios
-    private val basePath = Configuration.testSubDirectory
+    private val basePath = Configuration.featureSubDirectory
     private var glueClass = ""  // glue class name
     private var glueObject = ""  // glue object name
     private var stepNumberInScenario: Int = 0  // use to label variables in scenario
-    var dataIn = InputIterator("")
+    private var dataIn = InputIterator("")
     private var firstScenario = true // If first scenario
     private var background = false  // Have seen background
     private var cleanup = false // Have seen cleanup
+    private var inCleanupScenario = false // Scenario is cleanup
 
     // Create the output files, save names for deletions
     private val testFilename = basePath + "Test" + ".tmp"
@@ -84,6 +85,7 @@ class Translate {
     private fun actOnKeyword(keyword: String, words: List<String>, comment: List<String>) {
         val fullName = words.joinToString("_")
         trace("Act on keyword " + keyword + " " + fullName)
+        inCleanupScenario = false
         when (keyword) {
             "Feature" -> actOnFeature(fullName)
             "Scenario" -> actOnScenario(fullName, true)
@@ -94,6 +96,7 @@ class Translate {
 
             "Cleanup" -> {
                 actOnScenario(fullName, false)
+                inCleanupScenario = true
                 cleanup = true
             }
 
@@ -102,6 +105,7 @@ class Translate {
             "Then" -> actOnStep(fullName, comment)
             "And" -> actOnStep(fullName, comment)
             "Star" -> actOnStep(fullName, comment)
+            "Rule" -> actOnStep(fullName, comment)
             "Data" -> actOnData(words)
             "Arrange" -> actOnStep(fullName, comment)
             "Act" -> actOnStep(fullName, comment)
@@ -110,36 +114,34 @@ class Translate {
         }
     }
 
-    private fun actOnFeature(fullName: String) {
+    private fun actOnFeature(featureName: String) {
         if (featureActedOn) {
-            error("Feature keyword duplicated - it is ignored " + fullName)
+            error("Feature keyword duplicated - it is ignored " + featureName)
             return
         }
-        val featureName = fullName
         featureActedOn = true
-        val testPathname = Configuration.featureSubDirectory + featureName + "\\" + featureName + ".kt"
+        val testPathname = Configuration.testSubDirectory + featureName + "\\" + featureName + ".kt"
         println(" Writing " + testPathname)
+        val directoryName = Configuration.testSubDirectory + featureName
+        val result = File(directoryName).mkdirs()
+        println("Creating " + directoryName + " " + result)
         cleanFiles()
-        File(Configuration.featureSubDirectory + featureName).mkdir()
         testFile = FileWriter(testPathname, false)
-        val templateFilename = Configuration.featureSubDirectory + featureName + "\\" + featureName + "_glue.tmpl"
+        val templateFilename = Configuration.testSubDirectory + featureName + "\\" + featureName + "_glue.tmpl"
         glueTemplateFile = FileWriter(templateFilename, false)
         val dataDefinitionPathname =
-            Configuration.featureSubDirectory + featureName + "\\" + featureName + "_data." + Configuration.dataDefinitionFileExtension
+            Configuration.testSubDirectory + featureName + "\\" + featureName + "_data." + Configuration.dataDefinitionFileExtension
         trace(" Writing " + dataDefinitionPathname)
         dataDefinitionFile = FileWriter(dataDefinitionPathname, false)
 
-        glueClass = fullName + "_glue"
+        glueClass = featureName + "_glue"
 
-        glueObject = makeName(fullName) + "_glue_object"
-//        val data_class = fullName + "_data"
+        glueObject = makeName(featureName) + "_glue_object"
         testPrint("package " + Configuration.packageName + "." + featureName)
         testPrint("import org.junit.jupiter.api.Test")
         testPrint("import org.junit.jupiter.api.TestInstance")
-//        test_print("import " + Configuration.packageName + "." + glue_class)
-//        test_print("import " + Configuration.packageName + "." + data_class)
         testPrint("@TestInstance(TestInstance.Lifecycle.PER_CLASS)")
-        testPrint("class " + fullName + "{")
+        testPrint("class " + featureName + "{")
         testPrint("")
 
         templatePrint("package " + Configuration.packageName + "." + featureName)
@@ -164,7 +166,7 @@ class Translate {
     )
 
     private fun actOnData(words: List<String>) {
-        var internalClassName = ""
+        val internalClassName: String
         if (words.size < 2) {
             error("Need to specify data class name")
         }
@@ -281,7 +283,7 @@ class Translate {
         if (firstScenario) {
             firstScenario = false
         } else {
-            if (cleanup && addBackground) testPrint("        test_Cleanup()")
+            if (cleanup && addBackground && !inCleanupScenario) testPrint("        test_Cleanup()")
             testPrint("        }") // end previous scenario
         }
         testPrint("    @Test")
@@ -397,12 +399,10 @@ class Translate {
                 inHeaderLine = false
                 continue
             }
-            val values = row
-            convertBarLineToParameter(headers, values, className)
+            convertBarLineToParameter(headers, row, className)
         }
         testPrint("            )")
         testPrint("        " + glueObject + "." + fullName + "(objectList" + s + ")")
-//        test_print("")
         makeFunctionTemplate(dataType, fullName)
     }
 
@@ -452,9 +452,12 @@ class Translate {
         glueFunctions.put(fullName, dataType)
         if (dataType.isEmpty()) templatePrint("    fun " + fullName + "(){")
         else templatePrint("    fun " + fullName + "( value " + ": " + dataType + ") {")
-        templatePrint("        println(\"*******\")")
+        templatePrint("        println(\"---  \" + " + "\"" + fullName + "\")")
         if (dataType.length != 0) templatePrint("        println(value)")
-        templatePrint("        fail(\"Must implement\")")
+        if (!Configuration.inTest)
+            templatePrint("        fail(\"Must implement\")")
+        else
+            templatePrint("")
         templatePrint("    }")
         templatePrint("")
     }
@@ -493,7 +496,6 @@ class Translate {
         }
         testPrint("            \"\"\".trimIndent()")
         testPrint("        " + glueObject + "." + fullName + "(table" + s + ")")
-//        test_print("")
         makeFunctionTemplate("String", fullName)
     }
 
@@ -507,7 +509,6 @@ class Translate {
         }
         testPrint("            )")
         testPrint("        " + glueObject + "." + fullName + "(stringListList" + s + ")")
-//        test_print("")
         makeFunctionTemplate(dataType, fullName)
     }
 
@@ -532,6 +533,7 @@ class Translate {
         }
         testPrint("            ),")
     }
+
     private fun convertBarLineToListOfObject(line: String, objectName: String) {
         testPrint("           listOf<" + objectName + ">(")
         val elements = parseLine(line)
@@ -551,7 +553,7 @@ class Translate {
         val last = lineShort.length - 1
         if (last < 0) {
             error("table format error " + line)
-            return mutableListOf<String>("ERROR IN TABLE LINE " + line)
+            return mutableListOf("ERROR IN TABLE LINE " + line)
         }
         if (lineShort[last] == '|') lineShort = lineShort.substring(0, last)
         else error("table not end with | " + line)
@@ -623,7 +625,7 @@ class Translate {
     }
 
     private fun endUp() {
-        if (cleanup) testPrint("        test_Cleanup()")
+        if (cleanup && !inCleanupScenario) testPrint("        test_Cleanup()")
         testPrint("        }")   // End last scenario
         testPrint("    }") // End the class
         testPrint("")
@@ -633,7 +635,7 @@ class Translate {
         dataDefinitionFile.close()
     }
 
-    fun transpose(matrix: List<List<String>>): MutableList<MutableList<String>> {
+    private fun transpose(matrix: List<List<String>>): MutableList<MutableList<String>> {
         val transposed = MutableList(matrix[0].size) { MutableList(matrix.size) { "" } }
         val sizeRow = matrix[0].size
         for (element in matrix) {
@@ -652,20 +654,21 @@ class Translate {
     }
 
 
-    fun trace(value: String) {
+    private fun trace(value: String) {
         if (Configuration.traceOn) {
             println(value)
 
         }
 
     }
-    fun error(value: String) {
+
+    private fun error(value: String) {
         println("*** " + value)
     }
 
 
     class InputIterator(name: String) {
-        var linesIn = mutableListOf<String>()
+        private var linesIn = mutableListOf<String>()
         private var index = 0
 
         companion object {
@@ -721,7 +724,7 @@ class Translate {
             }
         }
 
-        fun convertCSVtoTable(csvData: String): String {
+        private fun convertCSVtoTable(csvData: String): String {
             val lines = csvData.split("\n")
             val data = lines.map { parseCsvLine(it) }
             val formattedData = data.map { row ->
@@ -730,7 +733,7 @@ class Translate {
             return formattedData.joinToString("\n")
         }
 
-        fun parseCsvLine(line: String): List<String> {
+        private fun parseCsvLine(line: String): List<String> {
             val result = mutableListOf<String>()
             var current = StringBuilder()
             var inQuotes = false
@@ -767,8 +770,7 @@ class Translate {
 
         fun peek(): String {
             if (index < linesIn.size) {
-                val item = linesIn[index]
-                return item
+                return linesIn[index]
             } else {
                 return EOF
             }
@@ -783,12 +785,14 @@ class Translate {
                 return EOF
             }
         }
-        fun trace(value: String) {
+
+        private fun trace(value: String) {
             if (Configuration.traceOn) {
                 println(value)
             }
         }
-        fun error(value: String) {
+
+        private fun error(value: String) {
             println("*** " + value)
         }
     }
@@ -798,12 +802,13 @@ class Translate {
 
 class Configuration {
     companion object {
+        val inTest = true  // switch to true for development of Translator
         var traceOn = false   // Set to true to see trace
         var spaceCharacters = '^'  // Will replace with space in tables
         var currentDirectory = ""
         var featureSubDirectory = "src\\test\\kotlin\\"
         var packageName = "gherkinexecutor"
-        var testSubDirectory = "src\\test\\kotlin\\"       // + packageName + "\\"
+        var testSubDirectory = "src\\test\\kotlin\\" + packageName + "\\"
         var dataDefinitionFileExtension = "tmpl" // change to kt if altering data file
         val featureFiles = mutableListOf(
 //            "tictactoe.feature",
