@@ -8,7 +8,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="cleaned up code   added Rule keyword.   Fixed issue with Cleanup keyword" />
+    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="cleaned up code   added Rule keyword.   Fixed issue with Cleanup keyword">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documentation draft.txt" beforeDir="false" afterPath="$PROJECT_DIR$/documentation draft.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/readme.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,7 +65,7 @@
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.fileTypes",
+    "settings.editor.selected.configurable": "advanced.settings",
     "two.files.diff.last.used.file": "C:/Users/user/ideaprojects/GherkinExecutor/src/test/kotlin/gherkinexecutor/Feature_Full_Test/Feature_Full_Test.kt"
   }
 }]]></component>
