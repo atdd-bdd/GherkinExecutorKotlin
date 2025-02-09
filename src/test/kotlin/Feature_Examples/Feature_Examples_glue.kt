@@ -15,8 +15,8 @@ class Feature_Examples_glue {
     }
 
 
-    fun When_filtered_by_ID_value( value : List<List<String>>) {
-            solution.setFilterValue((value[0][0]))
+    fun When_filtered_by_ID_value(value: List<List<String>>) {
+        solution.setFilterValue((value[0][0]))
     }
 
     fun Then_sum_is(value: List<List<String>>) {
@@ -35,4 +35,26 @@ class Feature_Examples_glue {
             )
         }
     }
+
+    fun Star_ID_must_have_exactly_5_letters_and_begin_with_Q( value : List<DomainTermID>) {
+        println("---  " + "Star_ID_must_have_exactly_5_letters_and_begin_with_Q")
+        println(value)
+
+    }
+
+    fun XStar_ID_must_have_exactly_5_letters_and_begin_with_Q(value: List<DomainTermID>) {
+        println("---  " + "Star_ID_must_have_exactly_5_letters_and_begin_with_Q")
+        println(value)
+
+        for (element in value) {
+            val temp = element.toDomainTermIDInternal()
+            assertEquals(
+                temp.valid,
+                ID(temp.value).isValid(),
+                temp.notes
+            )
+        }
+
+    }
+
 }

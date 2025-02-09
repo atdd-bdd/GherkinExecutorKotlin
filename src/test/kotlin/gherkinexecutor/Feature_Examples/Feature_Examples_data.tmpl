@@ -45,3 +45,28 @@ data class TemperatureComparisonInternal(
         notes.toString(),
         ) }
     }
+data class DomainTermID(
+    val value: String = "0",
+    val valid: String = "no",
+    val notes: String = "",
+    )
+ {
+    fun toDomainTermIDInternal() : DomainTermIDInternal{
+        return DomainTermIDInternal(
+        value.toString(),
+        valid.toBoolean(),
+        notes.toString(),
+        ) }
+    }
+data class DomainTermIDInternal(
+    val value: String= "0".toString(),
+    val valid: Boolean= "no".toBoolean(),
+    val notes: String= "".toString(),
+    ) {
+    fun toDomainTermID() : DomainTermID{
+        return DomainTermID(
+        value.toString(),
+        valid.toString(),
+        notes.toString(),
+        ) }
+    }

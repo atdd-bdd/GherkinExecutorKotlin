@@ -14,6 +14,7 @@ data class NameValueInternal(
     val iD: String= "",
     val value: Int= "0".toInt(),
 ) {
+//    Commented out since it is not used in the example
 //    fun toNameValue() : NameValue{
 //        return NameValue(
 //            iD,
@@ -38,10 +39,37 @@ data class TemperatureComparisonInternal(
     val c: Int= "0".toInt(),
     val notes: String= "",
 ) {
+//    Commented out since it is not used in the example
 //    fun toTemperatureComparison() : TemperatureComparison{
 //        return TemperatureComparison(
 //            f.toString(),
 //            c.toString(),
 //            notes.toString(),
 //        ) }
+}
+
+data class DomainTermID(
+    val value: String = "0",
+    val valid: String = "no",
+    val notes: String = "",
+)
+{
+    fun toDomainTermIDInternal() : DomainTermIDInternal{
+        return DomainTermIDInternal(
+            value.toString(),
+            valid.toBoolean(),
+            notes.toString(),
+        ) }
+}
+data class DomainTermIDInternal(
+    val value: String= "0".toString(),
+    val valid: Boolean= "no".toBoolean(),
+    val notes: String= "".toString(),
+) {
+    fun toDomainTermID() : DomainTermID{
+        return DomainTermID(
+            value.toString(),
+            valid.toString(),
+            notes.toString(),
+        ) }
 }

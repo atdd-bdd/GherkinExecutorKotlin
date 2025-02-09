@@ -32,4 +32,20 @@ Data TemperatureComparison
 | C      | 0        | Int       |        |
 | Notes  |          | String    |        |
 
+Scenario: Domain Term ID 
+* ID must have exactly 5 letters and begin with Q # ListOfObject DomainTermID
+| Value   | Valid  | Notes              |
+| Q1234   | true   |                    |
+| Q123    | false  | Too short          |
+| Q12345  | false  | Too long           |
+| A1234   | false  | Must begin with Q  |
+
+Data DomainTermID
+| Name   | Default  | DataType  |
+| Value  | 0        | String    |
+| Valid  | no       | Boolean   |
+| Notes  |          | String    |
+
+
+
 

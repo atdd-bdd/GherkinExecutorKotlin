@@ -1,30 +1,63 @@
 package gherkinexecutor.Feature_Examples
+
+import kotlin.test.assertEquals
 import kotlin.test.fail
 
 class Feature_Examples_glue {
 
-    fun Given_list_of_numbers( value : List<NameValue>) {
-        println("*******")
-        println(value)
-        fail("Must implement")
-    }
+    val solution = SolutionForListOfNumber()
 
-    fun When_filtered_by_ID_value( value : List<List<String>>) {
-        println("*******")
-        println(value)
-        fail("Must implement")
-    }
-
-    fun Then_sum_is( value : List<List<String>>) {
-        println("*******")
-        println(value)
-        fail("Must implement")
-    }
-
-    fun Star_Convert_F_to_C( value : List<TemperatureComparison>) {
-        println("*******")
-        println(value)
-        fail("Must implement")
-    }
+    fun Given_list_of_numbers(value: List<NameValue>) {
+        for (element in value) {
+            solution.add(element.toNameValueInternal())
+        }
 
     }
+
+
+    fun When_filtered_by_ID_value(value: List<List<String>>) {
+        solution.setFilterValue((value[0][0]))
+    }
+
+    fun Then_sum_is(value: List<List<String>>) {
+        val sum = solution.sum()
+        assertEquals(value[0][0].toInt(), sum)
+    }
+
+
+    fun Star_Convert_F_to_C(value: List<TemperatureComparison>) {
+        for (element in value) {
+            val temp = element.toTemperatureComparisonInternal()
+            assertEquals(
+                temp.c,
+                TemperatureCalculations.convertFarenheitToCelsius(temp.f),
+                temp.notes
+            )
+        }
+    }
+
+    fun Star_ID_must_have_exactly_5_letters_and_begin_with_Q( value : List<DomainTermID>) {
+        println("---  " + "Star_ID_must_have_exactly_5_letters_and_begin_with_Q")
+
+        for (element in value) {
+            val temp = element.toDomainTermIDInternal()
+            try {
+                ID(temp.value)
+                if (!temp.valid)
+                    fail("Value of " + temp.value + "accepted but should fail")
+            }
+            catch(e: Exception){
+                if (temp.valid)
+                    fail("Value of " + temp.value + "failed but should be accepted")
+                assertEquals(temp.notes, e.message, "Message does not mathc")
+            }
+//            assertEquals(
+//                temp.valid,
+//                ID(temp.value).isValid(),
+//                temp.notes
+//            )
+        }
+
+    }
+
+}

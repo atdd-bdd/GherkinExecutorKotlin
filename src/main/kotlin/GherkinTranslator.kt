@@ -20,8 +20,8 @@ class Translate {
     // Create the output files, save names for deletions
     private val testFilename = basePath + "Test" + ".tmp"
     private var testFile = FileWriter(testFilename)
-
     //    private lateinit var aTestFile: FileWriter  - to not create tmp file
+
     private val glueTemplateFilename = basePath + "Glue" + ".tmp"
     private var glueTemplateFile = FileWriter(glueTemplateFilename)
     private val dataDefinitionFilename = basePath + "DataDefinition" + ".tmp"
@@ -106,6 +106,7 @@ class Translate {
             "And" -> actOnStep(fullName, comment)
             "Star" -> actOnStep(fullName, comment)
             "Rule" -> actOnStep(fullName, comment)
+            "Calculation" -> actOnStep(fullName, comment)
             "Data" -> actOnData(words)
             "Arrange" -> actOnStep(fullName, comment)
             "Act" -> actOnStep(fullName, comment)
@@ -137,19 +138,19 @@ class Translate {
         glueClass = featureName + "_glue"
 
         glueObject = makeName(featureName) + "_glue_object"
-        testPrint("package " + Configuration.packageName + "." + featureName)
-        testPrint("import org.junit.jupiter.api.Test")
-        testPrint("import org.junit.jupiter.api.TestInstance")
-        testPrint("@TestInstance(TestInstance.Lifecycle.PER_CLASS)")
-        testPrint("class " + featureName + "{")
-        testPrint("")
+        testPrintLn("package " + Configuration.packageName + "." + featureName)
+        testPrintLn("import org.junit.jupiter.api.Test")
+        testPrintLn("import org.junit.jupiter.api.TestInstance")
+        testPrintLn("@TestInstance(TestInstance.Lifecycle.PER_CLASS)")
+        testPrintLn("class " + featureName + "{")
+        testPrintLn("")
 
-        templatePrint("package " + Configuration.packageName + "." + featureName)
-        templatePrint("import kotlin.test.fail")
-        templatePrint("")
-        templatePrint("class " + glueClass + " {")
-        templatePrint("")
-        dataDefinitionPrint("package " + Configuration.packageName + "." + featureName)
+        templatePrintLn("package " + Configuration.packageName + "." + featureName)
+        templatePrintLn("import kotlin.test.fail")
+        templatePrintLn("")
+        templatePrintLn("class " + glueClass + " {")
+        templatePrintLn("")
+        dataDefinitionPrintLn("package " + Configuration.packageName + "." + featureName)
     }
 
     private fun makeName(input: String): String {
@@ -158,120 +159,6 @@ class Translate {
         return temp[0].lowercaseChar() + temp.substring(1)
     }
 
-    data class DataValues(
-        val name: String,
-        val default: String,
-        val dataType: String = "String",
-        val notes: String = "",
-    )
-
-    private fun actOnData(words: List<String>) {
-        val internalClassName: String
-        if (words.size < 2) {
-            error("Need to specify data class name")
-        }
-        var className = words[1]
-        if (words.size > 2) internalClassName = words[2]
-        else internalClassName = className + "Internal"
-        val (followType, table) = lookForFollow()
-        if (!followType.equals("TABLE")) {
-            error("Error table does not follow data " + words[0] + " " + words[1])
-            return
-        }
-        if (dataNames.containsKey(className)) {
-            error("Data name is duplicated, has been renamed " + className)
-            className += stepCount
-        }
-        trace("Creating class for " + className)
-        dataNames.put(className, "")
-        dataDefinitionPrint("data class " + className + "(")
-        val variables = mutableListOf<DataValues>()
-        val doInternal = createVariableList(table, variables)
-        for (variable in variables) {
-            dataDefinitionPrint(
-                "    val " + makeName(variable.name) + ": String = \"" + variable.default + "\","
-            )
-        }
-
-        dataDefinitionPrint("    )")
-
-        if (doInternal) {
-            createConversionMethod(internalClassName, variables)
-            createInternalClass(internalClassName, className, variables)
-        }
-    }
-
-    private fun createConversionMethod(
-        internalClassName: String,
-        variables: MutableList<DataValues>,
-    ) {
-        dataDefinitionPrint(" {")
-        dataDefinitionPrint("    fun to" + internalClassName + "() : " + internalClassName + "{")
-        dataDefinitionPrint("        return " + internalClassName + "(")
-        for (variable in variables) {
-            dataDefinitionPrint("        " + makeName(variable.name) + ".to" + variable.dataType + "(),")
-        }
-        dataDefinitionPrint("        ) }") // end function
-
-        dataDefinitionPrint("    }") // end class
-    }
-
-    private fun createVariableList(
-        table: MutableList<String>,
-        variables: MutableList<DataValues>,
-    ): Boolean {
-        var headerLine = true
-        var doInternal = false
-        for (line in table) {
-            if (headerLine) {
-                val headers = parseLine(line)
-                checkHeaders(headers)
-                headerLine = false
-
-                if (headers.size > 2) doInternal = true
-                continue
-            }
-            val elements = parseLine(line)
-            if (elements.size < 2) {
-                error(" Data line has less than 2 entries " + line)
-                continue
-            }
-            if (elements.size > 3) variables.add(DataValues(elements[0], elements[1], elements[2], elements[3]))
-            else if (elements.size > 2) variables.add(DataValues(elements[0], elements[1], elements[2]))
-            else variables.add(DataValues(elements[0], elements[1]))
-        }
-        return doInternal
-    }
-
-    private fun checkHeaders(headers: MutableList<String>) {
-        val expected = listOf("Name", "Default", "Datatype", "Notes")
-        if (!(headers[0].equals(expected[0]) && headers[1].equals(expected[1]))) error("Headers should start with " + expected)
-    }
-
-    private fun createInternalClass(className: String, otherClassName: String, variables: List<DataValues>) {
-        var classNameInternal = className
-        if (dataNames.containsKey(classNameInternal)) {
-            error("Data name is duplicated, has been renamed " + classNameInternal)
-            classNameInternal += stepCount
-        }
-        trace("Creating internal class for " + classNameInternal)
-        dataNames.put(classNameInternal, "")
-        dataDefinitionPrint("data class " + classNameInternal + "(")
-        for (variable in variables) {
-            dataDefinitionPrint(
-                "    val " + makeName(variable.name) + ": " + variable.dataType + "= \"" + variable.default + "\".to" + variable.dataType + "(),"
-            )
-        }
-        dataDefinitionPrint("    ) {")
-        dataDefinitionPrint("    fun to" + otherClassName + "() : " + otherClassName + "{")
-        dataDefinitionPrint("        return " + otherClassName + "(")
-        for (variable in variables) {
-            dataDefinitionPrint("        " + makeName(variable.name) + ".toString(),")
-        }
-        dataDefinitionPrint("        ) }") // end function
-
-        dataDefinitionPrint("    }") // end class
-    }
 
     private fun actOnScenario(fullName: String, addBackground: Boolean) {
         var fullNameToUse = fullName
@@ -283,19 +170,19 @@ class Translate {
         if (firstScenario) {
             firstScenario = false
         } else {
-            if (cleanup && addBackground && !inCleanupScenario) testPrint("        test_Cleanup()")
-            testPrint("        }") // end previous scenario
+            if (cleanup && addBackground && !inCleanupScenario) testPrintLn("        test_Cleanup()")
+            testPrintLn("        }") // end previous scenario
         }
-        testPrint("    @Test")
-        testPrint("    fun test_" + fullNameToUse + "(){")
-        testPrint("        val " + glueObject + " = " + glueClass + "()")
-        if (background && addBackground) testPrint("        test_Background()")
+        testPrintLn("    @Test")
+        testPrintLn("    fun test_" + fullNameToUse + "(){")
+        testPrintLn("        val " + glueObject + " = " + glueClass + "()")
+        if (background && addBackground) testPrintLn("        test_Background()")
     }
 
     private fun actOnStep(fullName: String, comment: List<String>) {
         stepNumberInScenario += 1
         val (followType, table) = lookForFollow()
-        testPrint("")
+        testPrintLn("")
         when (followType) {
             "TABLE" -> {
                 createTheTable(comment, table, fullName)
@@ -311,6 +198,28 @@ class Translate {
         }
     }
 
+    private fun lookForFollow(): Pair<String, MutableList<String>> {
+        var line = dataIn.peek()
+        val empty = mutableListOf<String>()
+        while (line.isNotEmpty() && line[0] == '#') {
+            dataIn.next()
+            line = dataIn.peek()
+        }
+        line = line.trim()
+        if (line.isEmpty()) return Pair("NOTHING", empty)
+        if (line[0] == '|') {
+            val retValue = readTable()
+            trace("Table is " + retValue)
+            return Pair("TABLE", retValue)
+        }
+        if (line.equals("\"\"\"")) {
+            val retValue = readString()
+            trace("Multi Line String is " + retValue)
+            return Pair("STRING", retValue)
+        }
+        return Pair("NOTHING", empty)
+    }
+
     private fun createTheStringCode(
         comment: List<String>,
         table: MutableList<String>,
@@ -321,7 +230,6 @@ class Translate {
         if (option.equals("ListOfString")) stringToList(table, fullName)
         else stringToString(table, fullName)
     }
-
 
     private fun createTheTable(
         comment: List<String>,
@@ -357,28 +265,6 @@ class Translate {
         return false
     }
 
-    private fun lookForFollow(): Pair<String, MutableList<String>> {
-        var line = dataIn.peek()
-        val empty = mutableListOf<String>()
-        while (line.isNotEmpty() && line[0] == '#') {
-            dataIn.next()
-            line = dataIn.peek()
-        }
-        line = line.trim()
-        if (line.isEmpty()) return Pair("NOTHING", empty)
-        if (line[0] == '|') {
-            val retValue = readTable()
-            trace("Table is " + retValue)
-            return Pair("TABLE", retValue)
-        }
-        if (line.equals("\"\"\"")) {
-            val retValue = readString()
-            trace("Multi Line String is " + retValue)
-            return Pair("STRING", retValue)
-        }
-        return Pair("NOTHING", empty)
-    }
-
     private fun tableToListOfObject(
         table: MutableList<String>,
         fullName: String,
@@ -389,7 +275,7 @@ class Translate {
         val s = stepNumberInScenario.toString()
         val dataType = "List<" + className + ">"
         val dataTypeInitializer = "listOf<" + className + ">"
-        testPrint("        val objectList" + s + " = " + dataTypeInitializer + "(")
+        testPrintLn("        val objectList" + s + " = " + dataTypeInitializer + "(")
         var inHeaderLine = true
         val dataList = convertToListList(table, transpose)
         var headers = listOf("")
@@ -401,9 +287,14 @@ class Translate {
             }
             convertBarLineToParameter(headers, row, className)
         }
-        testPrint("            )")
-        testPrint("        " + glueObject + "." + fullName + "(objectList" + s + ")")
+        testPrintLn("            )")
+        testPrintLn("        " + glueObject + "." + fullName + "(objectList" + s + ")")
         makeFunctionTemplate(dataType, fullName)
+    }
+
+    private fun noParameter(fullName: String) {
+        testPrintLn("        " + glueObject + "." + fullName + "()")
+        makeFunctionTemplate("", fullName)
     }
 
     private fun convertToListList(table: MutableList<String>, transpose: Boolean): List<List<String>> {
@@ -424,20 +315,15 @@ class Translate {
             size = values.size
             error("not sufficient values, using what is there" + values)
         }
-        testPrint("            " + className + "(")
+        testPrintLn("            " + className + "(")
         for (i in 0 until size) {
-            testPrint(
+            testPrintLn(
                 "                " + makeName(headers[i]) + " = \"" + values[i].replace(
                     Configuration.spaceCharacters, ' '
                 ) + "\","
             )
         }
-        testPrint("                ),")
-    }
-
-    private fun noParameter(fullName: String) {
-        testPrint("        " + glueObject + "." + fullName + "()")
-        makeFunctionTemplate("", fullName)
+        testPrintLn("                ),")
     }
 
     private fun makeFunctionTemplate(dataType: String, fullName: String) {
@@ -450,52 +336,52 @@ class Translate {
             return  // already have a prototype
         }
         glueFunctions.put(fullName, dataType)
-        if (dataType.isEmpty()) templatePrint("    fun " + fullName + "(){")
-        else templatePrint("    fun " + fullName + "( value " + ": " + dataType + ") {")
-        templatePrint("        println(\"---  \" + " + "\"" + fullName + "\")")
-        if (dataType.length != 0) templatePrint("        println(value)")
+        if (dataType.isEmpty()) templatePrintLn("    fun " + fullName + "(){")
+        else templatePrintLn("    fun " + fullName + "( value " + ": " + dataType + ") {")
+        templatePrintLn("        println(\"---  \" + " + "\"" + fullName + "\")")
+        if (dataType.length != 0) templatePrintLn("        println(value)")
         if (!Configuration.inTest)
-            templatePrint("        fail(\"Must implement\")")
+            templatePrintLn("        fail(\"Must implement\")")
         else
-            templatePrint("")
-        templatePrint("    }")
-        templatePrint("")
+            templatePrintLn("")
+        templatePrintLn("    }")
+        templatePrintLn("")
     }
 
     private fun stringToList(table: MutableList<String>, fullName: String) {
         val s = stepNumberInScenario.toString()
         val dataType = "List<String>"
         val dataTypeInitializer = "listOf<String>"
-        testPrint("        val stringList" + s + " = " + dataTypeInitializer + "(")
+        testPrintLn("        val stringList" + s + " = " + dataTypeInitializer + "(")
         for (line in table) {
-            testPrint("            \"" + line + "\",")
+            testPrintLn("            \"" + line + "\",")
         }
-        testPrint("            )")
-        testPrint("        " + glueObject + "." + fullName + "(stringList" + s + ")")
+        testPrintLn("            )")
+        testPrintLn("        " + glueObject + "." + fullName + "(stringList" + s + ")")
         makeFunctionTemplate(dataType, fullName)
     }
 
     private fun stringToString(table: MutableList<String>, fullName: String) {
         val s = stepNumberInScenario.toString()
-        testPrint("        val string" + s + " =")
-        testPrint("            \"\"\"")
+        testPrintLn("        val string" + s + " =")
+        testPrintLn("            \"\"\"")
         for (line in table) {
-            testPrint("            " + line)
+            testPrintLn("            " + line)
         }
-        testPrint("            \"\"\".trimIndent()")
-        testPrint("        " + glueObject + "." + fullName + "(string" + s + ")")
+        testPrintLn("            \"\"\".trimIndent()")
+        testPrintLn("        " + glueObject + "." + fullName + "(string" + s + ")")
         makeFunctionTemplate("String", fullName)
     }
 
     private fun tableToString(table: MutableList<String>, fullName: String) {
         val s = stepNumberInScenario.toString()
-        testPrint("        val table" + s + " =")
-        testPrint("            \"\"\"")
+        testPrintLn("        val table" + s + " =")
+        testPrintLn("            \"\"\"")
         for (line in table) {
-            testPrint("            " + line)
+            testPrintLn("            " + line)
         }
-        testPrint("            \"\"\".trimIndent()")
-        testPrint("        " + glueObject + "." + fullName + "(table" + s + ")")
+        testPrintLn("            \"\"\".trimIndent()")
+        testPrintLn("        " + glueObject + "." + fullName + "(table" + s + ")")
         makeFunctionTemplate("String", fullName)
     }
 
@@ -503,12 +389,12 @@ class Translate {
         val s = stepNumberInScenario.toString()
         val dataType = "List<List<String>>"
         val dataTypeInitializer = "listOf<List<String>>"
-        testPrint("        val stringListList" + s + " = " + dataTypeInitializer + "(")
+        testPrintLn("        val stringListList" + s + " = " + dataTypeInitializer + "(")
         for (line in table) {
             convertBarLineToList(line)
         }
-        testPrint("            )")
-        testPrint("        " + glueObject + "." + fullName + "(stringListList" + s + ")")
+        testPrintLn("            )")
+        testPrintLn("        " + glueObject + "." + fullName + "(stringListList" + s + ")")
         makeFunctionTemplate(dataType, fullName)
     }
 
@@ -516,31 +402,31 @@ class Translate {
         val s = stepNumberInScenario.toString()
         val dataType = "List<List<" + objectName + ">>"
         val dataTypeInitializer = "listOf<List<" + objectName + ">>"
-        testPrint("        val objectListList" + s + " = " + dataTypeInitializer + "(")
+        testPrintLn("        val objectListList" + s + " = " + dataTypeInitializer + "(")
         for (line in table) {
             convertBarLineToListOfObject(line, objectName)
         }
-        testPrint("            )")
-        testPrint("        " + glueObject + "." + fullName + "(objectListList" + s + ")")
+        testPrintLn("            )")
+        testPrintLn("        " + glueObject + "." + fullName + "(objectListList" + s + ")")
         makeFunctionTemplate(dataType, fullName)
     }
 
     private fun convertBarLineToList(line: String) {
-        testPrint("           listOf<String>(")
+        testPrintLn("           listOf<String>(")
         val elements = parseLine(line)
         for (element in elements) {
-            testPrint("            \"" + element + "\",")
+            testPrintLn("            \"" + element + "\",")
         }
-        testPrint("            ),")
+        testPrintLn("            ),")
     }
 
     private fun convertBarLineToListOfObject(line: String, objectName: String) {
-        testPrint("           listOf<" + objectName + ">(")
+        testPrintLn("           listOf<" + objectName + ">(")
         val elements = parseLine(line)
         for (element in elements) {
-            testPrint("            " + objectName + "(\"" + element + "\"),")
+            testPrintLn("            " + objectName + "(\"" + element + "\"),")
         }
-        testPrint("            ),")
+        testPrintLn("            ),")
     }
 
     private fun parseLine(line: String): MutableList<String> {
@@ -609,27 +495,27 @@ class Translate {
 
     }
 
-    private fun testPrint(line: String) {
+    private fun testPrintLn(line: String) {
         testFile.write(line)
         testFile.write("\n")
     }
 
-    private fun dataDefinitionPrint(line: String) {
+    private fun dataDefinitionPrintLn(line: String) {
         dataDefinitionFile.write(line)
         dataDefinitionFile.write("\n")
     }
 
-    private fun templatePrint(line: String) {
+    private fun templatePrintLn(line: String) {
         glueTemplateFile.write(line)
         glueTemplateFile.write("\n")
     }
 
     private fun endUp() {
-        if (cleanup && !inCleanupScenario) testPrint("        test_Cleanup()")
-        testPrint("        }")   // End last scenario
-        testPrint("    }") // End the class
-        testPrint("")
-        templatePrint("    }")   // End the class
+        if (cleanup && !inCleanupScenario) testPrintLn("        test_Cleanup()")
+        testPrintLn("        }")   // End last scenario
+        testPrintLn("    }") // End the class
+        testPrintLn("")
+        templatePrintLn("    }")   // End the class
         testFile.close()
         glueTemplateFile.close()
         dataDefinitionFile.close()
@@ -653,7 +539,6 @@ class Translate {
         return transposed
     }
 
-
     private fun trace(value: String) {
         if (Configuration.traceOn) {
             println(value)
@@ -666,6 +551,120 @@ class Translate {
         println("*** " + value)
     }
 
+    data class DataValues(
+        val name: String,
+        val default: String,
+        val dataType: String = "String",
+        val notes: String = "",
+    )
+
+    private fun actOnData(words: List<String>) {
+        val internalClassName: String
+        if (words.size < 2) {
+            error("Need to specify data class name")
+        }
+        var className = words[1]
+        if (words.size > 2) internalClassName = words[2]
+        else internalClassName = className + "Internal"
+        val (followType, table) = lookForFollow()
+        if (!followType.equals("TABLE")) {
+            error("Error table does not follow data " + words[0] + " " + words[1])
+            return
+        }
+        if (dataNames.containsKey(className)) {
+            error("Data name is duplicated, has been renamed " + className)
+            className += stepCount
+        }
+        trace("Creating class for " + className)
+        dataNames.put(className, "")
+        dataDefinitionPrintLn("data class " + className + "(")
+        val variables = mutableListOf<DataValues>()
+        val doInternal = createVariableList(table, variables)
+        for (variable in variables) {
+            dataDefinitionPrintLn(
+                "    val " + makeName(variable.name) + ": String = \"" + variable.default + "\","
+            )
+        }
+
+        dataDefinitionPrintLn("    )")
+
+        if (doInternal) {
+            createConversionMethod(internalClassName, variables)
+            createInternalClass(internalClassName, className, variables)
+        }
+    }
+
+    private fun createConversionMethod(
+        internalClassName: String,
+        variables: MutableList<DataValues>,
+    ) {
+        dataDefinitionPrintLn(" {")
+        dataDefinitionPrintLn("    fun to" + internalClassName + "() : " + internalClassName + "{")
+        dataDefinitionPrintLn("        return " + internalClassName + "(")
+        for (variable in variables) {
+            dataDefinitionPrintLn("        " + makeName(variable.name) + ".to" + variable.dataType + "(),")
+        }
+        dataDefinitionPrintLn("        ) }") // end function
+
+        dataDefinitionPrintLn("    }") // end class
+    }
+
+    private fun createVariableList(
+        table: MutableList<String>,
+        variables: MutableList<DataValues>,
+    ): Boolean {
+        var headerLine = true
+        var doInternal = false
+        for (line in table) {
+            if (headerLine) {
+                val headers = parseLine(line)
+                checkHeaders(headers)
+                headerLine = false
+
+                if (headers.size > 2) doInternal = true
+                continue
+            }
+            val elements = parseLine(line)
+            if (elements.size < 2) {
+                error(" Data line has less than 2 entries " + line)
+                continue
+            }
+            if (elements.size > 3) variables.add(DataValues(elements[0], elements[1], elements[2], elements[3]))
+            else if (elements.size > 2) variables.add(DataValues(elements[0], elements[1], elements[2]))
+            else variables.add(DataValues(elements[0], elements[1]))
+        }
+        return doInternal
+    }
+
+    private fun checkHeaders(headers: MutableList<String>) {
+        val expected = listOf("Name", "Default", "Datatype", "Notes")
+        if (!(headers[0].equals(expected[0]) && headers[1].equals(expected[1]))) error("Headers should start with " + expected)
+    }
+
+    private fun createInternalClass(className: String, otherClassName: String, variables: List<DataValues>) {
+        var classNameInternal = className
+        if (dataNames.containsKey(classNameInternal)) {
+            error("Data name is duplicated, has been renamed " + classNameInternal)
+            classNameInternal += stepCount
+        }
+        trace("Creating internal class for " + classNameInternal)
+        dataNames.put(classNameInternal, "")
+        dataDefinitionPrintLn("data class " + classNameInternal + "(")
+        for (variable in variables) {
+            dataDefinitionPrintLn(
+                "    val " + makeName(variable.name) + ": " + variable.dataType + "= \"" + variable.default + "\".to" + variable.dataType + "(),"
+            )
+        }
+        dataDefinitionPrintLn("    ) {")
+        dataDefinitionPrintLn("    fun to" + otherClassName + "() : " + otherClassName + "{")
+        dataDefinitionPrintLn("        return " + otherClassName + "(")
+        for (variable in variables) {
+            dataDefinitionPrintLn("        " + makeName(variable.name) + ".toString(),")
+        }
+        dataDefinitionPrintLn("        ) }") // end function
+
+        dataDefinitionPrintLn("    }") // end class
+    }
 
     class InputIterator(name: String) {
         private var linesIn = mutableListOf<String>()
@@ -803,7 +802,7 @@ class Translate {
 class Configuration {
     companion object {
         val inTest = true  // switch to true for development of Translator
-        var traceOn = false   // Set to true to see trace
+        var traceOn = true // set to true to see trace
         var spaceCharacters = '^'  // Will replace with space in tables
         var currentDirectory = ""
         var featureSubDirectory = "src\\test\\kotlin\\"
