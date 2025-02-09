@@ -8,8 +8,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="Added documentation.  Made up a domain term scenario">
-      <change beforePath="$PROJECT_DIR$/src/test/resources/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/readme.md" afterDir="false" />
+    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="More documentation">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -407,7 +407,21 @@
       <option name="project" value="LOCAL" />
       <updated>1739141429522</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="More documentation">
+      <created>1739141911153</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1739141911154</updated>
+    </task>
+    <task id="LOCAL-00029" summary="More documentation">
+      <created>1739142351851</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1739142351852</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -431,7 +445,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactored and renamed" />
     <MESSAGE value="Added option for multistring and for list of list for table" />
     <MESSAGE value="Some code cleanup" />
     <MESSAGE value="corrected split line so additional word not added" />
@@ -456,7 +469,8 @@
     <MESSAGE value="Moved all functions into classes in preparation for Java version" />
     <MESSAGE value="cleaned up code   added Rule keyword.   Fixed issue with Cleanup keyword" />
     <MESSAGE value="Added documentation.  Made up a domain term scenario" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added documentation.  Made up a domain term scenario" />
+    <MESSAGE value="More documentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="More documentation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
