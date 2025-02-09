@@ -60,6 +60,7 @@ Rule ID must have exactly 5 letters and begin with Q # ListOfObject DomainTermID
 
 ```
 
+## How Does It work 
 Here is a feature file.  In the test directory, it is named "examples.feature".  The words after the keyword 
 `Feature` are combined into the name of the feature.  Let's assume that you are using the translator with Kotlin (language suffix .kt) 
 The operation is the same, the output code depends on the language. 
@@ -209,6 +210,72 @@ Now you could change it to use every row in the table:
 Note you can have as many columns and rows in the table as you need. 
 The form in the glue code looks the same - iterate around each row.  
 
+Domain Term 
 
+```
+   fun Star_ID_must_have_exactly_5_letters_and_begin_with_Q( value : List<DomainTermID>) {
+        println("---  " + "Star_ID_must_have_exactly_5_letters_and_begin_with_Q")
+
+        for (element in value) {
+            val temp = element.toDomainTermIDInternal()
+            try {
+                ID(temp.value)
+                if (!temp.valid)
+                    fail("Value of " + temp.value + "accepted but should fail")
+            }
+            catch(e: Exception){
+                if (temp.valid)
+                    fail("Value of " + temp.value + "failed but should be accepted")
+                assertEquals(temp.notes, e.message, "Message does not mathc")
+            }
+
+       }
+
+    }
+}
+```
+
+This is what the constructor might look like
+
+```
+data class ID(val value: String) {
+
+    init {
+        if (this.value.length < 5 )
+            throw Exception("Too short")
+        if (this.value.length > 5)
+            throw Exception("Too long")
+        if (this.value.get(0) != 'Q')
+            throw Exception("Must begin with Q")
+    }
+
+```
+
+If you are using a method to perform the validation, the glue code might look like this
+
+```
+            assertEquals(
+                temp.valid,
+                ID(temp.value).isValid(),
+                temp.notes
+            )
+```
+
+and the method might look like this
+
+```
+    fun isValid(): Boolean {
+        if (this.value.length < 5 )
+            return false
+        if (this.value.length > 5)
+            return false
+        if (this.value.get(0) != 'Q')
+            return false
+        return true
+    }
+```
+
+'''
+'
 ## Inspiration 
 
