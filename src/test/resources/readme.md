@@ -34,7 +34,9 @@ Let's give a couple of simple examples of calculations/business rules and domain
 that can be expressed with tables.  
 
 The first scenario is conversion from Fahrenheit to Celsius. 
-You can add as many rows as you wish to this 
+You can add as many variations in the calculation without having to write additional code.
+This scenario represents the data to the method which does the calculation and returns the result. 
+It does not change, regardless of the underlying implementation or language.
 ```
 Scenario: Temperature Conversion 
 # Business rule , Calculation 
@@ -45,7 +47,8 @@ Calculation Convert F to C # ListOfObject TemperatureComparison
 | -40  | -40  | Below zero  |
 ```
 
-A validation of a domain term 
+The second scenario is validation of a domain term. This validation could be performed 
+by a constructor, a parse method, or some other means.  
 ```
 Scenario: Domain Term ID 
 Rule ID must have exactly 5 letters and begin with Q # ListOfObject DomainTermID
