@@ -30,8 +30,11 @@ need to add additional code to use that table as a list of objects.  The means f
 so has changed from version to version.  The code for doing so has gotten more complex.     
 
 ## Examples 
-Let's give an example of 
+Let's give a couple of simple examples of calculations/business rules and domain terms 
+that can be expressed with tables.  
 
+The first scenario is conversion from Fahrenheit to Celsius. 
+You can add as many rows as you wish to this 
 ```
 Scenario: Temperature Conversion 
 # Business rule , Calculation 
@@ -42,6 +45,7 @@ Calculation Convert F to C # ListOfObject TemperatureComparison
 | -40  | -40  | Below zero  |
 ```
 
+A validation of a domain term 
 ```
 Scenario: Domain Term ID 
 Rule ID must have exactly 5 letters and begin with Q # ListOfObject DomainTermID

@@ -1,0 +1,26 @@
+package gherkinexecutor.Feature_Test_of_Object
+data class ContainsLibraryClass(
+    val aURL: String = "http://ken-pugh.com",
+    val aFile: String = "anyfile.txt",
+    val aPattern: String = "a.*b",
+    )
+ {
+    fun toContainsLibraryClassInternal() : ContainsLibraryClassInternal{
+        return ContainsLibraryClassInternal(
+        aURL.toURL(),
+        aFile.toFile(),
+        aPattern.toPattern(),
+        ) }
+    }
+data class ContainsLibraryClassInternal(
+    val aURL: URL= "http://ken-pugh.com".toURL(),
+    val aFile: File= "anyfile.txt".toFile(),
+    val aPattern: Pattern= "a.*b".toPattern(),
+    ) {
+    fun toContainsLibraryClass() : ContainsLibraryClass{
+        return ContainsLibraryClass(
+        aURL.toString(),
+        aFile.toString(),
+        aPattern.toString(),
+        ) }
+    }
