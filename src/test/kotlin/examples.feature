@@ -1,26 +1,26 @@
 Feature: Examples
 
 Scenario: Filter Data 
-# shows data tables 
-Given list of numbers # ListOfObject NameValue 
-| ID    | Value  |
+# filters data 
+Given list of numbers # ListOfObject LabelValue 
+| Label | Value  |
 | a     | 1      |
 | b     | 2      |
 | a     | 3      |
-When filtered by ID value
+When filtered by Label with value
 | a  |
 Then sum is 
 | 4 | 
 
-Data NameValue 
+Data LabelValue 
 | Name   | Default  | DataType  | Notes  |
-| ID     |          | String    |        |
+| Label  |          | String    |        |
 | Value  | 0        | Int       |        |
 
 
 Scenario: Temperature 
 # Business rule , Calculation 
-* Convert F to C # ListOfObject TemperatureComparison 
+Calculation Convert F to C # ListOfObject TemperatureComparison 
 | F    | C    | Notes       |
 | 32   | 0    | Freezing    |
 | 212  | 100  | Boiling     |
@@ -33,7 +33,7 @@ Data TemperatureComparison
 | Notes  |          | String    |        |
 
 Scenario: Domain Term ID 
-* ID must have exactly 5 letters and begin with Q # ListOfObject DomainTermID
+Rule ID must have exactly 5 letters and begin with Q # ListOfObject DomainTermID
 | Value   | Valid  | Notes              |
 | Q1234   | true   |                    |
 | Q123    | false  | Too short          |

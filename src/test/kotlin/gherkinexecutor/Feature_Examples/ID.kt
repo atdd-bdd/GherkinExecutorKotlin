@@ -11,14 +11,15 @@ data class ID(val value: String) {
             throw Exception("Must begin with Q")
 
     }
-    fun isValid(): Boolean {
-        if (this.value.length < 5 )
-            return false
-        if (this.value.length > 5)
-            return false
-        if (this.value.get(0) != 'Q')
-            return false
-        return true
-    }
+// Alternative validation method
+//    fun isValid(): Boolean {
+//        if (this.value.length < 5 )
+//            return false
+//        if (this.value.length > 5)
+//            return false
+//        if (this.value.get(0) != 'Q')
+//            return false
+//        return true
+//    }
 
 }

@@ -1,26 +1,111 @@
-# Gherkin Translator
+# Gherkin Translator 
 
-The translator converts a Gherkin 
-feature file into a unit test file.
-The unit test file calls a glue file which
-the developer edits to call the code under 
+## Summary 
+The Gherkin Translator simplifies the creation of test code from a Gherkin feature file. 
+It creates collections of objects and values that can be used to test the production code. 
+It is designed to work the same way with any implementation language.
+
+## Why Use Gherkin?
+Gherkin feature files are readable executable documentation.  If a requirement / story includes buiness rules,
+they provide a convenient form to collaborate with non-programmers.   They 
+also provide a way to document parts of a domain driven design.  
+For a developer they provide an alternative way to specify the values used 
+to call a parametrized test method.  
+The scenarios can be used in user documentation.
+For domains which have two-dimensional objects, the tabluar format can be much easier
+to comprehend. (See the tic-tac-toe example.)
+
+Here are a few introductory examples. The first shows a calculation from Fahrenheit to
+Celsius.  When it is translated, three files are created - one is a unit test file, one 
+is glue code which is revised to connect to the production code, and the third is 
+a data file which declares the classes used to connect the unit test code to the glue code.
+The full code is shown later.
+```
+Scenario: Temperature Conversion 
+Calculation Convert F to C # ListOfObject TemperatureComparison 
+| F    | C    | Notes       |
+| 32   | 0    | Freezing    |
+| 212  | 100  | Boiling     |
+| -40  | -40  | Below zero  |
+```
+An Excel-style table is a familiar construct to many non-programmers.
+(Ward Cunningham introduced this style with FIT).  So this form is easily understandable.
+To add another variation, you simply add another row to the table.  The comments
+`# ListOfObject TemperatureComparison` are used to create the unit tests.
+
+The Triad (Customer, Developer, Tester perspectives) can collaborate on the detailed behavior.  This
+separates the production implementation from the representation of the logic and calculations.  For example,
+one of the Triad might ask about the result for this calculation:  
+```
+| F    | C       | Notes                     |
+| 33   | .555    | How many decimal digits?  |
+```
+The Triad would then discuss how it should appear on an output (e.g. the screen). Note that
+the internal representation of F or C is irrelevant - it could be double, Double, BigInteger, or
+something else.   
+
+If your code style is to use Abstract Data Types, you can use a table to show allowable values.
+```
+Scenario: Domain Term ID 
+Rule ID must have exactly 5 letters and begin with Q # ListOfObject DomainTermID
+| Value   | Valid  | Notes              |
+| Q1234   | true   |                    |
+| Q123    | false  | Too short          |
+| Q12345  | false  | Too long           |
+| A1234   | false  | Must begin with Q  |
+```
+Now this could be used in a help file to show examples.  
+
+Here is domain related example.   A Forecast is a Domain Term that has multiple attributes.
+The data type for each attribute is shown, along with a default value.  
+```
+Data Forecast
+| Name        | Default   | Datatype           | Notes               |
+| Day         | 1/1/2025  | Date               |                     |
+| Time        | 12:00 am  | Time               |                     |
+| High        | 100       | Temperature        | High Temperature    |
+| Low         | 0         | Temperature        | Low Temperature     |
+| Rain        | 0         | Percentage         | Chance of Rain      |
+| Wind Speed  | 0         | Speed              |                     |
+| Direction   | N         | CompassDirection   |                     |
+| Condition   | Clear     | WeatherCondition   | Cloudy, Rain, etc.  |
+```
+Here's a possible story to search forecasts for those that meet certain conditions:
+```
+Scenario: Search Forecast
+Given forecast is           # ListOfObject Forecast
+| Day       | Time      | High  | Low  | Rain  | Wind Speed  | Direction  | Condition  |
+| 1/1/2025  | 12:00 am  | 70    | 60   | 0     | 1           | N          | Clear      |
+| 1/3/2025  | 12:00 am  | 60    | 40   | 10    | 5           | S          | Cloudy     |
+# And many more  (or read from CSV file)
+When searching for          # ListOfObject # ForecastSearchCriteria 
+| Field        | Relationship  | Value  |
+| High         | >             | 65     |
+| Wind Speed   | <             | 5      |
+Then results are # ListOfObject Forecast 
+| Day       | Condition  |
+| 1/1/2025  | Clear      |
+```
+The Given step uses the domain term defined in the previous block. The data could be
+listed here, read from a CSV file, or put onto a database. The When step gives the search
+criteria.  The Triad would define how these criteria should work.  
+Finally the Then step shows the expected results.   
+
+
+## How It Works in Brief
+
+The translator converts a Gherkin feature file into a unit test file.
+The unit test file calls a glue file which the developer edits to call the code under 
 test. 
-The translator also creates a template for the 
-glue file.  
+The translator also creates a template for the glue file.  
 
-The translator is a single file containing all
-the necessary components.  To translate a
-feature file, run it from the IDE.
+The Translator is a single file containing all the necessary components.  
+To translate a feature file, you supply the feature files you want converted by either adding them 
+to a list in the Translator or adding them as program arguments.  
 
 Unlike other implementations of Gherkin,
 each feature file is associated with one unit
-test file and its glue file.
-
-## Why Use Gherkin?
-
-Gherkin feature files are readable executable documentation.  If a requirement / story includes buiness rules, 
-they provide a convenient form to collaborate with non-programmers.  For a developer they provide an alternative way to specify the values used to call a parametrized test method.  
-
+test file, its glue file, and its class file. 
 
 ## Why Not Use Existing Frameworks? 
 
@@ -29,7 +114,26 @@ Gherkin for a number of years.  You can have a table after each step.   However 
 need to add additional code to use that table as a list of objects.  The means for doing 
 so has changed from version to version.  The code for doing so has gotten more complex.     
 
-## Examples 
+The Translator converts the Gherkin tables into initialized lists. The developer just needs to 
+specify the class of the objects that will be in those lists. It does not depend on 
+features of a specific languages, such as introspection. 
+
+The initial version of Translator works for Kotlin.   It is currently being converted
+to Java, Python, and C++.    A feature file written for one language should work
+in the other languages.  
+
+Since the entire source code is supplied, a developer can alter the translation to
+their preferred style.  If methods should not have underscores, that can be changed
+in a single line.  
+
+## How It Differs From Other Frameworks 
+The Translator passes data to steps only through tables.  There are no values embeeded the
+the steps.  The domain term which a value represents can be expressed as the header
+of a column contain the values.  
+
+The tables can be passed as a list of objects or a list of lists of strings.  
+
+## How It Works in Detail
 Let's give a couple of simple examples of calculations/business rules and domain terms 
 that can be expressed with tables.  
 
@@ -49,17 +153,7 @@ Calculation Convert F to C # ListOfObject TemperatureComparison
 
 The second scenario is validation of a domain term. This validation could be performed 
 by a constructor, a parse method, or some other means.  
-```
-Scenario: Domain Term ID 
-Rule ID must have exactly 5 letters and begin with Q # ListOfObject DomainTermID
-| Value   | Valid  | Notes              |
-| Q1234   | true   |                    |
-| Q123    | false  | Too short          |
-| Q12345  | false  | Too long           |
-| A1234   | false  | Must begin with Q  |
-
-```
-
+b
 ## How Does It work 
 Here is a feature file.  In the test directory, it is named "examples.feature".  The words after the keyword 
 `Feature` are combined into the name of the feature.  Let's assume that you are using the translator with Kotlin (language suffix .kt) 
