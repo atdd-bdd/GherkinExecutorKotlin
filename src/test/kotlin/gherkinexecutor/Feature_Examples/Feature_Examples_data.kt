@@ -1,25 +1,24 @@
 package gherkinexecutor.Feature_Examples
-data class NameValue(
-    val iD: String = "",
+data class LabelValue(
+    val label: String = "",
     val value: String = "0",
 )
 {
-    fun toNameValueInternal() : NameValueInternal{
-        return NameValueInternal(
-            iD,
+    fun toLabelValueInternal() : LabelValueInternal{
+        return LabelValueInternal(
+            label.toString(),
             value.toInt(),
         ) }
 }
-data class NameValueInternal(
-    val iD: String= "",
+data class LabelValueInternal(
+    val label: String= "".toString(),
     val value: Int= "0".toInt(),
 ) {
-//    Commented out since it is not used in the example
-//    fun toNameValue() : NameValue{
-//        return NameValue(
-//            iD,
-//            value.toString(),
-//        ) }
+    fun toLabelValue() : LabelValue{
+        return LabelValue(
+            label.toString(),
+            value.toString(),
+        ) }
 }
 data class TemperatureComparison(
     val f: String = "0",
@@ -31,23 +30,21 @@ data class TemperatureComparison(
         return TemperatureComparisonInternal(
             f.toInt(),
             c.toInt(),
-            notes,
+            notes.toString(),
         ) }
 }
 data class TemperatureComparisonInternal(
     val f: Int= "0".toInt(),
     val c: Int= "0".toInt(),
-    val notes: String= "",
+    val notes: String= "".toString(),
 ) {
-//    Commented out since it is not used in the example
-//    fun toTemperatureComparison() : TemperatureComparison{
-//        return TemperatureComparison(
-//            f.toString(),
-//            c.toString(),
-//            notes.toString(),
-//        ) }
+    fun toTemperatureComparison() : TemperatureComparison{
+        return TemperatureComparison(
+            f.toString(),
+            c.toString(),
+            notes.toString(),
+        ) }
 }
-
 data class DomainTermID(
     val value: String = "0",
     val valid: String = "no",

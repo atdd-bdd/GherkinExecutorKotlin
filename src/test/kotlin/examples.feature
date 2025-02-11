@@ -1,21 +1,5 @@
 Feature: Examples
 
-Scenario: Filter Data 
-# filters data 
-Given list of numbers # ListOfObject LabelValue 
-| Label | Value  |
-| a     | 1      |
-| b     | 2      |
-| a     | 3      |
-When filtered by Label with value
-| a  |
-Then sum is 
-| 4 | 
-
-Data LabelValue 
-| Name   | Default  | DataType  | Notes  |
-| Label  |          | String    |        |
-| Value  | 0        | Int       |        |
 
 
 Scenario: Temperature 
@@ -46,6 +30,22 @@ Data DomainTermID
 | Valid  | no       | Boolean   |
 | Notes  |          | String    |
 
+Scenario: Filter Data 
+# filters data 
+Given list of numbers # ListOfObject LabelValue 
+| Label | Value  |
+| a     | 1      |
+| b     | 2      |
+| a     | 3      |
+When filtered by Label with value
+| a  |
+Then sum is 
+| 4 | 
+
+Data LabelValue 
+| Name   | Default  | DataType  | Notes  |
+| Label  |          | String    |        |
+| Value  | 0        | Int       |        |
 
 
 

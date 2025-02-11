@@ -10,9 +10,9 @@ class TemperatureCalculations {
 
 
 class SolutionForListOfNumber {
-    private var values = mutableListOf<NameValueInternal>()
+    private var values = mutableListOf<LabelValueInternal>()
     private var filterValue = ""
-    fun add(value: NameValueInternal) {
+    fun add(value: LabelValueInternal) {
         values.add(value)
     }
 
@@ -23,7 +23,7 @@ class SolutionForListOfNumber {
     fun sum(): Int {
         var sum = 0
         for (element in values) {
-            if (element.iD == filterValue)
+            if (element.label == filterValue)
                 sum += (element.value)
         }
         return sum

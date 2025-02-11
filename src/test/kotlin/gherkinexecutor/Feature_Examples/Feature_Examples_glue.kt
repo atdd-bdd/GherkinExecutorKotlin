@@ -7,15 +7,15 @@ class Feature_Examples_glue {
 
     val solution = SolutionForListOfNumber()
 
-    fun Given_list_of_numbers(value: List<NameValue>) {
+    fun Given_list_of_numbers( value : List<LabelValue>) {
         for (element in value) {
-            solution.add(element.toNameValueInternal())
+            solution.add(element.toLabelValueInternal())
         }
 
     }
 
 
-    fun When_filtered_by_ID_value(value: List<List<String>>) {
+    fun When_filtered_by_Label_with_value( value : List<List<String>>) {
         solution.setFilterValue((value[0][0]))
     }
 
@@ -25,7 +25,7 @@ class Feature_Examples_glue {
     }
 
 
-    fun Star_Convert_F_to_C(value: List<TemperatureComparison>) {
+    fun Calculation_Convert_F_to_C( value : List<TemperatureComparison>) {
         for (element in value) {
             val temp = element.toTemperatureComparisonInternal()
             assertEquals(
@@ -36,7 +36,7 @@ class Feature_Examples_glue {
         }
     }
 
-    fun Star_ID_must_have_exactly_5_letters_and_begin_with_Q( value : List<DomainTermID>) {
+    fun Rule_ID_must_have_exactly_5_letters_and_begin_with_Q( value : List<DomainTermID>) {
         println("---  " + "Star_ID_must_have_exactly_5_letters_and_begin_with_Q")
 
         for (element in value) {

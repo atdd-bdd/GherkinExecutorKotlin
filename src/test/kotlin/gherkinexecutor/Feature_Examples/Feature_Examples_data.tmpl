@@ -1,22 +1,22 @@
 package gherkinexecutor.Feature_Examples
-data class NameValue(
-    val iD: String = "",
+data class LabelValue(
+    val label: String = "",
     val value: String = "0",
     )
  {
-    fun toNameValueInternal() : NameValueInternal{
-        return NameValueInternal(
-        iD.toString(),
+    fun toLabelValueInternal() : LabelValueInternal{
+        return LabelValueInternal(
+        label.toString(),
         value.toInt(),
         ) }
     }
-data class NameValueInternal(
-    val iD: String= "".toString(),
+data class LabelValueInternal(
+    val label: String= "".toString(),
     val value: Int= "0".toInt(),
     ) {
-    fun toNameValue() : NameValue{
-        return NameValue(
-        iD.toString(),
+    fun toLabelValue() : LabelValue{
+        return LabelValue(
+        label.toString(),
         value.toString(),
         ) }
     }

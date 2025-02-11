@@ -3,14 +3,14 @@ import kotlin.test.fail
 
 class Feature_Examples_glue {
 
-    fun Given_list_of_numbers( value : List<NameValue>) {
+    fun Given_list_of_numbers( value : List<LabelValue>) {
         println("---  " + "Given_list_of_numbers")
         println(value)
 
     }
 
-    fun When_filtered_by_ID_value( value : List<List<String>>) {
-        println("---  " + "When_filtered_by_ID_value")
+    fun When_filtered_by_Label_with_value( value : List<List<String>>) {
+        println("---  " + "When_filtered_by_Label_with_value")
         println(value)
 
     }
@@ -21,14 +21,14 @@ class Feature_Examples_glue {
 
     }
 
-    fun Star_Convert_F_to_C( value : List<TemperatureComparison>) {
-        println("---  " + "Star_Convert_F_to_C")
+    fun Calculation_Convert_F_to_C( value : List<TemperatureComparison>) {
+        println("---  " + "Calculation_Convert_F_to_C")
         println(value)
 
     }
 
-    fun Star_ID_must_have_exactly_5_letters_and_begin_with_Q( value : List<DomainTermID>) {
-        println("---  " + "Star_ID_must_have_exactly_5_letters_and_begin_with_Q")
+    fun Rule_ID_must_have_exactly_5_letters_and_begin_with_Q( value : List<DomainTermID>) {
+        println("---  " + "Rule_ID_must_have_exactly_5_letters_and_begin_with_Q")
         println(value)
 
     }

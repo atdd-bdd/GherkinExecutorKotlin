@@ -8,12 +8,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="More documentation">
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/Forecast.feature" afterDir="false" />
+    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="Documentation More">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/FileWriterWrapper.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/examples.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/examples.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/ID.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/ID.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_Production.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_Production.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_data.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_data.tmpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_glue.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_glue.tmpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/md file.pdf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -425,7 +431,14 @@
       <option name="project" value="LOCAL" />
       <updated>1739142351852</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Documentation More">
+      <created>1739306279775</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1739306279775</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -449,7 +462,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added option for multistring and for list of list for table" />
     <MESSAGE value="Some code cleanup" />
     <MESSAGE value="corrected split line so additional word not added" />
     <MESSAGE value="added in data definition step definition" />
@@ -474,7 +486,8 @@
     <MESSAGE value="cleaned up code   added Rule keyword.   Fixed issue with Cleanup keyword" />
     <MESSAGE value="Added documentation.  Made up a domain term scenario" />
     <MESSAGE value="More documentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="More documentation" />
+    <MESSAGE value="Documentation More" />
+    <option name="LAST_COMMIT_MESSAGE" value="Documentation More" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

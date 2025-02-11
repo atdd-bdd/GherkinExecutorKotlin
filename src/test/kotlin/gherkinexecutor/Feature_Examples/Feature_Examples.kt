@@ -8,17 +8,17 @@ class Feature_Examples{
     fun test_Scenario_Filter_Data(){
         val feature_Examples_glue_object = Feature_Examples_glue()
 
-        val objectList1 = listOf<NameValue>(
-            NameValue(
-                iD = "a",
+        val objectList1 = listOf<LabelValue>(
+            LabelValue(
+                label = "a",
                 value = "1",
                 ),
-            NameValue(
-                iD = "b",
+            LabelValue(
+                label = "b",
                 value = "2",
                 ),
-            NameValue(
-                iD = "a",
+            LabelValue(
+                label = "a",
                 value = "3",
                 ),
             )
@@ -29,7 +29,7 @@ class Feature_Examples{
             "a",
             ),
             )
-        feature_Examples_glue_object.When_filtered_by_ID_value(stringListList2)
+        feature_Examples_glue_object.When_filtered_by_Label_with_value(stringListList2)
 
         val stringListList3 = listOf<List<String>>(
            listOf<String>(
@@ -59,7 +59,7 @@ class Feature_Examples{
                 notes = "Below zero",
                 ),
             )
-        feature_Examples_glue_object.Star_Convert_F_to_C(objectList1)
+        feature_Examples_glue_object.Calculation_Convert_F_to_C(objectList1)
         }
     @Test
     fun test_Scenario_Domain_Term_ID(){
@@ -87,7 +87,7 @@ class Feature_Examples{
                 notes = "Must begin with Q",
                 ),
             )
-        feature_Examples_glue_object.Star_ID_must_have_exactly_5_letters_and_begin_with_Q(objectList1)
+        feature_Examples_glue_object.Rule_ID_must_have_exactly_5_letters_and_begin_with_Q(objectList1)
         }
     }
 
