@@ -602,11 +602,20 @@ class Translate {
         dataDefinitionPrintLn("    fun to" + internalClassName + "() : " + internalClassName + "{")
         dataDefinitionPrintLn("        return " + internalClassName + "(")
         for (variable in variables) {
-            dataDefinitionPrintLn("        " + makeName(variable.name) + ".to" + variable.dataType + "(),")
+            val initializer = makeToString(variable)
+            dataDefinitionPrintLn("        " + initializer +",")
         }
         dataDefinitionPrintLn("        ) }") // end function
 
         dataDefinitionPrintLn("    }") // end class
+    }
+
+    private fun makeToString(variable: DataValues): String {
+        // Add in additional dataTypes
+        var initializer = makeName(variable.name) + ".to" + variable.dataType + "()"
+        if (variable.dataType.equals("String"))
+            initializer = makeName(variable.name)
+        return initializer
     }
 
     private fun createVariableList(
@@ -651,8 +660,9 @@ class Translate {
         dataNames.put(classNameInternal, "")
         dataDefinitionPrintLn("data class " + classNameInternal + "(")
         for (variable in variables) {
+            val initializer = makeInitializer(variable)
             dataDefinitionPrintLn(
-                "    val " + makeName(variable.name) + ": " + variable.dataType + "= \"" + variable.default + "\".to" + variable.dataType + "(),"
+                "    val " + makeName(variable.name) + ": " +variable.dataType + " = " + initializer + ","
             )
         }
         dataDefinitionPrintLn("    ) {")
@@ -664,6 +674,14 @@ class Translate {
         dataDefinitionPrintLn("        ) }") // end function
 
         dataDefinitionPrintLn("    }") // end class
+    }
+
+    private fun makeInitializer(variable: DataValues): String {
+        // Add in additional data types that don't use the standard
+        var initializer =  "\"" + variable.default + "\".to" + variable.dataType + "()"
+        if (variable.dataType.equals("String"))
+            initializer = "\"" + variable.default + "\""
+        return initializer
     }
 
     class InputIterator(name: String) {
@@ -815,11 +833,13 @@ class Configuration {
 //            "include.feature",
 //            "testfeature.feature",
             "examples.feature",
+
 //            "tablesandstrings.feature",
 //            "data_definition.feature",
 //            "ParseCSV.feature",
 //            "SimpleTest.feature",
-//            "GherkinTranslatorFullTest.feature"
+            "GherkinTranslatorFullTest.feature",
+            "fulltest.feature"
         )
     }
 }

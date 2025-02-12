@@ -3,34 +3,34 @@ import kotlin.test.fail
 
 class Feature_Examples_glue {
 
-    fun Given_list_of_numbers( value : List<LabelValue>) {
-        println("---  " + "Given_list_of_numbers")
-        println(value)
-
-    }
-
-    fun When_filtered_by_Label_with_value( value : List<List<String>>) {
-        println("---  " + "When_filtered_by_Label_with_value")
-        println(value)
-
-    }
-
-    fun Then_sum_is( value : List<List<String>>) {
-        println("---  " + "Then_sum_is")
-        println(value)
-
-    }
-
     fun Calculation_Convert_F_to_C( value : List<TemperatureComparison>) {
         println("---  " + "Calculation_Convert_F_to_C")
         println(value)
-
+        fail("Must implement")
     }
 
     fun Rule_ID_must_have_exactly_5_letters_and_begin_with_Q( value : List<DomainTermID>) {
         println("---  " + "Rule_ID_must_have_exactly_5_letters_and_begin_with_Q")
         println(value)
+        fail("Must implement")
+    }
 
+    fun Given_list_of_numbers( value : List<LabelValue>) {
+        println("---  " + "Given_list_of_numbers")
+        println(value)
+        fail("Must implement")
+    }
+
+    fun When_filtered_by_Label_with_value( value : List<List<String>>) {
+        println("---  " + "When_filtered_by_Label_with_value")
+        println(value)
+        fail("Must implement")
+    }
+
+    fun Then_sum_is( value : List<List<String>>) {
+        println("---  " + "Then_sum_is")
+        println(value)
+        fail("Must implement")
     }
 
     }

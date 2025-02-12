@@ -5,40 +5,6 @@ import org.junit.jupiter.api.TestInstance
 class Feature_Examples{
 
     @Test
-    fun test_Scenario_Filter_Data(){
-        val feature_Examples_glue_object = Feature_Examples_glue()
-
-        val objectList1 = listOf<LabelValue>(
-            LabelValue(
-                label = "a",
-                value = "1",
-                ),
-            LabelValue(
-                label = "b",
-                value = "2",
-                ),
-            LabelValue(
-                label = "a",
-                value = "3",
-                ),
-            )
-        feature_Examples_glue_object.Given_list_of_numbers(objectList1)
-
-        val stringListList2 = listOf<List<String>>(
-           listOf<String>(
-            "a",
-            ),
-            )
-        feature_Examples_glue_object.When_filtered_by_Label_with_value(stringListList2)
-
-        val stringListList3 = listOf<List<String>>(
-           listOf<String>(
-            "4",
-            ),
-            )
-        feature_Examples_glue_object.Then_sum_is(stringListList3)
-        }
-    @Test
     fun test_Scenario_Temperature(){
         val feature_Examples_glue_object = Feature_Examples_glue()
 
@@ -88,6 +54,40 @@ class Feature_Examples{
                 ),
             )
         feature_Examples_glue_object.Rule_ID_must_have_exactly_5_letters_and_begin_with_Q(objectList1)
+        }
+    @Test
+    fun test_Scenario_Filter_Data(){
+        val feature_Examples_glue_object = Feature_Examples_glue()
+
+        val objectList1 = listOf<LabelValue>(
+            LabelValue(
+                label = "a",
+                value = "1",
+                ),
+            LabelValue(
+                label = "b",
+                value = "2",
+                ),
+            LabelValue(
+                label = "a",
+                value = "3",
+                ),
+            )
+        feature_Examples_glue_object.Given_list_of_numbers(objectList1)
+
+        val stringListList2 = listOf<List<String>>(
+           listOf<String>(
+            "a",
+            ),
+            )
+        feature_Examples_glue_object.When_filtered_by_Label_with_value(stringListList2)
+
+        val stringListList3 = listOf<List<String>>(
+           listOf<String>(
+            "4",
+            ),
+            )
+        feature_Examples_glue_object.Then_sum_is(stringListList3)
         }
     }
 

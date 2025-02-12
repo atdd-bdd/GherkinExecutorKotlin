@@ -1,25 +1,4 @@
 package gherkinexecutor.Feature_Examples
-data class LabelValue(
-    val label: String = "",
-    val value: String = "0",
-    )
- {
-    fun toLabelValueInternal() : LabelValueInternal{
-        return LabelValueInternal(
-        label.toString(),
-        value.toInt(),
-        ) }
-    }
-data class LabelValueInternal(
-    val label: String= "".toString(),
-    val value: Int= "0".toInt(),
-    ) {
-    fun toLabelValue() : LabelValue{
-        return LabelValue(
-        label.toString(),
-        value.toString(),
-        ) }
-    }
 data class TemperatureComparison(
     val f: String = "0",
     val c: String = "0",
@@ -30,13 +9,13 @@ data class TemperatureComparison(
         return TemperatureComparisonInternal(
         f.toInt(),
         c.toInt(),
-        notes.toString(),
+        notes,
         ) }
     }
 data class TemperatureComparisonInternal(
-    val f: Int= "0".toInt(),
-    val c: Int= "0".toInt(),
-    val notes: String= "".toString(),
+    val f: Int = "0".toInt(),
+    val c: Int = "0".toInt(),
+    val notes: String = "",
     ) {
     fun toTemperatureComparison() : TemperatureComparison{
         return TemperatureComparison(
@@ -53,20 +32,41 @@ data class DomainTermID(
  {
     fun toDomainTermIDInternal() : DomainTermIDInternal{
         return DomainTermIDInternal(
-        value.toString(),
+        value,
         valid.toBoolean(),
-        notes.toString(),
+        notes,
         ) }
     }
 data class DomainTermIDInternal(
-    val value: String= "0".toString(),
-    val valid: Boolean= "no".toBoolean(),
-    val notes: String= "".toString(),
+    val value: String = "0",
+    val valid: Boolean = "no".toBoolean(),
+    val notes: String = "",
     ) {
     fun toDomainTermID() : DomainTermID{
         return DomainTermID(
         value.toString(),
         valid.toString(),
         notes.toString(),
+        ) }
+    }
+data class LabelValue(
+    val label: String = "",
+    val value: String = "0",
+    )
+ {
+    fun toLabelValueInternal() : LabelValueInternal{
+        return LabelValueInternal(
+        label,
+        value.toInt(),
+        ) }
+    }
+data class LabelValueInternal(
+    val label: String = "",
+    val value: Int = "0".toInt(),
+    ) {
+    fun toLabelValue() : LabelValue{
+        return LabelValue(
+        label.toString(),
+        value.toString(),
         ) }
     }

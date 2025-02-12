@@ -13,9 +13,9 @@ data class ContainsLibraryClass(
         ) }
     }
 data class ContainsLibraryClassInternal(
-    val aURL: URL= "http://ken-pugh.com".toURL(),
-    val aFile: File= "anyfile.txt".toFile(),
-    val aPattern: Pattern= "a.*b".toPattern(),
+    val aURL: URL = "http://ken-pugh.com".toURL(),
+    val aFile: File = "anyfile.txt".toFile(),
+    val aPattern: Pattern = "a.*b".toPattern(),
     ) {
     fun toContainsLibraryClass() : ContainsLibraryClass{
         return ContainsLibraryClass(
