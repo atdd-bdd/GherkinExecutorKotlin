@@ -603,7 +603,7 @@ class Translate {
         dataDefinitionPrintLn("        return " + internalClassName + "(")
         for (variable in variables) {
             val initializer = makeToString(variable)
-            dataDefinitionPrintLn("        " + initializer +",")
+            dataDefinitionPrintLn("        " + initializer + ",")
         }
         dataDefinitionPrintLn("        ) }") // end function
 
@@ -662,14 +662,17 @@ class Translate {
         for (variable in variables) {
             val initializer = makeInitializer(variable)
             dataDefinitionPrintLn(
-                "    val " + makeName(variable.name) + ": " +variable.dataType + " = " + initializer + ","
+                "    val " + makeName(variable.name) + ": " + variable.dataType + " = " + initializer + ","
             )
         }
         dataDefinitionPrintLn("    ) {")
         dataDefinitionPrintLn("    fun to" + otherClassName + "() : " + otherClassName + "{")
         dataDefinitionPrintLn("        return " + otherClassName + "(")
         for (variable in variables) {
-            dataDefinitionPrintLn("        " + makeName(variable.name) + ".toString(),")
+            if (variable.dataType.equals("String"))
+                dataDefinitionPrintLn("        " + makeName(variable.name) + ",")
+            else
+                dataDefinitionPrintLn("        " + makeName(variable.name) + ".toString(),")
         }
         dataDefinitionPrintLn("        ) }") // end function
 
@@ -678,7 +681,7 @@ class Translate {
 
     private fun makeInitializer(variable: DataValues): String {
         // Add in additional data types that don't use the standard
-        var initializer =  "\"" + variable.default + "\".to" + variable.dataType + "()"
+        var initializer = "\"" + variable.default + "\".to" + variable.dataType + "()"
         if (variable.dataType.equals("String"))
             initializer = "\"" + variable.default + "\""
         return initializer

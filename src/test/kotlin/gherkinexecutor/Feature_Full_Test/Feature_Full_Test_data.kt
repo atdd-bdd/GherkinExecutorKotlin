@@ -16,7 +16,7 @@ data class InternalClass(
 ) {
     fun toMyClass() : MyClass{
         return MyClass(
-            one.toString(),
+            one,
             two.toString(),
         ) }
 }
@@ -41,7 +41,7 @@ data class ATestInternal(
     fun toATest() : ATest{
         return ATest(
             anInt.toString(),
-            aString.toString(),
+            aString,
             aDouble.toString(),
         ) }
 }
@@ -71,7 +71,7 @@ data class TemperatureComparisonInternal(
         return TemperatureComparison(
             f.toString(),
             c.toString(),
-            notes.toString(),
+            notes,
         ) }
 }
 data class DomainTermID(
@@ -94,9 +94,9 @@ data class DomainTermIDInternal(
 ) {
     fun toDomainTermID() : DomainTermID{
         return DomainTermID(
-            value.toString(),
+            value,
             valid.toString(),
-            notes.toString(),
+            notes,
         ) }
 }
 data class LabelValue(
@@ -116,7 +116,7 @@ data class LabelValueInternal(
 ) {
     fun toLabelValue() : LabelValue{
         return LabelValue(
-            label.toString(),
+            label,
             value.toString(),
         ) }
 }
