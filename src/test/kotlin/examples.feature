@@ -1,16 +1,15 @@
+
 Feature: Examples
-
-
 
 Scenario: Temperature 
 # Business rule , Calculation 
-Calculation Convert F to C # ListOfObject TemperatureComparison 
+Calculation Convert F to C # ListOfObject TemperatureCalculation 
 | F    | C    | Notes       |
 | 32   | 0    | Freezing    |
 | 212  | 100  | Boiling     |
 | -40  | -40  | Below zero  |
 
-Data TemperatureComparison
+Data TemperatureCalculation
 | Name   | Default  | DataType  | Notes  |
 | F      | 0        | Int       |        |
 | C      | 0        | Int       |        |
@@ -27,7 +26,7 @@ Rule ID must have exactly 5 letters and begin with Q # ListOfObject DomainTermID
 Data DomainTermID
 | Name   | Default  | DataType  |
 | Value  | 0        | String    |
-| Valid  | no       | Boolean   |
+| Valid  | false    | Boolean   |
 | Notes  |          | String    |
 
 Scenario: Filter Data 

@@ -836,13 +836,12 @@ class Configuration {
 //            "include.feature",
 //            "testfeature.feature",
             "examples.feature",
-
 //            "tablesandstrings.feature",
 //            "data_definition.feature",
 //            "ParseCSV.feature",
 //            "SimpleTest.feature",
-            "GherkinTranslatorFullTest.feature",
-            "fulltest.feature"
+//           "GherkinTranslatorFullTest.feature",
+//            "fulltest.feature"
         )
     }
 }

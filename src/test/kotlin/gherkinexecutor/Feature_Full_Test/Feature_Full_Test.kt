@@ -165,18 +165,18 @@ class Feature_Full_Test{
         val feature_Full_Test_glue_object = Feature_Full_Test_glue()
         test_Background()
 
-        val objectList1 = listOf<TemperatureComparison>(
-            TemperatureComparison(
+        val objectList1 = listOf<TemperatureCalculation>(
+            TemperatureCalculation(
                 f = "32",
                 c = "0",
                 notes = "Freezing",
                 ),
-            TemperatureComparison(
+            TemperatureCalculation(
                 f = "212",
                 c = "100",
                 notes = "Boiling",
                 ),
-            TemperatureComparison(
+            TemperatureCalculation(
                 f = "-40",
                 c = "-40",
                 notes = "Below zero",

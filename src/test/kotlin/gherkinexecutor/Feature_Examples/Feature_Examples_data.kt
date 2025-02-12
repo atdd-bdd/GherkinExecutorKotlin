@@ -1,4 +1,54 @@
 package gherkinexecutor.Feature_Examples
+data class TemperatureCalculation(
+    val f: String = "0",
+    val c: String = "0",
+    val notes: String = "",
+)
+{
+    fun toTemperatureCalculationInternal() : TemperatureCalculationInternal{
+        return TemperatureCalculationInternal(
+            f.toInt(),
+            c.toInt(),
+            notes,
+        ) }
+}
+data class TemperatureCalculationInternal(
+    val f: Int = "0".toInt(),
+    val c: Int = "0".toInt(),
+    val notes: String = "",
+) {
+    fun toTemperatureCalculation() : TemperatureCalculation{
+        return TemperatureCalculation(
+            f.toString(),
+            c.toString(),
+            notes,
+        ) }
+}
+data class DomainTermID(
+    val value: String = "0",
+    val valid: String = "false",
+    val notes: String = "",
+)
+{
+    fun toDomainTermIDInternal() : DomainTermIDInternal{
+        return DomainTermIDInternal(
+            value,
+            valid.toBoolean(),
+            notes,
+        ) }
+}
+data class DomainTermIDInternal(
+    val value: String = "0",
+    val valid: Boolean = "false".toBoolean(),
+    val notes: String = "",
+) {
+    fun toDomainTermID() : DomainTermID{
+        return DomainTermID(
+            value,
+            valid.toString(),
+            notes,
+        ) }
+}
 data class LabelValue(
     val label: String = "",
     val value: String = "0",
@@ -6,67 +56,17 @@ data class LabelValue(
 {
     fun toLabelValueInternal() : LabelValueInternal{
         return LabelValueInternal(
-            label.toString(),
+            label,
             value.toInt(),
         ) }
 }
 data class LabelValueInternal(
-    val label: String= "".toString(),
-    val value: Int= "0".toInt(),
+    val label: String = "",
+    val value: Int = "0".toInt(),
 ) {
     fun toLabelValue() : LabelValue{
         return LabelValue(
-            label.toString(),
+            label,
             value.toString(),
-        ) }
-}
-data class TemperatureComparison(
-    val f: String = "0",
-    val c: String = "0",
-    val notes: String = "",
-)
-{
-    fun toTemperatureComparisonInternal() : TemperatureComparisonInternal{
-        return TemperatureComparisonInternal(
-            f.toInt(),
-            c.toInt(),
-            notes.toString(),
-        ) }
-}
-data class TemperatureComparisonInternal(
-    val f: Int= "0".toInt(),
-    val c: Int= "0".toInt(),
-    val notes: String= "".toString(),
-) {
-    fun toTemperatureComparison() : TemperatureComparison{
-        return TemperatureComparison(
-            f.toString(),
-            c.toString(),
-            notes.toString(),
-        ) }
-}
-data class DomainTermID(
-    val value: String = "0",
-    val valid: String = "no",
-    val notes: String = "",
-)
-{
-    fun toDomainTermIDInternal() : DomainTermIDInternal{
-        return DomainTermIDInternal(
-            value.toString(),
-            valid.toBoolean(),
-            notes.toString(),
-        ) }
-}
-data class DomainTermIDInternal(
-    val value: String= "0".toString(),
-    val valid: Boolean= "no".toBoolean(),
-    val notes: String= "".toString(),
-) {
-    fun toDomainTermID() : DomainTermID{
-        return DomainTermID(
-            value.toString(),
-            valid.toString(),
-            notes.toString(),
         ) }
 }

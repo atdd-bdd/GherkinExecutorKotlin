@@ -49,26 +49,26 @@ data class NameValue(
     val iD: String = "",
     val value: String = "0",
 )
-data class TemperatureComparison(
+data class TemperatureCalculation(
     val f: String = "0",
     val c: String = "0",
     val notes: String = "",
 )
 {
-    fun toTemperatureComparisonInternal() : TemperatureComparisonInternal{
-        return TemperatureComparisonInternal(
+    fun toTemperatureCalculationInternal() : TemperatureCalculationInternal{
+        return TemperatureCalculationInternal(
             f.toInt(),
             c.toInt(),
             notes,
         ) }
 }
-data class TemperatureComparisonInternal(
+data class TemperatureCalculationInternal(
     val f: Int = "0".toInt(),
     val c: Int = "0".toInt(),
     val notes: String = "",
 ) {
-    fun toTemperatureComparison() : TemperatureComparison{
-        return TemperatureComparison(
+    fun toTemperatureCalculation() : TemperatureCalculation{
+        return TemperatureCalculation(
             f.toString(),
             c.toString(),
             notes,
@@ -76,7 +76,7 @@ data class TemperatureComparisonInternal(
 }
 data class DomainTermID(
     val value: String = "0",
-    val valid: String = "no",
+    val valid: String = "false",
     val notes: String = "",
 )
 {
@@ -89,7 +89,7 @@ data class DomainTermID(
 }
 data class DomainTermIDInternal(
     val value: String = "0",
-    val valid: Boolean = "no".toBoolean(),
+    val valid: Boolean = "false".toBoolean(),
     val notes: String = "",
 ) {
     fun toDomainTermID() : DomainTermID{

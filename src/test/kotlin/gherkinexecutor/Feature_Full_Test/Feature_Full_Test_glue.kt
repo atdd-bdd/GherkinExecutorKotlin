@@ -66,7 +66,7 @@ class Feature_Full_Test_glue {
         fail("Must implement")
     }
 
-    fun Calculation_Convert_F_to_C( value : List<TemperatureComparison>) {
+    fun Calculation_Convert_F_to_C( value : List<TemperatureCalculation>) {
         println("---  " + "Calculation_Convert_F_to_C")
         println(value)
         fail("Must implement")

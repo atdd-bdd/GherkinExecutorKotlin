@@ -8,10 +8,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="Refactored to add data initializer method">
+    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="Removed a toString() if attribute is already a string">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GherkinTranslator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/examples.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/examples.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_data.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_data.tmpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_glue.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_glue.tmpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Full_Test/Feature_Full_Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Full_Test/Feature_Full_Test.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Full_Test/Feature_Full_Test_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Full_Test/Feature_Full_Test_data.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Full_Test/Feature_Full_Test_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Full_Test/Feature_Full_Test_data.tmpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Full_Test/Feature_Full_Test_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Full_Test/Feature_Full_Test_glue.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Full_Test/Feature_Full_Test_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Full_Test/Feature_Full_Test_glue.tmpl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,7 +205,6 @@
     <configuration name="GherkinTranslatorKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GherkinTranslatorKt" />
       <module name="GherkinExecutor.main" />
-      <option name="PROGRAM_PARAMETERS" value="TestOfObject.feature examples.feature" />
       <shortenClasspath name="NONE" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -205,9 +214,9 @@
       <list>
         <item itemvalue="Gradle.Feature_Full_Test" />
         <item itemvalue="Gradle.Feature_Gherkin_Translator_Full_Test" />
+        <item itemvalue="Gradle.Feature_Examples (1)" />
         <item itemvalue="Kotlin.GherkinTranslatorKt" />
         <item itemvalue="Gradle.Feature_Tic_Tac_Toe_Game (1)" />
-        <item itemvalue="Gradle.Feature_Examples (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -489,7 +498,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added in parseCsvLine, but have not incorporated it into the iterator" />
     <MESSAGE value="fixed spacing in creating string from a multiline string" />
     <MESSAGE value="added Include, but still need to parse csv file" />
     <MESSAGE value="added transpose for tables" />
@@ -514,7 +522,8 @@
     <MESSAGE value="Refactored examples and moved some feature files" />
     <MESSAGE value="Documentation altered" />
     <MESSAGE value="Refactored to add data initializer method" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored to add data initializer method" />
+    <MESSAGE value="Removed a toString() if attribute is already a string" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed a toString() if attribute is already a string" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

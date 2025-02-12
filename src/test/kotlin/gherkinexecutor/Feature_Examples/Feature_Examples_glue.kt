@@ -5,29 +5,11 @@ import kotlin.test.fail
 
 class Feature_Examples_glue {
 
-    val solution = SolutionForListOfNumber()
 
-    fun Given_list_of_numbers( value : List<LabelValue>) {
+
+    fun Calculation_Convert_F_to_C( value : List<TemperatureCalculation>) {
         for (element in value) {
-            solution.add(element.toLabelValueInternal())
-        }
-
-    }
-
-
-    fun When_filtered_by_Label_with_value( value : List<List<String>>) {
-        solution.setFilterValue((value[0][0]))
-    }
-
-    fun Then_sum_is(value: List<List<String>>) {
-        val sum = solution.sum()
-        assertEquals(value[0][0].toInt(), sum)
-    }
-
-
-    fun Calculation_Convert_F_to_C( value : List<TemperatureComparison>) {
-        for (element in value) {
-            val temp = element.toTemperatureComparisonInternal()
+            val temp = element.toTemperatureCalculationInternal()
             assertEquals(
                 temp.c,
                 TemperatureCalculations.convertFarenheitToCelsius(temp.f),
@@ -45,8 +27,7 @@ class Feature_Examples_glue {
                 ID(temp.value)
                 if (!temp.valid)
                     fail("Value of " + temp.value + "accepted but should fail")
-            }
-            catch(e: Exception){
+            } catch (e: Exception) {
                 if (temp.valid)
                     fail("Value of " + temp.value + "failed but should be accepted")
                 assertEquals(temp.notes, e.message, "Message does not mathc")
@@ -57,7 +38,24 @@ class Feature_Examples_glue {
 //                temp.notes
 //            )
         }
+    }
+    val solution = SolutionForListOfNumber()
 
+    fun Given_list_of_numbers( value : List<LabelValue>) {
+        for (element in value) {
+            solution.add(element.toLabelValueInternal())
+        }
+
+    }
+
+
+    fun When_filtered_by_Label_with_value( value : List<List<String>>) {
+        solution.setFilterValue((value[0][0]))
+    }
+
+    fun Then_sum_is(value: List<List<String>>) {
+        val sum = solution.sum()
+        assertEquals(value[0][0].toInt(), sum)
     }
 
 }
