@@ -801,8 +801,8 @@ class Translate {
 
 class Configuration {
     companion object {
-        val inTest = true  // switch to true for development of Translator
-        var traceOn = true // set to true to see trace
+        val inTest = false  // switch to true for development of Translator
+        var traceOn = false // set to true to see trace
         var spaceCharacters = '^'  // Will replace with space in tables
         var currentDirectory = ""
         var featureSubDirectory = "src\\test\\kotlin\\"
@@ -811,18 +811,15 @@ class Configuration {
         var dataDefinitionFileExtension = "tmpl" // change to kt if altering data file
         val featureFiles = mutableListOf(
 //            "tictactoe.feature",
-//            "smoketest.feature",
 //            "GherkinTranslator.feature",
 //            "include.feature",
 //            "testfeature.feature",
-            "examples.feature", "tablesandstrings.feature",
-//            "FlowGrid.feature",
-//            "Robot Game.feature",
-            "data_definition.feature",
+            "examples.feature",
+//            "tablesandstrings.feature",
+//            "data_definition.feature",
 //            "ParseCSV.feature",
 //            "SimpleTest.feature",
-//            "GherkinTranslatorSmokeTest.feature",
-            "GherkinTranslatorFullTest.feature"
+//            "GherkinTranslatorFullTest.feature"
         )
     }
 }

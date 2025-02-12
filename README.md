@@ -193,6 +193,9 @@ In the test directory, it is named "examples.feature".  The words after the keyw
 `Feature` are combined into the name of the feature.  Let's assume that you are using the translator with Kotlin (language suffix .kt) 
 The operation is the same, the output code depends on the language. 
 
+To translate this file, you can pass it as a parameter to the `Translate` main method.  Alternatively
+you can add it to the Configuration list of feature files.   
+
 The single step in the `Scenario` ("Convert F to C ") is passed a list of objects of 
 `TemperatureComparison`.
 A unit test file with the name `Feature_Examples.kt` (with language appropriate suffix) is created in a directory with the same name. 
@@ -417,7 +420,29 @@ data class ID(val value: String) {
 ## Tables 
 There are a few details on tables.  The headers do not have to appear in the same order
 as the Data lists them.  You do not have to have a column for every Data item.  The corresponding attribute
-will be set to the default value.  
+will be set to the default value. 
+
+The `^` character in a table will be replaced by a space.  That way you can initialize a value
+to one or more spaces.   Otherwise a blank element in a table will become an empty string.  
+
+## Configuration 
+
+Here are the `Configuration` parameters in `Translate`.  
+
+These values should work for the default JetBrains layout.  You can alter them for another project layout.
+
+```
+        val inTest = false  // switch to true for development of Translator
+        var traceOn = false // set to true to see trace
+        var spaceCharacters = '^'  // Will replace with space in tables
+        var currentDirectory = ""
+        var featureSubDirectory = "src\\test\\kotlin\\"
+        var packageName = "gherkinexecutor"
+        var testSubDirectory = "src\\test\\kotlin\\" + packageName + "\\"
+        var dataDefinitionFileExtension = "tmpl" // change to kt if altering data file
+        val featureFiles = mutableListOf(
+```
+
 
 ## Inspiration 
 This form for expressing shared understanding came from Ward Cunningham's FIT
