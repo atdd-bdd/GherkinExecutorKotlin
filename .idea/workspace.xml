@@ -8,24 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="Documentation More">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_Production.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_data.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_glue.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/ID.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_Production.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_Production.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_glue.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/FlowGrid.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/OtherFeatureExamples/FlowGrid.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/GherkinTranslatorSmokeTest.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/OtherFeatureExamples/GherkinTranslatorSmokeTest.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Robot Game.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/OtherFeatureExamples/Robot Game.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/forthinterpreter.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/OtherFeatureExamples/forthinterpreter.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/smoketest.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/OtherFeatureExamples/smoketest.feature" afterDir="false" />
-    </list>
+    <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="Refactored examples and moved some feature files" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -450,7 +433,14 @@
       <option name="project" value="LOCAL" />
       <updated>1739309423740</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Refactored examples and moved some feature files">
+      <created>1739325984537</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1739325984538</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -474,7 +464,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Some code cleanup" />
     <MESSAGE value="corrected split line so additional word not added" />
     <MESSAGE value="added in data definition step definition" />
     <MESSAGE value="added in parseCsvLine, but have not incorporated it into the iterator" />
@@ -499,7 +488,8 @@
     <MESSAGE value="Added documentation.  Made up a domain term scenario" />
     <MESSAGE value="More documentation" />
     <MESSAGE value="Documentation More" />
-    <option name="LAST_COMMIT_MESSAGE" value="Documentation More" />
+    <MESSAGE value="Refactored examples and moved some feature files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored examples and moved some feature files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
