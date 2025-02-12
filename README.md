@@ -106,7 +106,11 @@ to a list in the Translator or adding them as program arguments.
 
 Unlike other implementations of Gherkin,
 each feature file is associated with one unit
-test file, its glue file, and its class file. 
+test file, its glue file, and its class file.
+
+If you need the same data types in multiple files, you can use the `Include` statement
+to add those data types to a feature. For example, `Include "datadefs.txt"`would add whatever
+is in that file to the feature file before it is translated.   
 
 ## Why Not Use Existing Frameworks? 
 
@@ -121,7 +125,8 @@ features of a specific languages, such as introspection.
 
 The initial version of Translator works for Kotlin.   It is currently being converted
 to Java, Python, and C++.    A feature file written for one language should work
-in the other languages.  
+in the other languages.  The only issues would be replacing the Datatype of a field (e.g. Int)
+with the appropriate type in another language.  
 
 Since the entire source code is supplied, a developer can alter the translation to
 their preferred style.  If methods should not have underscores, that can be changed
@@ -129,8 +134,8 @@ in a single line.
 
 ## How It Differs From Other Frameworks 
 The Translator passes data to steps only through tables.  There are no values embeeded the
-the steps.  The domain term which a value represents can be expressed as the header
-of a column contain the values.  
+the steps.  The domain term which a value represents is the header of a column
+which contains the values.  
 
 The tables can be passed as a list of objects or a list of lists of strings.  
 
@@ -192,7 +197,8 @@ The single step in the `Scenario` ("Convert F to C ") is passed a list of object
 `TemperatureComparison`.
 A unit test file with the name `Feature_Examples.kt` (with language appropriate suffix) is created in a directory with the same name. 
 A another file is created called `Feature_Examples_glue.tmpl` is also created.  This contains code that is called 
-from `Feature_Examples.kt`. 
+from `Feature_Examples.kt`.  A third file `Feature_Examples_data.tmpl` is created.  This
+contains the declarations for the classes.  
 
 The first time you run the Translator, you should rename that file to the language appropriate suffix
 (e.g. rename it from .tmpl to .kt).  You will be making changes in this file to 
@@ -214,7 +220,7 @@ Calculation Convert F to C # ListOfObject TemperatureComparison
 | 212  | 100  | Boiling     |
 | -40  | -40  | Below zero  |
 ```
-The `Calculation` is a new keyword that is a synonym for `*` in Gherkin.  In the translator, you could also use `Calculation` or `Rule` instead.
+The `Calculation` is a new keyword that is a synonym for `*` in Gherkin.  In the translator, you could also use `Rule` or `*` instead.
 This turns into code in  `Feature_Examples.kt`:
 ```
 class Feature_Examples{
@@ -243,7 +249,7 @@ class Feature_Examples{
         }
 
 ```
-Now to simplify creation of the objects in a table, you create a data description.   
+Now to simplify creation of the objects in a table, you create a data description.
 The `Data TemperatureComparison` portion produces code in the test file that
 declares a `TemperatureComparison` class.  Every attribute in this class is `String` type. Since the table also contains the data types for each element
 in this class, a second class with the default name `TemperatureConversionInternal` is also created.  You can attempt to
@@ -251,7 +257,7 @@ create an instance of this class in the glue code to check that the format of ea
 
 In this file, you can add `import` for any other classes your production code might need. 
 Note that the test file only references the class with all string attributes.  The glue code is the place to
-do all the conversions.
+do all the conversions into a `TemperatureComparisonInternal` using the supplied method. 
 ```
 Data TemperatureComparison
 | Name   | Default  | DataType  | Notes  |
@@ -259,7 +265,9 @@ Data TemperatureComparison
 | C      | 0        | Int       |        |
 | Notes  |          | String    |        |
 ```
-turns into code in `Feature_Examples_data.tmpl` that looks like
+The `Data` statement turns into code in `Feature_Examples_data.tmpl` that looks like the following.
+If you add another work, the internal class will be named by that word, rather than
+the created one: `TemperatureComparisonInternal`
 ```
 data class TemperatureComparison(
     val f: String = "0",
@@ -324,7 +332,7 @@ class TemperatureCalculations {
     }
 }
 ```
-Now you could change it to use every row in the table:
+Now you could change the glue method to use every row in the table:
 ```
     fun Calculation_Convert_F_to_C(value: List<TemperatureComparison>) {
         for (element in value) {
@@ -406,7 +414,12 @@ data class ID(val value: String) {
             throw Exception("Must begin with Q")
     }
 ```
+## Tables 
+There are a few details on tables.  The headers do not have to appear in the same order
+as the Data lists them.  You do not have to have a column for every Data item.  The corresponding attribute
+will be set to the default value.  
+
 ## Inspiration 
 This form for expressing shared understanding came from Ward Cunningham's FIT
-(Framework for Integrated Testing).  Gherkin came from ???.  Running a program
-to create the interface came from 
+(Framework for Integrated Testing).  Gherkin came from Aslak Hellesøy.  Running a program
+to create the code came from Gojko Adzic.   
