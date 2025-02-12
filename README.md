@@ -139,8 +139,6 @@ Here is a feature file.
 ```
 Feature: Examples
 
-
-
 Scenario: Temperature 
 # Business rule , Calculation 
 Calculation Convert F to C # ListOfObject TemperatureComparison 
@@ -289,7 +287,6 @@ You will be able to add your data types to that method, so it will use the appro
 (e.g. `constructor, .parseValue()`, etc. )
 
 Here is what the glue `.tmpl` file looks like: 
-
 ```
 class Feature_Examples_glue {
 
@@ -315,7 +312,6 @@ method and the return value is compared to the `C` value.
             )
         }
     }
-
 ```
 The compiler would suggest you create a method such as follows.  The companion object is
 equivalent to a class method (e.g. `static`) in other languages.

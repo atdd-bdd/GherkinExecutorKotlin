@@ -1,4 +1,4 @@
-package Feature_Tic_Tac_Toe_Game
+package gherkinexecutor.Feature_Tic_Tac_Toe_Game
 data class Move(
     var row: String = "0",
     var column: String = "0",
@@ -14,7 +14,7 @@ data class Move(
             throw IllegalArgumentException("Invalid move string format")
         }
     }
-    fun toMoveInternal() : MoveInternal{
+    fun toMoveInternal() : MoveInternal {
         return MoveInternal(
             row.toInt(),
             column.toInt(),

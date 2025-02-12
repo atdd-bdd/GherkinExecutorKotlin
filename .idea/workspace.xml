@@ -11,15 +11,20 @@
     <list default="true" id="771b5a02-8da7-4498-906f-e192cfe0abd2" name="Changes" comment="Documentation More">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/FileWriterWrapper.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/examples.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/examples.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_Production.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_Production.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_data.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_data.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_glue.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_glue.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Examples/Feature_Examples_glue.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/md file.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_Production.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_data.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/Feature_Examples_glue.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Examples/ID.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_Production.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_Production.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_data.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_glue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/gherkinexecutor/Feature_Tic_Tac_Toe_Game/Feature_Tic_Tac_Toe_Game_glue.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/FlowGrid.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/OtherFeatureExamples/FlowGrid.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/GherkinTranslatorSmokeTest.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/OtherFeatureExamples/GherkinTranslatorSmokeTest.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Robot Game.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/OtherFeatureExamples/Robot Game.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/forthinterpreter.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/OtherFeatureExamples/forthinterpreter.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/smoketest.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/OtherFeatureExamples/smoketest.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,11 +91,11 @@
       <recent name="C:\Users\user\ideaprojects\GherkinExecutor\src\test\kotlin\Feature_Gherkin_Translator_Smoke_Test" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\user\ideaprojects\GherkinExecutor\src\test\kotlin\OtherFeatureExamples" />
       <recent name="C:\Users\user\ideaprojects\GherkinExecutor" />
       <recent name="C:\Users\user\ideaprojects\GherkinExecutor\src\main\kotlin\Feature_Examples" />
       <recent name="C:\Users\user\ideaprojects\GherkinExecutor\src\main\kotlin" />
       <recent name="C:\Users\user\ideaprojects\GherkinExecutor\src\test\kotlin" />
-      <recent name="C:\Users\user\ideaprojects\GherkinExecutor\src\main\resources" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="Feature_Examples" />
@@ -107,7 +112,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Feature_Examples (1)">
+  <component name="RunManager" selected="Gradle.Feature_Tic_Tac_Toe_Game (1)">
     <configuration name="Feature_Data_Definition" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -154,7 +159,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="Feature_Examples" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="Feature_Tic_Tac_Toe_Game (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -167,7 +172,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;Feature_Examples.Feature_Examples&quot;" />
+            <option value="&quot;gherkinexecutor.Feature_Tic_Tac_Toe_Game.Feature_Tic_Tac_Toe_Game&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -211,11 +216,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Feature_Tic_Tac_Toe_Game (1)" />
         <item itemvalue="Gradle.Feature_Examples (1)" />
         <item itemvalue="Kotlin.GherkinTranslatorKt" />
         <item itemvalue="Gradle.Feature_Data_Definition" />
         <item itemvalue="Gradle.Feature_Tic_Tac_Toe_Game" />
-        <item itemvalue="Gradle.Feature_Examples" />
       </list>
     </recent_temporary>
   </component>
@@ -438,7 +443,14 @@
       <option name="project" value="LOCAL" />
       <updated>1739306279775</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Documentation More">
+      <created>1739309423740</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1739309423740</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="UnknownFeatures">

@@ -1,8 +1,7 @@
-package Feature_Tic_Tac_Toe_Game
+package gherkinexecutor.Feature_Tic_Tac_Toe_Game
 
 import kotlin.test.assertEquals
 
-import gherkinexecutor.Feature_Tic_Tac_Toe_Game.TicTacToeGame
 class Feature_Tic_Tac_Toe_Game_glue {
 
     val ticTacToeGame = TicTacToeGame()

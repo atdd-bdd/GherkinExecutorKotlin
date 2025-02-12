@@ -12,7 +12,6 @@ data class ContainsLibraryClass(
 {
     fun toContainsLibraryClassInternal() : ContainsLibraryClassInternal{
         return ContainsLibraryClassInternal(
-//            aURL.toURL(),
             URL(aURL),
             File(aFile),
             aPattern.toPattern(),
@@ -25,10 +24,12 @@ data class ContainsLibraryClassInternal(
 //    val aFile: File= "anyfile.txt".toFile(),
     val aPattern: Pattern= "a.*b".toPattern(),
 ) {
-    fun toContainsLibraryClass() : ContainsLibraryClass{
-        return ContainsLibraryClass(
-            aURL.toString(),
-            aFile.toString(),
-            aPattern.toString(),
-        ) }
+
+    // Created, but not used
+//    fun toContainsLibraryClass() : ContainsLibraryClass{
+//        return ContainsLibraryClass(
+//            aURL.toString(),
+//            aFile.toString(),
+//            aPattern.toString(),
+//        ) }
 }
